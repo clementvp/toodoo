@@ -1,0 +1,60 @@
+/*
+|--------------------------------------------------------------------------
+| Routes file
+|--------------------------------------------------------------------------
+|
+| The routes file is used for defining the HTTP routes.
+|
+*/
+
+import router from '@adonisjs/core/services/router'
+import { middleware } from './kernel.js'
+
+// Home page - redirect to login if not authenticated
+router.on('/').redirect('/login')
+
+// Authentication routes (public)
+const AuthController = () => import('#controllers/auth_controller')
+router.get('/register', [AuthController, 'showRegister'])
+router.post('/register', [AuthController, 'register'])
+router.get('/login', [AuthController, 'showLogin'])
+router.post('/login', [AuthController, 'login'])
+router.post('/logout', [AuthController, 'logout'])
+
+// Protected routes (require authentication)
+router
+  .group(() => {
+    // Todos routes
+    const TodosController = () => import('#controllers/todos_controller')
+    router.get('/todos', [TodosController, 'index'])
+    router.post('/todos', [TodosController, 'create'])
+    router.patch('/todos/:id', [TodosController, 'update'])
+    router.delete('/todos/:id', [TodosController, 'delete'])
+
+    // Notes routes
+    const NotesController = () => import('#controllers/notes_controller')
+    router.get('/notes', [NotesController, 'index'])
+    router.get('/notes/:id', [NotesController, 'show'])
+    router.post('/notes', [NotesController, 'create'])
+    router.delete('/notes/:id', [NotesController, 'delete'])
+
+    // Bookmarks routes
+    const BookmarksController = () => import('#controllers/bookmarks_controller')
+    router.get('/bookmarks', [BookmarksController, 'index'])
+    router.post('/bookmarks', [BookmarksController, 'store'])
+    router.delete('/bookmarks/:id', [BookmarksController, 'destroy'])
+  })
+  .use(middleware.auth())
+
+// Admin routes (require authentication + admin role)
+router
+  .group(() => {
+    const AdminController = () => import('#controllers/admin_controller')
+    router.get('/admin/users', [AdminController, 'index'])
+    router.get('/admin/users/create', [AdminController, 'create'])
+    router.post('/admin/users', [AdminController, 'store'])
+    router.delete('/admin/users/:id', [AdminController, 'destroy'])
+    router.patch('/admin/users/:id/role', [AdminController, 'updateRole'])
+    router.patch('/admin/users/:id/reset-password', [AdminController, 'resetPassword'])
+  })
+  .use([middleware.auth(), middleware.admin()])

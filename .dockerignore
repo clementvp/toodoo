@@ -1,0 +1,47 @@
+# Dependencies
+node_modules/
+npm-debug.log
+yarn-error.log
+
+# Build outputs
+build/
+dist/
+tmp/
+
+# Frontend compiled assets
+public/assets/
+
+# Environment files
+.env*
+!.env.example
+
+# Git
+.git/
+.gitignore
+
+# Docker
+Dockerfile*
+.dockerignore
+docker-compose.yml
+
+# IDE
+.idea/
+.vscode/
+.fleet/
+*.swp
+*.swo
+
+# Platform
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary
+*.tmp

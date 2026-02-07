@@ -1,0 +1,15 @@
+# Dependencies
+node_modules/
+
+# Build outputs
+build/
+dist/
+
+# Frontend compiled
+public/assets/
+
+# Testing
+coverage/
+
+# Config files
+*.config.js

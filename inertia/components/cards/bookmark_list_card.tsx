@@ -22,7 +22,21 @@ export default function BookmarkListCard({ bookmarks }: BookmarkListCardProps) {
   }
 
   return (
-    <Card title="Mes bookmarks">
+    <Card
+      title="Mes bookmarks"
+      style={{
+        background: '#fff',
+        boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+        height: '100%',
+        display: 'flex',
+        flexDirection: 'column',
+      }}
+      bodyStyle={{
+        flex: 1,
+        overflow: 'auto',
+        padding: '16px',
+      }}
+    >
       {bookmarks.length === 0 ? (
         <Empty description="Aucun bookmark" />
       ) : (
@@ -53,7 +67,10 @@ export default function BookmarkListCard({ bookmarks }: BookmarkListCardProps) {
                 </Button>,
               ]}
             >
-              <List.Item.Meta title={bookmark.url} description={new Date(bookmark.createdAt).toLocaleString('fr-FR')} />
+              <List.Item.Meta
+                title={bookmark.url}
+                description={new Date(bookmark.createdAt).toLocaleString('fr-FR')}
+              />
             </List.Item>
           )}
         />

@@ -146,9 +146,6 @@ DB_PASSWORD=postgres
 
 # Session
 SESSION_DRIVER=cookie
-
-# Security
-CSRF_ENABLED=true
 ```
 
 **Generate App Key**:

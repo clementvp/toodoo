@@ -7,6 +7,7 @@ Ce guide explique comment gérer les migrations de base de données en productio
 ✅ **Les migrations s'exécutent automatiquement** lors de chaque déploiement grâce au script `start.sh`.
 
 Le processus est le suivant :
+
 1. L'application démarre
 2. Le script `start.sh` s'exécute
 3. Les migrations sont appliquées automatiquement
@@ -21,6 +22,7 @@ node bin/server.js              # Démarre l'application
 ```
 
 **Important** :
+
 - ✅ Seules les **nouvelles migrations** sont exécutées
 - ✅ Les migrations déjà appliquées sont **ignorées**
 - ✅ Chaque migration s'exécute dans une **transaction** (rollback automatique en cas d'erreur)
@@ -55,13 +57,14 @@ export default class CreateUsersTable extends BaseSchema {
 export default class AddRoleToUsers extends BaseSchema {
   async up() {
     this.schema.alterTable('users', (table) => {
-      table.string('role').defaultTo('user')  // ✅ Valeur par défaut = pas de perte de données
+      table.string('role').defaultTo('user') // ✅ Valeur par défaut = pas de perte de données
     })
   }
 }
 ```
 
 Lors du déploiement :
+
 - Migration 1 : ✅ Ignorée (déjà exécutée)
 - Migration 2 : ✅ Exécutée (nouvelle)
 - **Résultat** : Les utilisateurs existants ont automatiquement le rôle 'user'
@@ -275,7 +278,7 @@ export default class AddAvatarToUsers extends BaseSchema {
 
   async up() {
     this.schema.alterTable(this.tableName, (table) => {
-      table.string('avatar_url').nullable()  // ✅ Nullable = sûr
+      table.string('avatar_url').nullable() // ✅ Nullable = sûr
     })
   }
 
@@ -317,6 +320,7 @@ caprover deploy
 ```
 
 **Ce qui se passe automatiquement** :
+
 1. CapRover build l'image Docker
 2. Le conteneur démarre
 3. Le script `start.sh` s'exécute

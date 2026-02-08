@@ -5,6 +5,21 @@ import { loginValidator } from '#validators/login_validator'
 
 export default class AuthController {
   /**
+   * Handle home page
+   * Redirect to todos if authenticated, login otherwise
+   */
+  async home({ auth, response }: HttpContext) {
+    // Check if user is authenticated (including remember me token)
+    await auth.use('web').check()
+
+    if (auth.use('web').isAuthenticated) {
+      return response.redirect('/todos')
+    }
+
+    return response.redirect('/login')
+  }
+
+  /**
    * Show registration page
    * Only accessible if there are no users (first user registration)
    */
@@ -74,15 +89,19 @@ export default class AuthController {
    * Support "Remember Me" functionality
    */
   async login({ request, auth, response, session }: HttpContext) {
-    // Validate input
-    const { email, password, remember } = await request.validateUsing(loginValidator)
-
     try {
+      // Validate input (email and password only)
+      const { email, password } = await request.validateUsing(loginValidator)
+
+      // Get remember field directly from request (not validated)
+      const remember = request.input('remember', false)
+
       // Find user and verify credentials
       const user = await User.verifyCredentials(email, password)
 
       // Create session with optional "remember me" (T034)
-      await auth.use('web').login(user, remember ?? false)
+      const rememberBool = Boolean(remember)
+      await auth.use('web').login(user, rememberBool)
 
       // Set success message
       session.flash('success', 'Connexion réussie !')

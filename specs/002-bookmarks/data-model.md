@@ -18,31 +18,36 @@ The bookmarks feature introduces a single new entity: **Bookmark**. This entity 
 
 **Attributes**:
 
-| Field | Type | Constraints | Description |
-|-------|------|-------------|-------------|
-| id | Integer | PRIMARY KEY, AUTO INCREMENT | Unique identifier |
-| userId | Integer | FOREIGN KEY → users.id, NOT NULL | Owner of the bookmark |
-| url | String (2048) | NOT NULL, 1-2048 chars | The bookmark content (any text) |
-| createdAt | Timestamp | NOT NULL, AUTO | Creation timestamp |
-| updatedAt | Timestamp | NOT NULL, AUTO UPDATE | Last modification timestamp |
+| Field     | Type          | Constraints                      | Description                     |
+| --------- | ------------- | -------------------------------- | ------------------------------- |
+| id        | Integer       | PRIMARY KEY, AUTO INCREMENT      | Unique identifier               |
+| userId    | Integer       | FOREIGN KEY → users.id, NOT NULL | Owner of the bookmark           |
+| url       | String (2048) | NOT NULL, 1-2048 chars           | The bookmark content (any text) |
+| createdAt | Timestamp     | NOT NULL, AUTO                   | Creation timestamp              |
+| updatedAt | Timestamp     | NOT NULL, AUTO UPDATE            | Last modification timestamp     |
 
 **Relationships**:
+
 - **belongsTo User**: Each bookmark belongs to exactly one user
 
 **Validation Rules**:
+
 - `url` field is required (cannot be empty after trimming)
 - `url` maximum length: 2048 characters
 - `url` minimum length: 1 character (after trimming)
 - No format validation on `url` content
 
 **Indexes**:
+
 - Primary: `id` (automatic)
 - Composite: `(user_id, created_at DESC)` - optimizes user filtering + ordering
 
 **Query Scopes**:
+
 - `forUser(userId)`: Automatically filter bookmarks by user ID
 
 **Cascade Rules**:
+
 - When a User is deleted → CASCADE DELETE all their bookmarks
 
 ---
@@ -101,6 +106,7 @@ CREATE INDEX idx_bookmarks_user_created
 ```
 
 **Index Rationale**:
+
 - `idx_bookmarks_user_created`: Composite index on (user_id, created_at DESC)
   - Supports filtering by user: `WHERE user_id = ?`
   - Supports ordering: `ORDER BY created_at DESC`
@@ -155,12 +161,13 @@ export interface Bookmark {
   id: number
   userId: number
   url: string
-  createdAt: string  // ISO 8601 format
-  updatedAt: string  // ISO 8601 format
+  createdAt: string // ISO 8601 format
+  updatedAt: string // ISO 8601 format
 }
 ```
 
 **Serialization**:
+
 - Lucid model's `serialize()` method converts DateTime objects to ISO strings
 - Frontend receives plain objects matching this interface
 
@@ -171,13 +178,13 @@ export interface Bookmark {
 ### Common Queries
 
 **1. Get all user's bookmarks (newest first)**
+
 ```typescript
-const bookmarks = await Bookmark.query()
-  .where('user_id', userId)
-  .orderBy('created_at', 'desc')
+const bookmarks = await Bookmark.query().where('user_id', userId).orderBy('created_at', 'desc')
 ```
 
 **2. Create new bookmark**
+
 ```typescript
 const bookmark = await Bookmark.create({
   userId: user.id,
@@ -186,6 +193,7 @@ const bookmark = await Bookmark.create({
 ```
 
 **3. Delete bookmark (with ownership verification)**
+
 ```typescript
 const bookmark = await Bookmark.query()
   .where('id', bookmarkId)
@@ -196,6 +204,7 @@ await bookmark.delete()
 ```
 
 **4. Using query scope**
+
 ```typescript
 const bookmarks = await Bookmark.query()
   .apply((scopes) => scopes.forUser(userId))
@@ -229,14 +238,14 @@ Bookmarks have minimal state:
 
 ## Validation Rules Summary
 
-| Rule | Level | Description |
-|------|-------|-------------|
-| Required | Application | `url` field cannot be empty |
-| Length Check | Application | `url` must be 1-2048 characters |
-| Data Type | Database | `url` is VARCHAR(2048) |
-| Ownership | Application | Users can only access their own bookmarks |
-| Foreign Key | Database | `user_id` must reference existing user |
-| Cascade | Database | Deleting user removes all their bookmarks |
+| Rule         | Level       | Description                               |
+| ------------ | ----------- | ----------------------------------------- |
+| Required     | Application | `url` field cannot be empty               |
+| Length Check | Application | `url` must be 1-2048 characters           |
+| Data Type    | Database    | `url` is VARCHAR(2048)                    |
+| Ownership    | Application | Users can only access their own bookmarks |
+| Foreign Key  | Database    | `user_id` must reference existing user    |
+| Cascade      | Database    | Deleting user removes all their bookmarks |
 
 **No format validation**: The `url` field accepts any text content.
 
@@ -245,16 +254,19 @@ Bookmarks have minimal state:
 ## Performance Characteristics
 
 **Query Performance**:
+
 - Primary queries use composite index (user_id, created_at)
 - Expected performance: <100ms for up to 1000 bookmarks per user
 - Single query fetch (no N+1 problems)
 
 **Storage Estimates**:
+
 - Average URL length: ~100 characters
 - 1000 bookmarks per user: ~100KB per user
 - Negligible storage impact
 
 **Scalability Considerations**:
+
 - No pagination needed up to 1000 items per user
 - If needed later, implement cursor-based pagination on `created_at`
 

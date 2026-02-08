@@ -34,3 +34,10 @@ coverage
 
 # Temporary files
 *.tmp
+
+# Claude Code and Speckit directories
+.claude
+.specify
+
+# Vite cache
+.vite

@@ -1,17 +1,17 @@
-import { Head, router, usePage } from '@inertiajs/react'
+import { Head, router } from '@inertiajs/react'
 import { Layout, Form, Input, Button, Card, Typography } from 'antd'
 import { UserAddOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import Header from '../../../components/layout/header'
-import type { PageProps } from '../../../lib/types'
+import type { User } from '../../../lib/types'
 
 const { Title } = Typography
 
-interface CreateUserPageProps extends PageProps {
+export interface CreateUserPageProps {
+  user?: User
   errors?: Record<string, string>
 }
 
-export default function CreateUser() {
-  const { user, errors } = usePage<CreateUserPageProps>().props
+export default function CreateUser({ user, errors }: CreateUserPageProps) {
   const [form] = Form.useForm()
 
   const onFinish = (values: any) => {

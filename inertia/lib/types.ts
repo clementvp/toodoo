@@ -34,7 +34,3 @@ export interface Bookmark {
   createdAt: string // ISO date string
   updatedAt: string
 }
-
-export interface PageProps<T = Record<string, unknown>> {
-  user?: User
-}

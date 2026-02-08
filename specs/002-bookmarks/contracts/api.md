@@ -14,6 +14,7 @@ All endpoints require authentication via the existing session-based auth middlew
 **Middleware**: `auth`
 
 **Unauthenticated Response**:
+
 ```
 HTTP 302 Found
 Location: /login
@@ -30,6 +31,7 @@ Location: /login
 **Purpose**: Retrieve all bookmarks for the authenticated user, ordered by creation date (newest first).
 
 **Request**:
+
 ```http
 GET /bookmarks HTTP/1.1
 Host: example.com
@@ -41,6 +43,7 @@ Cookie: adonis-session=...
 **Response**: Inertia.js page render
 
 **Success (200 OK)**:
+
 ```json
 {
   "component": "bookmarks/index",
@@ -71,6 +74,7 @@ Cookie: adonis-session=...
 ```
 
 **Notes**:
+
 - Returns empty array if user has no bookmarks
 - Bookmarks are ordered by `createdAt DESC` (newest first)
 - Only returns bookmarks owned by authenticated user
@@ -84,6 +88,7 @@ Cookie: adonis-session=...
 **Purpose**: Create a new bookmark for the authenticated user.
 
 **Request**:
+
 ```http
 POST /bookmarks HTTP/1.1
 Host: example.com
@@ -94,13 +99,15 @@ url=https://example.com
 ```
 
 **Request Body** (Form Data):
+
 ```typescript
 {
-  url: string  // Required, 1-2048 characters
+  url: string // Required, 1-2048 characters
 }
 ```
 
 **Success Response (302 Found)**:
+
 ```http
 HTTP/1.1 302 Found
 Location: /bookmarks
@@ -108,6 +115,7 @@ Set-Cookie: adonis-session=...
 ```
 
 **Session Flash**:
+
 ```json
 {
   "success": "Bookmark créé avec succès!"
@@ -115,6 +123,7 @@ Set-Cookie: adonis-session=...
 ```
 
 **Validation Error (422 Unprocessable Entity)**:
+
 ```json
 {
   "errors": {
@@ -124,12 +133,14 @@ Set-Cookie: adonis-session=...
 ```
 
 **Validation Rules**:
+
 - `url` is required
 - `url` must not be empty after trimming
 - `url` maximum length: 2048 characters
 - `url` minimum length: 1 character (after trimming)
 
 **Possible Validation Errors**:
+
 ```json
 // Empty URL
 {
@@ -155,6 +166,7 @@ Set-Cookie: adonis-session=...
 **Purpose**: Delete a specific bookmark owned by the authenticated user.
 
 **Request**:
+
 ```http
 DELETE /bookmarks/42 HTTP/1.1
 Host: example.com
@@ -162,9 +174,11 @@ Cookie: adonis-session=...
 ```
 
 **Path Parameters**:
+
 - `id` (integer): Bookmark ID to delete
 
 **Success Response (302 Found)**:
+
 ```http
 HTTP/1.1 302 Found
 Location: /bookmarks
@@ -172,6 +186,7 @@ Set-Cookie: adonis-session=...
 ```
 
 **Session Flash**:
+
 ```json
 {
   "success": "Bookmark supprimé avec succès!"
@@ -179,6 +194,7 @@ Set-Cookie: adonis-session=...
 ```
 
 **Not Found (404 Not Found)**:
+
 ```http
 HTTP/1.1 404 Not Found
 Content-Type: application/json
@@ -189,6 +205,7 @@ Content-Type: application/json
 ```
 
 **Unauthorized (404 Not Found)**:
+
 ```http
 HTTP/1.1 404 Not Found
 Content-Type: application/json
@@ -199,6 +216,7 @@ Content-Type: application/json
 ```
 
 **Notes**:
+
 - Returns 404 if bookmark doesn't exist OR doesn't belong to authenticated user
 - This prevents information leakage about other users' bookmarks
 - Uses `firstOrFail()` with `where('user_id', userId)` for security
@@ -211,11 +229,11 @@ Content-Type: application/json
 
 ```typescript
 interface Bookmark {
-  id: number                 // Unique identifier
-  userId: number            // Owner user ID
-  url: string               // Bookmark content (any text, 1-2048 chars)
-  createdAt: string         // ISO 8601 timestamp (e.g., "2026-02-06T14:30:00.000Z")
-  updatedAt: string         // ISO 8601 timestamp
+  id: number // Unique identifier
+  userId: number // Owner user ID
+  url: string // Bookmark content (any text, 1-2048 chars)
+  createdAt: string // ISO 8601 timestamp (e.g., "2026-02-06T14:30:00.000Z")
+  updatedAt: string // ISO 8601 timestamp
 }
 ```
 
@@ -268,11 +286,11 @@ Redirects to `/login` instead of returning JSON.
 
 ## HTTP Methods Summary
 
-| Method | Endpoint | Purpose | Authentication | Idempotent |
-|--------|----------|---------|----------------|------------|
-| GET | /bookmarks | List user's bookmarks | Required | Yes |
-| POST | /bookmarks | Create new bookmark | Required | No |
-| DELETE | /bookmarks/:id | Delete bookmark | Required | Yes |
+| Method | Endpoint       | Purpose               | Authentication | Idempotent |
+| ------ | -------------- | --------------------- | -------------- | ---------- |
+| GET    | /bookmarks     | List user's bookmarks | Required       | Yes        |
+| POST   | /bookmarks     | Create new bookmark   | Required       | No         |
+| DELETE | /bookmarks/:id | Delete bookmark       | Required       | Yes        |
 
 ---
 
@@ -285,11 +303,13 @@ import router from '@adonisjs/core/services/router'
 import BookmarksController from '#controllers/bookmarks_controller'
 
 // Bookmarks routes (authenticated)
-router.group(() => {
-  router.get('/bookmarks', [BookmarksController, 'index'])
-  router.post('/bookmarks', [BookmarksController, 'store'])
-  router.delete('/bookmarks/:id', [BookmarksController, 'destroy'])
-}).middleware('auth')
+router
+  .group(() => {
+    router.get('/bookmarks', [BookmarksController, 'index'])
+    router.post('/bookmarks', [BookmarksController, 'store'])
+    router.delete('/bookmarks/:id', [BookmarksController, 'destroy'])
+  })
+  .middleware('auth')
 ```
 
 ---
@@ -297,20 +317,24 @@ router.group(() => {
 ## Security Considerations
 
 ### Data Isolation
+
 - All queries filter by authenticated user's ID
 - DELETE operation verifies ownership before deletion
 - Returns 404 instead of 403 to prevent information disclosure
 
 ### Input Validation
+
 - URL field is trimmed before validation
 - Length constraints prevent database overflow
 - VineJS validator sanitizes input
 
 ### CSRF Protection
+
 - All POST/DELETE requests require CSRF token
 - Handled automatically by AdonisJS Shield middleware
 
 ### Session Security
+
 - Uses existing AdonisJS session-based authentication
 - HTTP-only cookies prevent XSS access to session token
 
@@ -401,9 +425,7 @@ test('DELETE /bookmarks/:id deletes bookmark', async ({ client, assert }) => {
   const user = await UserFactory.create()
   const bookmark = await BookmarkFactory.merge({ userId: user.id }).create()
 
-  const response = await client
-    .delete(`/bookmarks/${bookmark.id}`)
-    .loginAs(user)
+  const response = await client.delete(`/bookmarks/${bookmark.id}`).loginAs(user)
 
   response.assertRedirectsTo('/bookmarks')
   assert.notExists(await Bookmark.find(bookmark.id))
@@ -414,9 +436,7 @@ test('DELETE /bookmarks/:id fails for other user bookmark', async ({ client, ass
   const user2 = await UserFactory.create()
   const bookmark = await BookmarkFactory.merge({ userId: user1.id }).create()
 
-  const response = await client
-    .delete(`/bookmarks/${bookmark.id}`)
-    .loginAs(user2)
+  const response = await client.delete(`/bookmarks/${bookmark.id}`).loginAs(user2)
 
   response.assertStatus(404)
   assert.exists(await Bookmark.find(bookmark.id))
@@ -427,11 +447,11 @@ test('DELETE /bookmarks/:id fails for other user bookmark', async ({ client, ass
 
 ## Performance Expectations
 
-| Operation | Target | Measurement |
-|-----------|--------|-------------|
-| GET /bookmarks | <500ms | Server response time |
-| POST /bookmarks | <1s | Create + redirect |
-| DELETE /bookmarks/:id | <500ms | Delete + redirect |
+| Operation             | Target | Measurement          |
+| --------------------- | ------ | -------------------- |
+| GET /bookmarks        | <500ms | Server response time |
+| POST /bookmarks       | <1s    | Create + redirect    |
+| DELETE /bookmarks/:id | <500ms | Delete + redirect    |
 
 **Note**: Times exclude network latency and client-side rendering.
 

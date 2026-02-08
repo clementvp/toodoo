@@ -1,13 +1,15 @@
-# Todo & Notes Web Application
+# Toudoux
 
 A secure, multi-user web application for managing todos and notes with a calendar-based interface.
 
 ## Features
 
-- 🔐 **User Authentication** - Secure registration and login with session management
+- 🔐 **User Authentication** - Secure registration and login with session management and Remember Me
 - ✅ **Todo Management** - Create, update, delete todos with dates and times
 - 📝 **Notes Management** - Create, view, delete notes organized by date
-- 📅 **Calendar View** - Intuitive 80/20 split layout with monthly calendar
+- 🔖 **Bookmarks Management** - Save and organize URLs and text snippets
+- 📅 **Calendar View** - Intuitive 70/30 split layout with monthly calendar
+- 👥 **User Roles** - Admin and regular user roles with different permissions
 - 🎨 **Modern Design** - Clean UI with Modern Productivity color palette
 - 🔒 **Data Isolation** - Complete user data isolation (users can only see their own data)
 - 📱 **Responsive** - Mobile-friendly design
@@ -78,10 +80,15 @@ npm run dev
 
 Visit http://localhost:3333 and you'll be redirected to the login page.
 
-## Test Account (if seeded)
+## Test Accounts (if seeded)
 
+**Regular User:**
 - **Email**: test@example.com
 - **Password**: password123
+
+**Admin User:**
+- **Email**: admin@example.com
+- **Password**: admin123
 
 ## Development Commands
 
@@ -181,7 +188,6 @@ docker exec -it todo_notes_db psql -U postgres -d todo_notes
 | `DB_PASSWORD`    | Database password                                      | postgres    |
 | `DB_DATABASE`    | Database name                                          | todo_notes  |
 | `SESSION_DRIVER` | Session driver                                         | cookie      |
-| `CSRF_ENABLED`   | Enable CSRF protection                                 | true        |
 
 ## Features Detail
 
@@ -211,10 +217,27 @@ docker exec -it todo_notes_db psql -U postgres -d todo_notes
 - Full-text content display in modal
 - Ownership verification (users can only view/delete their own notes)
 
+### Bookmarks Management
+
+- Save URLs and text snippets (up to 2048 characters)
+- View bookmarks in a scrollable list
+- Open bookmarks in new tab
+- Delete bookmarks with confirmation
+- Timestamps in French locale
+- Ownership verification (users can only view/delete their own bookmarks)
+- 70/30 split layout (list on left, form on right)
+
+### User Roles & Administration
+
+- **Admin Role** - Access to user management dashboard
+- **User Role** - Standard access to todos, notes, and bookmarks
+- Admin can create, view, and delete users
+- Role-based access control
+
 ### Calendar Interface
 
-- Monthly calendar view (80% width)
-- Side panel with list and form (20% width)
+- Monthly calendar view (70% width)
+- Side panel with list and form (30% width)
 - Click day to filter items
 - Navigate between months
 - Condensed item titles in calendar cells (badges)

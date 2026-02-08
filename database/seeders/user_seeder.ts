@@ -2,16 +2,28 @@ import { BaseSeeder } from '@adonisjs/lucid/seeders'
 import User from '#models/user'
 import Todo from '#models/todo'
 import Note from '#models/note'
+import Bookmark from '#models/bookmark'
 import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
   async run() {
-    // Create test user
+    // Create test user (regular user)
     const user = await User.firstOrCreate(
       { email: 'test@example.com' },
       {
         email: 'test@example.com',
         password: 'password123',
+        role: 'user',
+      }
+    )
+
+    // Create admin user
+    await User.firstOrCreate(
+      { email: 'admin@example.com' },
+      {
+        email: 'admin@example.com',
+        password: 'admin123',
+        role: 'admin',
       }
     )
 
@@ -75,8 +87,32 @@ export default class extends BaseSeeder {
       }
     )
 
-    console.log('✅ Seed data created successfully!')
-    console.log('📧 Test user: test@example.com')
-    console.log('🔑 Password: password123')
+    // Create sample bookmarks
+    await Bookmark.firstOrCreate(
+      { url: 'https://adonisjs.com', userId: user.id },
+      {
+        userId: user.id,
+        url: 'https://adonisjs.com',
+        createdAt: DateTime.now(),
+      }
+    )
+
+    await Bookmark.firstOrCreate(
+      { url: 'https://react.dev', userId: user.id },
+      {
+        userId: user.id,
+        url: 'https://react.dev',
+        createdAt: DateTime.now().minus({ hours: 2 }),
+      }
+    )
+
+    await Bookmark.firstOrCreate(
+      { url: 'https://ant.design', userId: user.id },
+      {
+        userId: user.id,
+        url: 'https://ant.design',
+        createdAt: DateTime.now().minus({ days: 1 }),
+      }
+    )
   }
 }

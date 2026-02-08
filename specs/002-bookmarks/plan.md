@@ -18,17 +18,18 @@ Add a bookmark management feature that allows users to save, view, and open URL 
 **Target Platform**: Web application (server-rendered with Inertia.js SSR)
 **Project Type**: Web application (AdonisJS backend + React/Inertia frontend)
 **Performance Goals**:
-  - Add bookmark: <5 seconds (includes validation and persistence)
-  - View bookmark list: <2 seconds (query + render)
-  - Support up to 1000 bookmarks per user without pagination
-**Constraints**:
-  - Must follow existing user authentication patterns
-  - Must scope bookmarks to authenticated users
-  - Must validate URL format before saving
-**Scale/Scope**:
-  - Multi-user application
-  - User-scoped bookmarks (similar to Notes and Todos)
-  - Single entity (Bookmark model)
+
+- Add bookmark: <5 seconds (includes validation and persistence)
+- View bookmark list: <2 seconds (query + render)
+- Support up to 1000 bookmarks per user without pagination
+  **Constraints**:
+- Must follow existing user authentication patterns
+- Must scope bookmarks to authenticated users
+- Must validate URL format before saving
+  **Scale/Scope**:
+- Multi-user application
+- User-scoped bookmarks (similar to Notes and Todos)
+- Single entity (Bookmark model)
 
 ## Constitution Check
 
@@ -180,6 +181,7 @@ All design artifacts generated and validated.
 #### 1. Data Model ✅ (`data-model.md`)
 
 **Bookmark Entity**:
+
 - Fields: id, userId, url (VARCHAR 2048), createdAt, updatedAt
 - Validation: Required, 1-2048 chars, NO format validation
 - Relationships: belongsTo User (CASCADE DELETE)
@@ -191,6 +193,7 @@ All design artifacts generated and validated.
 #### 2. API Contracts ✅ (`contracts/api.md`)
 
 **Endpoints**:
+
 - `GET /bookmarks` - List user's bookmarks (newest first)
 - `POST /bookmarks` - Create bookmark (validates url field)
 - `DELETE /bookmarks/:id` - Delete bookmark (ownership verified)
@@ -204,6 +207,7 @@ All design artifacts generated and validated.
 #### 3. Quickstart Guide ✅ (`quickstart.md`)
 
 **Contents**:
+
 - Setup instructions (migration, dev server)
 - Testing commands (npm test, specific test files)
 - Usage examples (UI and curl)
@@ -217,6 +221,7 @@ All design artifacts generated and validated.
 Ran `.specify/scripts/bash/update-agent-context.sh claude`
 
 **Changes Applied**:
+
 - Added TypeScript with Node.js 20.6+
 - Added AdonisJS v6, Lucid ORM, VineJS, Inertia.js with React
 - Added PostgreSQL database
@@ -225,6 +230,7 @@ Ran `.specify/scripts/bash/update-agent-context.sh claude`
 ### Constitution Re-Check ✅
 
 All principles verified post-design (see Constitution Check section above):
+
 - ✅ Simplicity: Minimal design, reuses patterns
 - ✅ Observability: Logging and validation in place
 - ✅ User-Centric: Three independently testable stories
@@ -252,12 +258,14 @@ Before proceeding to task generation:
 ## Planning Summary
 
 ### Phase 0 ✅ COMPLETE
+
 - ✅ Research completed and documented in `research.md`
 - ✅ URL validation decision: Minimal validation (accept any text)
 - ✅ Database schema designed: Simple, indexed, follows patterns
 - ✅ UI patterns identified: Reuse Notes/Todos components
 
 ### Phase 1 ✅ COMPLETE
+
 - ✅ `data-model.md` - Bookmark entity fully specified
 - ✅ `contracts/api.md` - REST API endpoints documented
 - ✅ `quickstart.md` - Developer guide created
@@ -271,12 +279,14 @@ Before proceeding to task generation:
 Run `/speckit.tasks` to generate the task breakdown for implementation.
 
 The task generation will create `tasks.md` with:
+
 - Actionable tasks ordered by dependencies
 - P1 → P2 → P3 user story implementation sequence
 - Migration, model, controller, validator, and frontend tasks
 - Test tasks for each component
 
 **Expected workflow after `/speckit.tasks`**:
+
 1. Review generated tasks in `specs/002-bookmarks/tasks.md`
 2. Run `/speckit.implement` to execute tasks sequentially
 3. Test each user story independently as implemented

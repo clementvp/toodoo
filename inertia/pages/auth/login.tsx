@@ -1,25 +1,27 @@
 import { Layout, Card, Form, Input, Button, Typography, Alert, Checkbox } from 'antd'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
-import { router, usePage } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import { useState } from 'react'
 import Header from '../../components/layout/header'
 
 const { Content } = Layout
 const { Title, Text } = Typography
 
-interface LoginPageProps {
+export interface LoginPageProps {
   errors?: Record<string, string>
-  success?: string
+  success?: string | null
+  error?: string | null
 }
 
-export default function Login() {
-  const { errors, success } = usePage<LoginPageProps>().props
+export default function Login({ errors, success, error, ...props }: LoginPageProps & Record<string, any>) {
   const [loading, setLoading] = useState(false)
 
   const onFinish = (values: { email: string; password: string; remember?: boolean }) => {
     setLoading(true)
     router.post('/login', values, {
-      onFinish: () => setLoading(false),
+      onFinish: () => {
+        setLoading(false)
+      },
     })
   }
 
@@ -54,6 +56,17 @@ export default function Login() {
             <Alert
               message="Connexion échouée"
               description={Object.values(errors).join(', ')}
+              type="error"
+              showIcon
+              style={{ marginBottom: '16px' }}
+            />
+          )}
+
+          {/* Single error message (from controller) */}
+          {error && (
+            <Alert
+              message="Connexion échouée"
+              description={error}
               type="error"
               showIcon
               style={{ marginBottom: '16px' }}

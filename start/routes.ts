@@ -10,11 +10,11 @@
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 
-// Home page - redirect to login if not authenticated
-router.on('/').redirect('/login')
-
 // Authentication routes (public)
 const AuthController = () => import('#controllers/auth_controller')
+
+// Home page - redirect to todos if authenticated, login otherwise
+router.get('/', [AuthController, 'home'])
 router.get('/register', [AuthController, 'showRegister'])
 router.post('/register', [AuthController, 'register'])
 router.get('/login', [AuthController, 'showLogin'])

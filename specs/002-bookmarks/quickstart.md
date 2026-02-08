@@ -26,6 +26,7 @@ node ace migration:run
 ```
 
 Expected output:
+
 ```
 ✔ Executed 1 migrations in 45ms
   ❯ database/migrations/[timestamp]_create_bookmarks_table
@@ -40,6 +41,7 @@ node ace db:query "SELECT table_name FROM information_schema.tables WHERE table_
 ```
 
 Or use your PostgreSQL client:
+
 ```sql
 \dt bookmarks
 ```
@@ -75,11 +77,13 @@ npm test
 ### Run Bookmark-Specific Tests
 
 **Functional tests:**
+
 ```bash
 node ace test tests/functional/bookmarks.spec.ts
 ```
 
 **Unit tests (validator):**
+
 ```bash
 node ace test tests/unit/bookmark_validator.spec.ts
 ```
@@ -97,12 +101,14 @@ npm test -- --watch
 ### 1. Add a Bookmark
 
 **Via UI:**
+
 1. Navigate to `/bookmarks`
 2. Enter any text in the URL field (e.g., `https://example.com` or `my-note`)
 3. Click "Ajouter" button
 4. Bookmark appears in the list immediately
 
 **Via curl:**
+
 ```bash
 curl -X POST http://localhost:3333/bookmarks \
   -H "Content-Type: application/x-www-form-urlencoded" \
@@ -113,10 +119,12 @@ curl -X POST http://localhost:3333/bookmarks \
 ### 2. View Bookmark List
 
 **Via UI:**
+
 1. Navigate to `/bookmarks`
 2. All your bookmarks appear in reverse chronological order (newest first)
 
 **Via curl:**
+
 ```bash
 curl http://localhost:3333/bookmarks \
   -H "Cookie: adonis-session=YOUR_SESSION_COOKIE"
@@ -125,17 +133,20 @@ curl http://localhost:3333/bookmarks \
 ### 3. Open a Bookmark
 
 **Via UI:**
+
 1. Click the "Ouvrir" button next to any bookmark
 2. The link opens in a new browser tab
 
 ### 4. Delete a Bookmark
 
 **Via UI:**
+
 1. Click the "Supprimer" button next to a bookmark
 2. Confirm deletion in the modal dialog
 3. Bookmark is removed from the list
 
 **Via curl:**
+
 ```bash
 curl -X DELETE http://localhost:3333/bookmarks/42 \
   -H "Cookie: adonis-session=YOUR_SESSION_COOKIE"
@@ -193,11 +204,11 @@ tests/
 
 ## API Endpoints
 
-| Method | Endpoint | Purpose |
-|--------|----------|---------|
-| GET | `/bookmarks` | List all user's bookmarks |
-| POST | `/bookmarks` | Create new bookmark |
-| DELETE | `/bookmarks/:id` | Delete specific bookmark |
+| Method | Endpoint         | Purpose                   |
+| ------ | ---------------- | ------------------------- |
+| GET    | `/bookmarks`     | List all user's bookmarks |
+| POST   | `/bookmarks`     | Create new bookmark       |
+| DELETE | `/bookmarks/:id` | Delete specific bookmark  |
 
 All endpoints require authentication.
 
@@ -228,6 +239,7 @@ node ace tinker
 ```
 
 Then in the REPL:
+
 ```javascript
 const { default: Bookmark } = await import('#models/bookmark')
 await Bookmark.query().where('user_id', 1).delete()
@@ -240,6 +252,7 @@ node ace tinker
 ```
 
 Then:
+
 ```javascript
 const { default: Bookmark } = await import('#models/bookmark')
 await Bookmark.createMany([
@@ -270,6 +283,7 @@ node ace migration:rollback
 **Error**: `relation "bookmarks" already exists`
 
 **Solution**: The table was already created. Either:
+
 - Skip this migration: Already complete
 - Drop and recreate: `node ace migration:rollback` then `node ace migration:run`
 
@@ -312,16 +326,19 @@ node ace migration:rollback
 **Enable SQL query logging:**
 
 Edit `config/database.ts`:
+
 ```typescript
-debug: true  // Log all SQL queries
+debug: true // Log all SQL queries
 ```
 
 **Check server logs:**
+
 ```bash
 npm run dev  # Watch terminal output
 ```
 
 **Inspect database:**
+
 ```bash
 node ace db:query "SELECT * FROM bookmarks WHERE user_id = 1"
 ```
@@ -374,6 +391,7 @@ After confirming the feature works:
 ## Support
 
 For issues or questions:
+
 1. Check existing Notes/Todos implementation for patterns
 2. Review AdonisJS documentation
 3. Check test files for usage examples

@@ -4,6 +4,7 @@
 **Created**: 2026-02-06
 **Status**: Draft
 **Input**: User description: "Ajouter une fonctionnalité de bookmarks (signets) à l'application. Les bookmarks sont des liens simples sans notion de calendrier. Fonctionnalités requises:
+
 - Pouvoir ajouter un bookmark (juste une URL, obligatoire)
 - Accéder à la liste de tous les bookmarks
 - Pouvoir ouvrir un bookmark

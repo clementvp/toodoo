@@ -1,23 +1,23 @@
 import { Layout, Modal, Typography, Space, Button } from 'antd'
 import { useState } from 'react'
-import { usePage } from '@inertiajs/react'
 import Header from '../../components/layout/header'
 import CalendarLayout from '../../components/layout/calendar_layout'
 import NoteCalendarView from '../../components/calendar/note_calendar_view'
 import NoteListCard from '../../components/cards/note_list_card'
 import NoteFormCard from '../../components/cards/note_form_card'
-import type { Note, PageProps } from '../../lib/types'
+import type { Note, User } from '~/lib/types'
 import { dayjs, isSameDay } from '../../lib/date_utils'
 import type { Dayjs } from 'dayjs'
+import {Head} from "@inertiajs/react";
 
-const { Title, Paragraph } = Typography
+const { Paragraph } = Typography
 
-interface NotesPageProps extends PageProps {
+export interface NotesPageProps {
+  user?: User
   notes: Note[]
 }
 
-export default function NotesIndex() {
-  const { user, notes } = usePage<NotesPageProps>().props
+export default function NotesIndex({ user, notes }: NotesPageProps) {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs())
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
   const [modalVisible, setModalVisible] = useState(false)
@@ -44,19 +44,20 @@ export default function NotesIndex() {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
+        <Head title="Notes" />
       <Header user={user} currentPath="/notes" />
       <CalendarLayout
         calendarSlot={
-          <NoteCalendarView
-            notes={notes}
-            selectedDate={selectedDate}
-            onSelect={handleDateSelect}
-          />
+          <NoteCalendarView notes={notes} selectedDate={selectedDate} onSelect={handleDateSelect} />
         }
         sidePanel={
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%' }}>
             <div style={{ flex: 1, minHeight: 0 }}>
-              <NoteListCard notes={notesForSelectedDay} onViewNote={handleViewNote} selectedDate={selectedDate} />
+              <NoteListCard
+                notes={notesForSelectedDay}
+                onViewNote={handleViewNote}
+                selectedDate={selectedDate}
+              />
             </div>
             <div>
               <NoteFormCard selectedDate={selectedDate} />
@@ -81,7 +82,7 @@ export default function NotesIndex() {
           <Space direction="vertical" style={{ width: '100%' }}>
             <Paragraph style={{ whiteSpace: 'pre-wrap' }}>{selectedNote.content}</Paragraph>
             <Paragraph type="secondary" style={{ fontSize: '12px', marginTop: '16px' }}>
-              Créée le : {dayjs(selectedNote.createdAt).format('DD MMMM YYYY')}
+              Créée le : {dayjs(selectedNote.createdAt).locale('fr').format('DD MMMM YYYY')}
             </Paragraph>
           </Space>
         )}

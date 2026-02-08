@@ -1,21 +1,21 @@
 import { Layout } from 'antd'
 import { useState } from 'react'
-import { usePage } from '@inertiajs/react'
 import Header from '../../components/layout/header'
 import CalendarLayout from '../../components/layout/calendar_layout'
 import CalendarView from '../../components/calendar/calendar_view'
 import TodoListCard from '../../components/cards/todo_list_card'
 import TodoFormCard from '../../components/cards/todo_form_card'
-import type { Todo, PageProps } from '../../lib/types'
+import type { Todo, User } from '../../lib/types'
 import { dayjs, isSameDay } from '../../lib/date_utils'
 import type { Dayjs } from 'dayjs'
+import {Head} from "@inertiajs/react";
 
-interface TodosPageProps extends PageProps {
+export interface TodosPageProps {
+  user?: User
   todos: Todo[]
 }
 
-export default function TodosIndex() {
-  const { user, todos } = usePage<TodosPageProps>().props
+export default function TodosIndex({ user, todos }: TodosPageProps) {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs())
 
   // T058: Filter todos by selected day
@@ -28,6 +28,7 @@ export default function TodosIndex() {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
+      <Head title="Bookmarks" />
       <Header user={user} currentPath="/todos" />
       <CalendarLayout
         calendarSlot={

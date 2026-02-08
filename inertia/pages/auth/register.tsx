@@ -1,19 +1,18 @@
 import { Layout, Card, Form, Input, Button, Typography, Alert } from 'antd'
 import { UserOutlined, LockOutlined, MailOutlined } from '@ant-design/icons'
-import { Link, router, usePage } from '@inertiajs/react'
+import { Link, router } from '@inertiajs/react'
 import { useState } from 'react'
 import Header from '../../components/layout/header'
 
 const { Content } = Layout
 const { Title, Text } = Typography
 
-interface RegisterPageProps {
+export interface RegisterPageProps {
   errors?: Record<string, string>
   success?: string
 }
 
-export default function Register() {
-  const { errors, success } = usePage<RegisterPageProps>().props
+export default function Register({ errors, success }: RegisterPageProps) {
   const [loading, setLoading] = useState(false)
 
   const onFinish = (values: { email: string; password: string }) => {
@@ -46,7 +45,9 @@ export default function Register() {
             <Title level={2} style={{ marginTop: '16px', marginBottom: '8px' }}>
               Créer un compte
             </Title>
-            <Text type="secondary">Inscrivez-vous pour commencer à organiser vos tâches et notes</Text>
+            <Text type="secondary">
+              Inscrivez-vous pour commencer à organiser vos tâches et notes
+            </Text>
           </div>
 
           {/* T036: Form validation error display */}

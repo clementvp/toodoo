@@ -1,47 +1,69 @@
-# Dependencies
-node_modules/
-npm-debug.log
-yarn-error.log
-
-# Build outputs
-build/
-dist/
-tmp/
-
-# Frontend compiled assets
-public/assets/
-
-# Environment files
-.env*
-!.env.example
+# Node modules (will be installed in container)
+node_modules
 
 # Git
-.git/
+.git
 .gitignore
+.gitattributes
 
-# Docker
-Dockerfile*
-.dockerignore
-docker-compose.yml
+# Environment files (secrets should be configured in CapRover)
+.env
+.env.*
 
-# IDE
-.idea/
-.vscode/
-.fleet/
+# IDE and editors
+.vscode
+.idea
+.fleet
 *.swp
 *.swo
 
-# Platform
+# Development and testing
+tests
+*.test.ts
+*.test.js
+*.spec.ts
+*.spec.js
+
+# Source TypeScript files (we only need the compiled build/ folder)
+app
+bin/*.ts
+config/*.ts
+database/*.ts
+start/*.ts
+adonisrc.ts
+tsconfig.json
+
+# Build tools
+.vite
+vite.config.ts
+
+# Claude Code and Speckit
+.claude
+.specify
+
+# Temporary files
+tmp
+*.tmp
+*.log
+npm-debug.log
+yarn-error.log
+
+# Testing
+coverage
+.nyc_output
+
+# Platform specific
 .DS_Store
 Thumbs.db
 
-# Logs
-*.log
-logs/
+# Documentation (keep only CAPROVER.md)
+*.md
+!CAPROVER.md
 
-# Testing
-coverage/
-.nyc_output/
+# CI/CD
+.github
+.gitlab-ci.yml
 
-# Temporary
-*.tmp
+# Docker
+docker-compose.yml
+Dockerfile.dev

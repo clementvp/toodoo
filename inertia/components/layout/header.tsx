@@ -42,9 +42,14 @@ export default function Header({ user, currentPath }: HeaderProps) {
         <div style={{ display: 'flex', alignItems: 'center', gap: '16px' }}>
           <Link
             href="/"
-            style={{ color: '#4F46E5', fontSize: '20px', fontWeight: 'bold', textDecoration: 'none' }}
+            style={{
+              color: '#4F46E5',
+              fontSize: '20px',
+              fontWeight: 'bold',
+              textDecoration: 'none',
+            }}
           >
-            <HomeOutlined /> Tâches & Notes
+            <HomeOutlined /> Toudoux
           </Link>
           {user && (
             <>
@@ -53,7 +58,8 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   type="text"
                   icon={<CheckSquareOutlined />}
                   style={{
-                    borderBottom: currentPath === '/todos' ? '2px solid #4F46E5' : '2px solid transparent',
+                    borderBottom:
+                      currentPath === '/todos' ? '2px solid #4F46E5' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/todos' ? 600 : 400,
                   }}
@@ -66,7 +72,8 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   type="text"
                   icon={<FileTextOutlined />}
                   style={{
-                    borderBottom: currentPath === '/notes' ? '2px solid #4F46E5' : '2px solid transparent',
+                    borderBottom:
+                      currentPath === '/notes' ? '2px solid #4F46E5' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/notes' ? 600 : 400,
                   }}
@@ -79,7 +86,8 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   type="text"
                   icon={<BookOutlined />}
                   style={{
-                    borderBottom: currentPath === '/bookmarks' ? '2px solid #4F46E5' : '2px solid transparent',
+                    borderBottom:
+                      currentPath === '/bookmarks' ? '2px solid #4F46E5' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/bookmarks' ? 600 : 400,
                   }}

@@ -9,7 +9,7 @@ import { ConfigProvider } from 'antd'
 import frFR from 'antd/locale/fr_FR'
 import ErrorBoundary from '../components/error_boundary'
 
-const appName = import.meta.env.VITE_APP_NAME || 'Tâches & Notes'
+const appName = import.meta.env.VITE_APP_NAME || 'Toudoux'
 
 // Modern Productivity theme configuration
 const theme = {

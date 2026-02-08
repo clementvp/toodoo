@@ -29,7 +29,14 @@ export default function BookmarkFormCard() {
   }
 
   return (
-    <Card title="Ajouter un bookmark" style={{ marginBottom: 24 }}>
+    <Card
+      title="Ajouter un bookmark"
+      style={{
+        background: '#fff',
+        boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
+        height: 'fit-content',
+      }}
+    >
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
         {error && <Alert message={error} type="error" closable style={{ marginBottom: 16 }} />}
 
@@ -42,7 +49,7 @@ export default function BookmarkFormCard() {
         </Form.Item>
 
         <Form.Item>
-          <Button type="primary" htmlType="submit" icon={<PlusOutlined />} loading={loading}>
+          <Button type="primary" htmlType="submit" icon={<PlusOutlined />} loading={loading} block>
             Ajouter
           </Button>
         </Form.Item>

@@ -1,4 +1,4 @@
-import { Head, router, usePage } from '@inertiajs/react'
+import { Head, router } from '@inertiajs/react'
 import { Layout, Table, Button, Space, Tag, Modal, Form, Input, Typography } from 'antd'
 import {
   UserAddOutlined,
@@ -10,8 +10,8 @@ import {
 } from '@ant-design/icons'
 import { useState } from 'react'
 import Header from '../../../components/layout/header'
-import type { PageProps } from '../../../lib/types'
 import { dayjs } from '../../../lib/date_utils'
+import type { User as UserType } from '../../../lib/types'
 
 const { Title } = Typography
 
@@ -22,12 +22,12 @@ interface User {
   createdAt: string
 }
 
-interface AdminUsersPageProps extends PageProps {
+export interface AdminUsersPageProps {
+  user?: UserType
   users: User[]
 }
 
-export default function AdminUsersIndex() {
-  const { user, users } = usePage<AdminUsersPageProps>().props
+export default function AdminUsersIndex({ user, users }: AdminUsersPageProps) {
   const [resetPasswordModalVisible, setResetPasswordModalVisible] = useState(false)
   const [selectedUser, setSelectedUser] = useState<User | null>(null)
   const [form] = Form.useForm()
@@ -62,7 +62,8 @@ export default function AdminUsersIndex() {
 
   const handleToggleRole = (userToUpdate: User) => {
     const newRole = userToUpdate.role === 'admin' ? 'user' : 'admin'
-    const action = newRole === 'admin' ? 'promouvoir en administrateur' : 'rétrograder en utilisateur'
+    const action =
+      newRole === 'admin' ? 'promouvoir en administrateur' : 'rétrograder en utilisateur'
 
     Modal.confirm({
       title: `Changer le rôle de ${userToUpdate.email} ?`,
@@ -140,7 +141,8 @@ export default function AdminUsersIndex() {
       dataIndex: 'createdAt',
       key: 'createdAt',
       render: (date: string) => dayjs(date).locale('fr').format('DD MMMM YYYY à HH:mm'),
-      sorter: (a: User, b: User) => new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
+      sorter: (a: User, b: User) =>
+        new Date(a.createdAt).getTime() - new Date(b.createdAt).getTime(),
     },
     {
       title: 'Actions',
@@ -162,11 +164,7 @@ export default function AdminUsersIndex() {
           >
             {record.role === 'admin' ? 'Rétrograder' : 'Promouvoir'}
           </Button>
-          <Button
-            type="text"
-            icon={<KeyOutlined />}
-            onClick={() => handleResetPassword(record)}
-          >
+          <Button type="text" icon={<KeyOutlined />} onClick={() => handleResetPassword(record)}>
             Réinitialiser MDP
           </Button>
           <Button
@@ -176,7 +174,9 @@ export default function AdminUsersIndex() {
             onClick={() => handleDelete(record)}
             disabled={record.id === user?.id}
             title={
-              record.id === user?.id ? 'Vous ne pouvez pas supprimer votre propre compte' : 'Supprimer'
+              record.id === user?.id
+                ? 'Vous ne pouvez pas supprimer votre propre compte'
+                : 'Supprimer'
             }
           >
             Supprimer
@@ -220,7 +220,11 @@ export default function AdminUsersIndex() {
               columns={columns}
               dataSource={users}
               rowKey="id"
-              pagination={{ pageSize: 10, showSizeChanger: true, showTotal: (total) => `Total : ${total} utilisateurs` }}
+              pagination={{
+                pageSize: 10,
+                showSizeChanger: true,
+                showTotal: (total) => `Total : ${total} utilisateurs`,
+              }}
               style={{ background: '#fff', borderRadius: '8px' }}
             />
           </div>

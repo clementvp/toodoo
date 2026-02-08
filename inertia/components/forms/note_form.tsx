@@ -26,6 +26,7 @@ export default function NoteForm({ selectedDate, errors, onSuccess }: NoteFormPr
       },
       {
         preserveScroll: true,
+        only: ['notesToday'],
         onSuccess: () => {
           form.resetFields()
           onSuccess?.()

@@ -52,6 +52,7 @@ export default function NotesCard({ notes }: NotesCardProps) {
       onOk() {
         router.delete(`/notes/${note.id}`, {
           preserveScroll: true,
+          only: ['notesToday'],
         })
       },
     })

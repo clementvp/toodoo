@@ -56,7 +56,7 @@ export async function fetchWeatherData(city: string): Promise<WeatherData | null
       tempMin: Math.round(data.main.temp_min),
       tempMax: Math.round(data.main.temp_max),
       humidity: data.main.humidity,
-      windSpeed: Math.round(data.wind.speed * 3.6), // Convert m/s to km/h
+      windSpeed: Math.round(data.wind.speed * 3.6),
     }
   } catch (error) {
     console.error('Weather API error:', error)

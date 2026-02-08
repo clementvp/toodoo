@@ -7,7 +7,7 @@ export default function DateTimeCard() {
   useEffect(() => {
     const timer = setInterval(() => {
       setCurrentTime(new Date())
-    }, 1000) // Update every second
+    }, 1000)
 
     return () => clearInterval(timer)
   }, [])

@@ -15,10 +15,9 @@ export default class extends BaseSchema {
         .notNullable()
       table.string('title', 255).notNullable()
       table.text('content').notNullable()
-      table.date('created_at').notNullable() // Date association
+      table.date('created_at').notNullable()
       table.timestamp('updated_at', { useTz: true }).notNullable()
 
-      // Composite index for query performance
       table.index(['user_id', 'created_at'])
     })
   }

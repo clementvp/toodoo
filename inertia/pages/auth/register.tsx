@@ -50,7 +50,6 @@ export default function Register({ errors, success }: RegisterPageProps) {
             </Text>
           </div>
 
-          {/* T036: Form validation error display */}
           {errors && Object.keys(errors).length > 0 && (
             <Alert
               title="Erreur de validation"

@@ -6,6 +6,8 @@
 
 ---
 
+Always use Context7 MCP when I need library/API documentation, code generation, setup or configuration steps without me having to explicitly ask.
+
 ## 📋 Table des matières
 
 1. [Stack Technique](#stack-technique)
@@ -130,29 +132,7 @@ TooDoo/
   }
   ```
 
-### Ant Design v6
 
-**⚠️ IMPORTANT - API Ant Design v6:**
-
-- ✅ **Alert:** Utiliser `title` et `description` (PAS `message`)
-
-  ```tsx
-  <Alert title="Titre" description="Description" type="warning" />
-  ```
-
-- ✅ **Card:** Utiliser `styles.body` (PAS `bodyStyle`) et `variant="borderless"` (PAS `bordered={false}`)
-
-  ```tsx
-  <Card variant="borderless" styles={{ body: { padding: 24 } }} />
-  ```
-
-- ✅ **Space:** Utiliser `orientation` (PAS `direction`)
-
-  ```tsx
-  <Space orientation="vertical" />
-  ```
-
-- ✅ **Theme:** Configuration dans `inertia/app/app.tsx` avec `token` et `components`
 
 ### Code Style
 

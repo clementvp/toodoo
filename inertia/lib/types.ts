@@ -11,8 +11,8 @@ export interface Todo {
   userId: number
   title: string
   description: string | null
-  dueDate: string // ISO date string
-  dueTime: string | null // HH:mm format
+  dueDate: string
+  dueTime: string | null
   status: 'À faire' | 'Terminé'
   createdAt: string
   updatedAt: string
@@ -23,7 +23,7 @@ export interface Note {
   userId: number
   title: string
   content: string
-  createdAt: string // ISO date string (date association)
+  createdAt: string
   updatedAt: string
 }
 
@@ -31,7 +31,7 @@ export interface Bookmark {
   id: number
   userId: number
   url: string
-  createdAt: string // ISO date string
+  createdAt: string
   updatedAt: string
 }
 

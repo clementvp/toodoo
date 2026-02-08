@@ -7,6 +7,7 @@ const authConfig = defineConfig({
   guards: {
     web: sessionGuard({
       useRememberMeTokens: true,
+      rememberMeTokensAge: '2 months',
       provider: sessionUserProvider({
         model: () => import('#models/user'),
       }),
@@ -16,10 +17,6 @@ const authConfig = defineConfig({
 
 export default authConfig
 
-/**
- * Inferring types from the configured auth
- * guards.
- */
 declare module '@adonisjs/auth/types' {
   export interface Authenticators extends InferAuthenticators<typeof authConfig> {}
 }

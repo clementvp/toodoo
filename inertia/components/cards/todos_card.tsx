@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Card, List, Checkbox, Button, Empty, Modal, message } from 'antd'
 import { CheckSquareOutlined, DeleteOutlined, PlusOutlined } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
@@ -14,10 +14,14 @@ export default function TodosCard({ todos }: TodosCardProps) {
   const [localTodos, setLocalTodos] = useState(todos)
   const [createModalVisible, setCreateModalVisible] = useState(false)
 
+  // Synchroniser l'état local quand les props changent
+  useEffect(() => {
+    setLocalTodos(todos)
+  }, [todos])
+
   const handleStatusToggle = async (todoId: number, currentStatus: string) => {
     const newStatus = currentStatus === 'À faire' ? 'Terminé' : 'À faire'
 
-    // Optimistic UI update
     setLocalTodos(
       localTodos.map((t) => (t.id === todoId ? { ...t, status: newStatus as Todo['status'] } : t))
     )
@@ -28,8 +32,8 @@ export default function TodosCard({ todos }: TodosCardProps) {
         { status: newStatus },
         {
           preserveScroll: true,
+          only: ['todosToday'],
           onError: () => {
-            // Revert on failure
             setLocalTodos(
               localTodos.map((t) =>
                 t.id === todoId ? { ...t, status: currentStatus as Todo['status'] } : t
@@ -40,7 +44,6 @@ export default function TodosCard({ todos }: TodosCardProps) {
         }
       )
     } catch (error) {
-      // Revert on failure
       setLocalTodos(
         localTodos.map((t) =>
           t.id === todoId ? { ...t, status: currentStatus as Todo['status'] } : t
@@ -60,6 +63,7 @@ export default function TodosCard({ todos }: TodosCardProps) {
       onOk: () => {
         router.delete(`/todos/${todo.id}`, {
           preserveScroll: true,
+          only: ['todosToday'],
           onSuccess: () => {
             setLocalTodos(localTodos.filter((t) => t.id !== todo.id))
             message.success('Todo supprimé')

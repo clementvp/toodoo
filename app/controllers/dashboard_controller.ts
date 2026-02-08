@@ -10,7 +10,6 @@ export default class DashboardController {
     const user = auth.user!
     const today = DateTime.now().toSQLDate()
 
-    // Fetch todos, notes, and user settings in parallel
     const [todosToday, notesToday, userSettings] = await Promise.all([
       Todo.query().where('user_id', user.id).where('due_date', today!).orderBy('created_at', 'asc'),
 
@@ -22,7 +21,6 @@ export default class DashboardController {
       UserSetting.firstOrCreate({ userId: user.id }, { userId: user.id, weatherCity: null }),
     ])
 
-    // Fetch weather if city is configured
     let weather = null
     if (userSettings.weatherCity) {
       weather = await fetchWeatherData(userSettings.weatherCity)

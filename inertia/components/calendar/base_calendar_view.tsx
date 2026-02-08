@@ -20,12 +20,10 @@ export default function BaseCalendarView<T extends { id: number | string }>({
 }: BaseCalendarViewProps<T>) {
   const { token } = theme.useToken()
 
-  // Get items for a specific date
   const getItemsForDate = (date: Dayjs): T[] => {
     return items.filter((item) => dayjs(getItemDate(item)).isSame(date, 'day'))
   }
 
-  // Render cell content with item badges
   const dateCellRender = (value: Dayjs) => {
     const listData = getItemsForDate(value)
 

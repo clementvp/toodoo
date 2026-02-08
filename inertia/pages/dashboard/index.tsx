@@ -22,7 +22,6 @@ export default function Dashboard({
       <Header user={user} currentPath="/" />
       <Content style={{ padding: '24px' }}>
         <Row gutter={[16, 16]} style={{ minHeight: 'calc(100vh - 64px - 48px)' }}>
-          {/* Sidebar gauche : DateTime + Weather */}
           <Col xs={24} md={24} lg={6} style={{ display: 'flex' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
               <div style={{ flex: 1 }}>
@@ -34,14 +33,12 @@ export default function Dashboard({
             </div>
           </Col>
 
-          {/* Colonne centrale : Todos */}
           <Col xs={24} md={12} lg={9} style={{ display: 'flex' }}>
             <div style={{ width: '100%' }}>
               <TodosCard todos={todosToday} />
             </div>
           </Col>
 
-          {/* Colonne droite : Notes */}
           <Col xs={24} md={12} lg={9} style={{ display: 'flex' }}>
             <div style={{ width: '100%' }}>
               <NotesCard notes={notesToday} />

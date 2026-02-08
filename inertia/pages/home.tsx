@@ -18,7 +18,6 @@ export default function Home({ user }: HomePageProps) {
         <div className="fixed xl:absolute left-8 right-8 top-0 bottom-0 xl:inset-0 max-w-screen-xl mx-auto before:content-[''] before:[background:repeating-linear-gradient(0deg,var(--sand-5)_0_4px,transparent_0_8px)] before:absolute before:top-0 before:left-0 before:h-full before:w-px after:content-[''] after:[background:repeating-linear-gradient(0deg,var(--sand-5)_0_4px,transparent_0_8px)] after:absolute after:top-0 after:right-0 after:h-full after:w-px"></div>
 
         <div className="pt-4 h-full flex flex-col">
-          {/* Header */}
           <div className="grow pb-4 bg-gradient-to-b from-sand-1 to-sand-2 flex justify-center items-center">
             <a href="https://adonisjs.com" target="_blank" className="isolate">
               <svg className="w-16 h-16 fill-primary" viewBox="0 0 33 33">
@@ -31,7 +30,6 @@ export default function Home({ user }: HomePageProps) {
             </a>
           </div>
 
-          {/* Bento with documentation, Adocasts, packages and Discord */}
           <div className="isolate mt-10 max-w-screen-xl mx-auto px-16 xl:px-8 grid grid-cols-1 xl:grid-cols-2 xl:grid-rows-3 gap-8">
             <article className="row-span-3 relative p-6 shadow-sm hover:shadow border border-sand-7 hover:border-sand-8 rounded-2xl transition ease-in-out duration-700 group flex flex-col gap-8">
               <div className="relative opacity-80">
@@ -178,7 +176,6 @@ export default function Home({ user }: HomePageProps) {
             </article>
           </div>
 
-          {/* Features */}
           <div className="grow mt-10 mb-8 px-16 xl:px-8 max-w-screen-xl mx-auto">
             <div className="grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-4 gap-4">
               <article className="relative py-4 px-5 bg-white border border-transparent rounded-lg hover:border-sand-8 hover:shadow-sm transition duration-100 ease-in-out group">

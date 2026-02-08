@@ -4,13 +4,8 @@ import { createTodoValidator, updateTodoValidator } from '#validators/todo_valid
 import { DateTime } from 'luxon'
 
 export default class TodosController {
-  /**
-   * T041: Display todos page with calendar view
-   */
   async index({ auth, inertia }: HttpContext) {
     const user = auth.user!
-
-    // Get current month's todos (data isolation enforced)
     const todos = await Todo.query()
       .where('user_id', user.id)
       .orderBy('due_date', 'asc')
@@ -21,9 +16,6 @@ export default class TodosController {
     })
   }
 
-  /**
-   * T042: Create a new todo
-   */
   async create({ request, auth, response, session }: HttpContext) {
     const user = auth.user!
     const data = await request.validateUsing(createTodoValidator)
@@ -38,17 +30,12 @@ export default class TodosController {
     })
 
     session.flash('success', 'Todo created successfully!')
-    return response.redirect('/todos')
+    return response.redirect().back()
   }
 
-  /**
-   * T043 + T045: Update a todo with ownership verification
-   */
   async update({ params, request, auth, response, session }: HttpContext) {
     const user = auth.user!
     const data = await request.validateUsing(updateTodoValidator)
-
-    // T045: Verify ownership before update
     const todo = await Todo.query().where('id', params.id).where('user_id', user.id).firstOrFail()
 
     await todo
@@ -62,21 +49,16 @@ export default class TodosController {
       .save()
 
     session.flash('success', 'Todo updated successfully!')
-    return response.redirect('/todos')
+    return response.redirect().back()
   }
 
-  /**
-   * T044 + T045: Delete a todo with ownership verification
-   */
   async delete({ params, auth, response, session }: HttpContext) {
     const user = auth.user!
-
-    // T045: Verify ownership before delete
     const todo = await Todo.query().where('id', params.id).where('user_id', user.id).firstOrFail()
 
     await todo.delete()
 
     session.flash('success', 'Todo deleted successfully!')
-    return response.redirect('/todos')
+    return response.redirect().back()
   }
 }

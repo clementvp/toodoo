@@ -10,7 +10,6 @@ interface WeatherCardProps {
 }
 
 export default function WeatherCard({ weather, hasCity }: WeatherCardProps) {
-  // Rafraîchissement automatique toutes les 30 minutes
   useEffect(() => {
     if (!hasCity) return
 
@@ -19,12 +18,11 @@ export default function WeatherCard({ weather, hasCity }: WeatherCardProps) {
         router.reload({ only: ['weather'] })
       },
       30 * 60 * 1000
-    ) // 30 minutes en millisecondes
+    )
 
     return () => clearInterval(intervalId)
   }, [hasCity])
   const renderContent = () => {
-    // No city configured
     if (!hasCity) {
       return (
         <Empty
@@ -38,7 +36,6 @@ export default function WeatherCard({ weather, hasCity }: WeatherCardProps) {
       )
     }
 
-    // API error or unavailable
     if (!weather) {
       return (
         <Alert
@@ -50,7 +47,6 @@ export default function WeatherCard({ weather, hasCity }: WeatherCardProps) {
       )
     }
 
-    // Display weather data
     return (
       <div style={{ textAlign: 'center' }}>
         <div style={{ fontSize: '24px', fontWeight: 'bold', marginBottom: '12px' }}>

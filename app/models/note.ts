@@ -19,7 +19,7 @@ export default class Note extends BaseModel {
   declare content: string
 
   @column.date()
-  declare createdAt: DateTime // Used as date association
+  declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
@@ -27,7 +27,6 @@ export default class Note extends BaseModel {
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
 
-  // Query scope for automatic user filtering (data isolation)
   static forUser(query: any, userId: number) {
     query.where('user_id', userId)
   }

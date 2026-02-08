@@ -34,7 +34,6 @@ export default class Todo extends BaseModel {
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
 
-  // Query scope for automatic user filtering (data isolation)
   static forUser(query: any, userId: number) {
     query.where('user_id', userId)
   }

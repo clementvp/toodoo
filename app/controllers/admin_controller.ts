@@ -7,9 +7,6 @@ import {
 } from '#validators/admin_validator'
 
 export default class AdminController {
-  /**
-   * Liste tous les utilisateurs
-   */
   async index({ inertia }: HttpContext) {
     const users = await User.query().orderBy('created_at', 'desc')
 
@@ -23,16 +20,10 @@ export default class AdminController {
     })
   }
 
-  /**
-   * Affiche le formulaire de création d'un utilisateur
-   */
   async create({ inertia }: HttpContext) {
     return inertia.render('admin/users/create')
   }
 
-  /**
-   * Crée un nouvel utilisateur
-   */
   async store({ request, response, session }: HttpContext) {
     const data = await request.validateUsing(createUserValidator)
 
@@ -46,14 +37,9 @@ export default class AdminController {
     return response.redirect('/admin/users')
   }
 
-  /**
-   * Supprime un utilisateur (et toutes ses données via cascade)
-   */
   async destroy({ params, response, session, auth }: HttpContext) {
     const user = await User.findOrFail(params.id)
     const currentUser = auth.user!
-
-    // Empêcher un admin de se supprimer lui-même
     if (user.id === currentUser.id) {
       session.flash('error', 'Vous ne pouvez pas supprimer votre propre compte')
       return response.redirect('/admin/users')
@@ -65,15 +51,10 @@ export default class AdminController {
     return response.redirect('/admin/users')
   }
 
-  /**
-   * Change le rôle d'un utilisateur (admin <-> user)
-   */
   async updateRole({ params, request, response, session, auth }: HttpContext) {
     const user = await User.findOrFail(params.id)
     const data = await request.validateUsing(updateRoleValidator)
     const currentUser = auth.user!
-
-    // Empêcher un admin de changer son propre rôle
     if (user.id === currentUser.id) {
       session.flash('error', 'Vous ne pouvez pas modifier votre propre rôle')
       return response.redirect('/admin/users')
@@ -88,9 +69,6 @@ export default class AdminController {
     return response.redirect('/admin/users')
   }
 
-  /**
-   * Réinitialise le mot de passe d'un utilisateur
-   */
   async resetPassword({ params, request, response, session }: HttpContext) {
     const user = await User.findOrFail(params.id)
     const data = await request.validateUsing(resetPasswordValidator)

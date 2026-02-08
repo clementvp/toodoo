@@ -25,10 +25,8 @@ export default function CalendarLayout({ calendarSlot, sidePanel }: CalendarLayo
         }}
         className="calendar-layout"
       >
-        {/* Calendar section - 70% */}
         {calendarSlot}
 
-        {/* Side panel - 30% */}
         <div
           style={{
             flex: '0 0 calc(30% - 16px)',

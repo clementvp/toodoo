@@ -5,8 +5,6 @@ import { updateUserSettingValidator } from '#validators/user_setting'
 export default class SettingsController {
   async index({ auth, inertia }: HttpContext) {
     const user = auth.user!
-
-    // Get or create user settings
     const userSettings = await UserSetting.firstOrCreate(
       { userId: user.id },
       { userId: user.id, weatherCity: null }
@@ -22,13 +20,10 @@ export default class SettingsController {
     const user = auth.user!
     const data = await request.validateUsing(updateUserSettingValidator)
 
-    // Get or create user settings
     const userSettings = await UserSetting.firstOrCreate(
       { userId: user.id },
       { userId: user.id, weatherCity: null }
     )
-
-    // Update weather city
     userSettings.weatherCity = data.weatherCity || null
     await userSettings.save()
 

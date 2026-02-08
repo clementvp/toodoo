@@ -32,7 +32,6 @@ export default function BookmarksIndex({ user, bookmarks }: BookmarksPageProps) 
           }}
           className="bookmarks-layout"
         >
-          {/* Bookmarks list - 70% */}
           <div
             style={{
               flex: '1',
@@ -43,7 +42,6 @@ export default function BookmarksIndex({ user, bookmarks }: BookmarksPageProps) 
             <BookmarkListCard bookmarks={bookmarks} />
           </div>
 
-          {/* Form panel - 30% */}
           <div
             style={{
               flex: '0 0 calc(30% - 16px)',

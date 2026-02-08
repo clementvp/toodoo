@@ -51,7 +51,6 @@ export default function Login({ errors, success, error }: LoginPageProps & Recor
             <Text type="secondary">Connectez-vous pour accéder à vos tâches et notes</Text>
           </div>
 
-          {/* T037: Form validation error display */}
           {errors && Object.keys(errors).length > 0 && (
             <Alert
               title="Connexion échouée"
@@ -62,7 +61,6 @@ export default function Login({ errors, success, error }: LoginPageProps & Recor
             />
           )}
 
-          {/* Single error message (from controller) */}
           {error && (
             <Alert
               title="Connexion échouée"

@@ -231,7 +231,6 @@ export default function AdminUsersIndex({ user, users }: AdminUsersPageProps) {
         </Layout.Content>
       </Layout>
 
-      {/* Modal pour réinitialiser le mot de passe */}
       <Modal
         title={`Réinitialiser le mot de passe de ${selectedUser?.email}`}
         open={resetPasswordModalVisible}

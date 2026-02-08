@@ -8,53 +8,44 @@ import ErrorBoundary from '../components/error_boundary'
 
 const appName = import.meta.env.VITE_APP_NAME || 'Toudoux'
 
-// Monochrome Elegant theme configuration
 const theme = {
   token: {
-    // Primary colors - Monochrome black
-    colorPrimary: '#1a1a1a', // Deep black - Primary actions
-    colorPrimaryHover: '#333333', // Charcoal - Hover state
-    colorPrimaryActive: '#000000', // Pure black - Active state
+    colorPrimary: '#1a1a1a',
+    colorPrimaryHover: '#333333',
+    colorPrimaryActive: '#000000',
 
-    // Status colors - Modern and vibrant
-    colorSuccess: '#22c55e', // Modern green
-    colorWarning: '#f59e0b', // Sophisticated orange
-    colorError: '#ef4444', // Elegant red
-    colorInfo: '#0ea5e9', // Sky blue
+    colorSuccess: '#22c55e',
+    colorWarning: '#f59e0b',
+    colorError: '#ef4444',
+    colorInfo: '#0ea5e9',
 
-    // Background colors
-    colorBgContainer: '#FFFFFF', // White - Cards
-    colorBgLayout: '#fafafa', // Very light grey - Background
-    colorBgElevated: '#FFFFFF', // White - Modals
+    colorBgContainer: '#FFFFFF',
+    colorBgLayout: '#fafafa',
+    colorBgElevated: '#FFFFFF',
 
-    // Text colors
-    colorText: '#1a1a1a', // Deep black - Primary text
-    colorTextSecondary: '#666666', // Medium grey - Secondary text
-    colorTextTertiary: '#999999', // Light grey - Tertiary text
+    colorText: '#1a1a1a',
+    colorTextSecondary: '#666666',
+    colorTextTertiary: '#999999',
 
-    // Border
-    colorBorder: '#e5e5e5', // Light border
-    colorBorderSecondary: '#f0f0f0', // Very light border
+    colorBorder: '#e5e5e5',
+    colorBorderSecondary: '#f0f0f0',
 
-    // Typography
     fontSize: 14,
     fontSizeHeading1: 32,
     fontSizeHeading2: 24,
     fontSizeHeading3: 20,
     fontWeightStrong: 600,
 
-    // Layout
     borderRadius: 8,
     borderRadiusLG: 12,
     borderRadiusSM: 6,
 
-    // Shadow - More subtle for elegant look
     boxShadow: '0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)',
     boxShadowSecondary: '0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)',
   },
   components: {
     Button: {
-      primaryColor: '#ffffff', // White text on black buttons
+      primaryColor: '#ffffff',
       fontWeight: 500,
     },
     Card: {

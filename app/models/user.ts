@@ -39,9 +39,6 @@ export default class User extends compose(BaseModel, AuthFinder) {
   @hasMany(() => Note)
   declare notes: HasMany<typeof Note>
 
-  /**
-   * Check if user is admin
-   */
   isAdmin(): boolean {
     return this.role === 'admin'
   }

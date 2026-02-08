@@ -7,7 +7,6 @@ import { DateTime } from 'luxon'
 
 export default class extends BaseSeeder {
   async run() {
-    // Create test user (regular user)
     const user = await User.firstOrCreate(
       { email: 'test@example.com' },
       {
@@ -17,7 +16,6 @@ export default class extends BaseSeeder {
       }
     )
 
-    // Create admin user
     await User.firstOrCreate(
       { email: 'admin@example.com' },
       {
@@ -27,7 +25,6 @@ export default class extends BaseSeeder {
       }
     )
 
-    // Create sample todos
     await Todo.firstOrCreate(
       { title: 'Complete project setup', userId: user.id },
       {
@@ -64,7 +61,6 @@ export default class extends BaseSeeder {
       }
     )
 
-    // Create sample notes
     await Note.firstOrCreate(
       { title: 'Project Ideas', userId: user.id },
       {
@@ -87,7 +83,6 @@ export default class extends BaseSeeder {
       }
     )
 
-    // Create sample bookmarks
     await Bookmark.firstOrCreate(
       { url: 'https://adonisjs.com', userId: user.id },
       {

@@ -1,16 +1,5 @@
-/*
-|--------------------------------------------------------------------------
-| Routes file
-|--------------------------------------------------------------------------
-|
-| The routes file is used for defining the HTTP routes.
-|
-*/
-
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
-
-// Authentication routes (public)
 const AuthController = () => import('#controllers/auth_controller')
 
 router.get('/register', [AuthController, 'showRegister'])
@@ -19,33 +8,23 @@ router.get('/login', [AuthController, 'showLogin'])
 router.post('/login', [AuthController, 'login'])
 router.post('/logout', [AuthController, 'logout'])
 
-// Protected routes (require authentication)
 router
   .group(() => {
-    // Dashboard route (home page)
     const DashboardController = () => import('#controllers/dashboard_controller')
     router.get('/', [DashboardController, 'index'])
-
-    // Settings routes
     const SettingsController = () => import('#controllers/settings_controller')
     router.get('/settings', [SettingsController, 'index'])
     router.patch('/settings', [SettingsController, 'update'])
-
-    // Todos routes
     const TodosController = () => import('#controllers/todos_controller')
     router.get('/todos', [TodosController, 'index'])
     router.post('/todos', [TodosController, 'create'])
     router.patch('/todos/:id', [TodosController, 'update'])
     router.delete('/todos/:id', [TodosController, 'delete'])
-
-    // Notes routes
     const NotesController = () => import('#controllers/notes_controller')
     router.get('/notes', [NotesController, 'index'])
     router.get('/notes/:id', [NotesController, 'show'])
     router.post('/notes', [NotesController, 'create'])
     router.delete('/notes/:id', [NotesController, 'delete'])
-
-    // Bookmarks routes
     const BookmarksController = () => import('#controllers/bookmarks_controller')
     router.get('/bookmarks', [BookmarksController, 'index'])
     router.post('/bookmarks', [BookmarksController, 'store'])
@@ -53,7 +32,6 @@ router
   })
   .use(middleware.auth())
 
-// Admin routes (require authentication + admin role)
 router
   .group(() => {
     const AdminController = () => import('#controllers/admin_controller')

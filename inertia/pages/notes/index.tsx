@@ -23,21 +23,17 @@ export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
   const [modalVisible, setModalVisible] = useState(false)
 
-  // T077: Filter notes by selected day
   const notesForSelectedDay = notes.filter((note) => isSameDay(note.createdAt, selectedDate))
 
-  // T070: Calendar day click handler
   const handleDateSelect = (date: Dayjs) => {
     setSelectedDate(date)
   }
 
-  // T071: Note title click handler to display modal
   const handleViewNote = (note: Note) => {
     setSelectedNote(note)
     setModalVisible(true)
   }
 
-  // T079: Modal close returns to calendar with same day selected
   const handleModalClose = () => {
     setModalVisible(false)
     setSelectedNote(null)
@@ -67,7 +63,6 @@ export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
         }
       />
 
-      {/* T072: Modal for note detail view */}
       <Modal
         title={selectedNote?.title}
         open={modalVisible}

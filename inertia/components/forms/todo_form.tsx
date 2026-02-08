@@ -28,6 +28,7 @@ export default function TodoForm({ selectedDate, errors, onSuccess }: TodoFormPr
       },
       {
         preserveScroll: true,
+        only: ['todosToday'],
         onSuccess: () => {
           form.resetFields()
           setDueTime(null)

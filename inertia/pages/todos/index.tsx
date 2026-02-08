@@ -19,17 +19,15 @@ export interface TodosPageProps {
 export default function TodosIndex({ user, todos, errors }: TodosPageProps) {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs())
 
-  // T058: Filter todos by selected day
   const todosForSelectedDay = todos.filter((todo) => isSameDay(todo.dueDate, selectedDate))
 
-  // T051: Calendar day click handler
   const handleDateSelect = (date: Dayjs) => {
     setSelectedDate(date)
   }
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Head title="Bookmarks" />
+      <Head title="Todo" />
       <Header user={user} currentPath="/todos" />
       <CalendarLayout
         calendarSlot={

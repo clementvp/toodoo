@@ -80,7 +80,7 @@ export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
         width={800}
       >
         {selectedNote && (
-          <Space direction="vertical" style={{ width: '100%' }}>
+          <Space orientation="vertical" style={{ width: '100%' }}>
             <Paragraph style={{ whiteSpace: 'pre-wrap' }}>{selectedNote.content}</Paragraph>
             <Paragraph type="secondary" style={{ fontSize: '12px', marginTop: '16px' }}>
               Créée le : {dayjs(selectedNote.createdAt).locale('fr').format('DD MMMM YYYY')}

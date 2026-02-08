@@ -1,20 +1,16 @@
 import { Card, Form, Input, Button, Alert } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { router, usePage } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import { useState } from 'react'
-import { toISODate, dayjs } from '../../lib/date_utils'
+import { toISODate } from '~/lib/date_utils'
 import type { Dayjs } from 'dayjs'
 
 interface NoteFormCardProps {
   selectedDate: Dayjs
-}
-
-interface NoteFormPageProps {
   errors?: Record<string, string>
 }
 
-export default function NoteFormCard({ selectedDate }: NoteFormCardProps) {
-  const { errors } = usePage<NoteFormPageProps>().props
+export default function NoteFormCard({ selectedDate, errors }: NoteFormCardProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const formattedDate = selectedDate.locale('fr').format('D MMMM YYYY')
@@ -48,7 +44,7 @@ export default function NoteFormCard({ selectedDate }: NoteFormCardProps) {
     >
       {errors && Object.keys(errors).length > 0 && (
         <Alert
-          message="Erreur de validation"
+          title="Erreur de validation"
           description={Object.values(errors).join(', ')}
           type="error"
           showIcon

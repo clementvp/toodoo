@@ -1,11 +1,10 @@
 import { Card, List, Button, Empty, Typography, Modal } from 'antd'
 import { DeleteOutlined, EyeOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
-import type { Note } from '../../lib/types'
-import { dayjs } from '../../lib/date_utils'
+import type { Note } from '~/lib/types'
 import type { Dayjs } from 'dayjs'
 
-const { Text } = Typography
+const { Paragraph } = Typography
 
 interface NoteListCardProps {
   notes: Note[]
@@ -50,10 +49,12 @@ export default function NoteListCard({ notes, onViewNote, selectedDate }: NoteLi
         display: 'flex',
         flexDirection: 'column',
       }}
-      bodyStyle={{
-        flex: 1,
-        overflow: 'auto',
-        padding: '16px',
+      styles={{
+        body: {
+          flex: 1,
+          overflow: 'auto',
+          padding: '16px',
+        },
       }}
     >
       {notes.length === 0 ? (
@@ -86,9 +87,9 @@ export default function NoteListCard({ notes, onViewNote, selectedDate }: NoteLi
               <List.Item.Meta
                 title={note.title}
                 description={
-                  <Text ellipsis={{ rows: 2 }} style={{ color: '#64748b' }}>
+                  <Paragraph ellipsis={{ rows: 2 }} style={{ color: '#64748b', marginBottom: 0 }}>
                     {note.content}
-                  </Text>
+                  </Paragraph>
                 }
               />
             </List.Item>

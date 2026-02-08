@@ -15,9 +15,10 @@ const { Paragraph } = Typography
 export interface NotesPageProps {
   user?: User
   notes: Note[]
+  errors?: Record<string, string>
 }
 
-export default function NotesIndex({ user, notes }: NotesPageProps) {
+export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs())
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
   const [modalVisible, setModalVisible] = useState(false)
@@ -60,7 +61,7 @@ export default function NotesIndex({ user, notes }: NotesPageProps) {
               />
             </div>
             <div>
-              <NoteFormCard selectedDate={selectedDate} />
+              <NoteFormCard selectedDate={selectedDate} errors={errors} />
             </div>
           </div>
         }

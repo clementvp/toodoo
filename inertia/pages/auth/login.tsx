@@ -54,7 +54,7 @@ export default function Login({ errors, success, error }: LoginPageProps & Recor
           {/* T037: Form validation error display */}
           {errors && Object.keys(errors).length > 0 && (
             <Alert
-              message="Connexion échouée"
+              title="Connexion échouée"
               description={Object.values(errors).join(', ')}
               type="error"
               showIcon
@@ -65,7 +65,7 @@ export default function Login({ errors, success, error }: LoginPageProps & Recor
           {/* Single error message (from controller) */}
           {error && (
             <Alert
-              message="Connexion échouée"
+              title="Connexion échouée"
               description={error}
               type="error"
               showIcon
@@ -74,7 +74,7 @@ export default function Login({ errors, success, error }: LoginPageProps & Recor
           )}
 
           {success && (
-            <Alert message={success} type="success" showIcon style={{ marginBottom: '16px' }} />
+            <Alert title={success} type="success" showIcon style={{ marginBottom: '16px' }} />
           )}
 
           <Form name="login" onFinish={onFinish} layout="vertical" size="large">

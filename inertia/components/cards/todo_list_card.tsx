@@ -7,8 +7,8 @@ import {
   ExclamationCircleOutlined,
 } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
-import type { Todo } from '../../lib/types'
-import { formatTime, dayjs } from '../../lib/date_utils'
+import type { Todo } from '~/lib/types'
+import { formatTime } from '~/lib/date_utils'
 import type { Dayjs } from 'dayjs'
 
 interface TodoListCardProps {
@@ -64,10 +64,12 @@ export default function TodoListCard({ todos, selectedDate }: TodoListCardProps)
         display: 'flex',
         flexDirection: 'column',
       }}
-      bodyStyle={{
-        flex: 1,
-        overflow: 'auto',
-        padding: '16px',
+      styles={{
+        body: {
+          flex: 1,
+          overflow: 'auto',
+          padding: '16px',
+        },
       }}
     >
       {todos.length === 0 ? (

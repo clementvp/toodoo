@@ -31,10 +31,12 @@ export default function BookmarkListCard({ bookmarks }: BookmarkListCardProps) {
         display: 'flex',
         flexDirection: 'column',
       }}
-      bodyStyle={{
-        flex: 1,
-        overflow: 'auto',
-        padding: '16px',
+      styles={{
+        body: {
+          flex: 1,
+          overflow: 'auto',
+          padding: '16px',
+        },
       }}
     >
       {bookmarks.length === 0 ? (

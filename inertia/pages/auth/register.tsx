@@ -53,7 +53,7 @@ export default function Register({ errors, success }: RegisterPageProps) {
           {/* T036: Form validation error display */}
           {errors && Object.keys(errors).length > 0 && (
             <Alert
-              message="Erreur de validation"
+              title="Erreur de validation"
               description={Object.values(errors).join(', ')}
               type="error"
               showIcon
@@ -62,7 +62,7 @@ export default function Register({ errors, success }: RegisterPageProps) {
           )}
 
           {success && (
-            <Alert message={success} type="success" showIcon style={{ marginBottom: '16px' }} />
+            <Alert title={success} type="success" showIcon style={{ marginBottom: '16px' }} />
           )}
 
           <Form name="register" onFinish={onFinish} layout="vertical" size="large">

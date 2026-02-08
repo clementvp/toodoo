@@ -1,20 +1,16 @@
 import { Card, Form, Input, Button, TimePicker, Alert } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
-import { router, usePage } from '@inertiajs/react'
+import { router } from '@inertiajs/react'
 import { useState } from 'react'
-import { dayjs, toISODate } from '../../lib/date_utils'
+import { toISODate } from '~/lib/date_utils'
 import type { Dayjs } from 'dayjs'
 
 interface TodoFormCardProps {
   selectedDate: Dayjs
-}
-
-interface TodoFormPageProps {
   errors?: Record<string, string>
 }
 
-export default function TodoFormCard({ selectedDate }: TodoFormCardProps) {
-  const { errors } = usePage<TodoFormPageProps>().props
+export default function TodoFormCard({ selectedDate, errors }: TodoFormCardProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [dueTime, setDueTime] = useState<Dayjs | null>(null)
@@ -51,7 +47,7 @@ export default function TodoFormCard({ selectedDate }: TodoFormCardProps) {
     >
       {errors && Object.keys(errors).length > 0 && (
         <Alert
-          message="Erreur de validation"
+          title="Erreur de validation"
           description={Object.values(errors).join(', ')}
           type="error"
           showIcon

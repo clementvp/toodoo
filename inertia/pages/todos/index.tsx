@@ -13,9 +13,10 @@ import {Head} from "@inertiajs/react";
 export interface TodosPageProps {
   user?: User
   todos: Todo[]
+  errors?: Record<string, string>
 }
 
-export default function TodosIndex({ user, todos }: TodosPageProps) {
+export default function TodosIndex({ user, todos, errors }: TodosPageProps) {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs())
 
   // T058: Filter todos by selected day
@@ -40,7 +41,7 @@ export default function TodosIndex({ user, todos }: TodosPageProps) {
               <TodoListCard todos={todosForSelectedDay} selectedDate={selectedDate} />
             </div>
             <div>
-              <TodoFormCard selectedDate={selectedDate} />
+              <TodoFormCard selectedDate={selectedDate} errors={errors} />
             </div>
           </div>
         }

@@ -1,14 +1,13 @@
 import { Head } from '@inertiajs/react'
 import { Layout } from 'antd'
 import Header from '../components/layout/header'
-import type { User } from '../lib/types'
+import type { User } from '~/lib/types'
 
 export interface HomePageProps {
   user?: User
 }
 
 export default function Home({ user }: HomePageProps) {
-
   return (
     <>
       <Head title="Accueil" />

@@ -38,7 +38,7 @@ export default function BookmarkFormCard() {
       }}
     >
       <Form form={form} layout="vertical" onFinish={handleSubmit}>
-        {error && <Alert message={error} type="error" closable style={{ marginBottom: 16 }} />}
+        {error && <Alert title={error} type="error" closable style={{ marginBottom: 16 }} />}
 
         <Form.Item
           label="URL ou texte"

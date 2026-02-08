@@ -2,7 +2,7 @@ import { Head, router } from '@inertiajs/react'
 import { Layout, Form, Input, Button, Card, Typography } from 'antd'
 import { UserAddOutlined, ArrowLeftOutlined } from '@ant-design/icons'
 import Header from '../../../components/layout/header'
-import type { User } from '../../../lib/types'
+import type { User } from '~/lib/types'
 
 const { Title } = Typography
 

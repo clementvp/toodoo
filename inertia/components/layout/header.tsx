@@ -10,7 +10,7 @@ import {
   MenuOutlined,
 } from '@ant-design/icons'
 import { useState } from 'react'
-import type { User } from '../../lib/types'
+import type { User } from '~/lib/types'
 
 const { Header: AntHeader } = Layout
 

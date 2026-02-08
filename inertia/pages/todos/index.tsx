@@ -5,7 +5,7 @@ import CalendarLayout from '../../components/layout/calendar_layout'
 import CalendarView from '../../components/calendar/calendar_view'
 import TodoListCard from '../../components/cards/todo_list_card'
 import TodoFormCard from '../../components/cards/todo_form_card'
-import type { Todo, User } from '../../lib/types'
+import type { Todo, User } from '~/lib/types'
 import { dayjs, isSameDay } from '../../lib/date_utils'
 import type { Dayjs } from 'dayjs'
 import {Head} from "@inertiajs/react";

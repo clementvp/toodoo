@@ -13,7 +13,7 @@ export interface LoginPageProps {
   error?: string | null
 }
 
-export default function Login({ errors, success, error, ...props }: LoginPageProps & Record<string, any>) {
+export default function Login({ errors, success, error }: LoginPageProps & Record<string, any>) {
   const [loading, setLoading] = useState(false)
 
   const onFinish = (values: { email: string; password: string; remember?: boolean }) => {

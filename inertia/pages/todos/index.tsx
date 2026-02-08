@@ -8,7 +8,7 @@ import TodoFormCard from '../../components/cards/todo_form_card'
 import type { Todo, User } from '~/lib/types'
 import { dayjs, isSameDay } from '../../lib/date_utils'
 import type { Dayjs } from 'dayjs'
-import {Head} from "@inertiajs/react";
+import { Head } from '@inertiajs/react'
 
 export interface TodosPageProps {
   user?: User

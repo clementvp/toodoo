@@ -131,7 +131,7 @@ export default function TodosCard({ todos }: TodosCardProps) {
             onClick={() => setCreateModalVisible(true)}
           />
         }
-        bordered={false}
+        variant="borderless"
         style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         styles={{ body: { flex: 1, overflow: 'auto' } }}
       >

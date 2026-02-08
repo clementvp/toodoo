@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Layout, Card, Form, Input, Button, Alert } from 'antd'
-import { Head, router, usePage } from '@inertiajs/react'
+import { Head, router } from '@inertiajs/react'
 import Header from '~/components/layout/header'
 import type { User, UserSettings } from '~/lib/types'
 
@@ -9,10 +9,10 @@ const { Content } = Layout
 interface SettingsPageProps {
   user?: User
   userSettings: UserSettings
+  success?: string
 }
 
-export default function SettingsPage({ user, userSettings }: SettingsPageProps) {
-  const { props } = usePage()
+export default function SettingsPage({ user, userSettings, success }: SettingsPageProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
 
@@ -29,16 +29,11 @@ export default function SettingsPage({ user, userSettings }: SettingsPageProps) 
       <Header user={user} currentPath="/settings" />
       <Content style={{ padding: '24px' }}>
         <div style={{ maxWidth: '600px', margin: '0 auto' }}>
-          {props.success && (
-            <Alert
-              message={props.success as string}
-              type="success"
-              closable
-              style={{ marginBottom: '16px' }}
-            />
+          {success && (
+            <Alert title={success} type="success" closable style={{ marginBottom: '16px' }} />
           )}
 
-          <Card title="Météo" bordered={false}>
+          <Card title="Météo" variant="borderless">
             <Form
               form={form}
               layout="vertical"

@@ -112,7 +112,7 @@ export default function NotesCard({ notes }: NotesCardProps) {
             onClick={() => setCreateModalVisible(true)}
           />
         }
-        bordered={false}
+        variant="borderless"
         style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         styles={{ body: { flex: 1, overflow: 'auto' } }}
       >
@@ -131,7 +131,7 @@ export default function NotesCard({ notes }: NotesCardProps) {
         width={800}
       >
         {selectedNote && (
-          <Space direction="vertical" style={{ width: '100%' }}>
+          <Space orientation="vertical" style={{ width: '100%' }}>
             <Paragraph style={{ whiteSpace: 'pre-wrap' }}>{selectedNote.content}</Paragraph>
             <Paragraph type="secondary" style={{ fontSize: '12px', marginTop: '16px' }}>
               Créée le : {dayjs(selectedNote.createdAt).locale('fr').format('DD MMMM YYYY')}

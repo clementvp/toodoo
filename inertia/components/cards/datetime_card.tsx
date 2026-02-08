@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react'
 import { Card } from 'antd'
-import { ClockCircleOutlined } from '@ant-design/icons'
 
 export default function DateTimeCard() {
   const [currentTime, setCurrentTime] = useState(new Date())
@@ -29,14 +28,13 @@ export default function DateTimeCard() {
   return (
     <Card
       title="Date & Heure"
-      bordered={false}
+      variant="borderless"
       style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
       styles={{
         body: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' },
       }}
     >
       <div style={{ textAlign: 'center' }}>
-        <ClockCircleOutlined style={{ fontSize: '48px', marginBottom: '16px', color: '#1890ff' }} />
         <div
           style={{
             fontSize: '22px',
@@ -47,7 +45,7 @@ export default function DateTimeCard() {
         >
           {dateStr}
         </div>
-        <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#1890ff' }}>{timeStr}</div>
+        <div style={{ fontSize: '32px', fontWeight: 'bold', color: '#1a1a1a' }}>{timeStr}</div>
       </div>
     </Card>
   )

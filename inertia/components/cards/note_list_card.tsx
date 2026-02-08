@@ -1,10 +1,8 @@
-import { Card, List, Button, Empty, Typography, Modal } from 'antd'
+import { Card, List, Button, Empty, Modal } from 'antd'
 import { DeleteOutlined, EyeOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
 import type { Note } from '~/lib/types'
 import type { Dayjs } from 'dayjs'
-
-const { Paragraph } = Typography
 
 interface NoteListCardProps {
   notes: Note[]

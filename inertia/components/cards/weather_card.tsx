@@ -1,5 +1,5 @@
 import { useEffect } from 'react'
-import { Card, Empty, Button, Spin, Alert } from 'antd'
+import { Card, Empty, Button, Alert } from 'antd'
 import { SettingOutlined, CloudOutlined } from '@ant-design/icons'
 import { Link, router } from '@inertiajs/react'
 import type { WeatherData } from '~/lib/types'
@@ -42,7 +42,7 @@ export default function WeatherCard({ weather, hasCity }: WeatherCardProps) {
     if (!weather) {
       return (
         <Alert
-          message="Météo indisponible"
+          title="Météo indisponible"
           description="Impossible de récupérer les données météo. Veuillez réessayer plus tard."
           type="warning"
           showIcon
@@ -62,7 +62,7 @@ export default function WeatherCard({ weather, hasCity }: WeatherCardProps) {
           style={{ width: '80px', height: '80px' }}
         />
         <div
-          style={{ fontSize: '32px', fontWeight: 'bold', color: '#1890ff', marginBottom: '8px' }}
+          style={{ fontSize: '32px', fontWeight: 'bold', color: '#1a1a1a', marginBottom: '8px' }}
         >
           {weather.temperature}°C
         </div>
@@ -99,7 +99,7 @@ export default function WeatherCard({ weather, hasCity }: WeatherCardProps) {
           <SettingOutlined style={{ fontSize: '16px', cursor: 'pointer' }} />
         </Link>
       }
-      bordered={false}
+      variant="borderless"
       style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
       styles={{
         body: { flex: 1, display: 'flex', alignItems: 'center', justifyContent: 'center' },

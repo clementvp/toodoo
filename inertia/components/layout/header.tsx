@@ -45,7 +45,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
           <Link
             href="/"
             style={{
-              color: '#4F46E5',
+              color: '#1a1a1a',
               fontSize: '20px',
               fontWeight: 'bold',
               textDecoration: 'none',
@@ -61,7 +61,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   icon={<DashboardOutlined />}
                   style={{
                     borderBottom:
-                      currentPath === '/' ? '2px solid #4F46E5' : '2px solid transparent',
+                      currentPath === '/' ? '2px solid #1a1a1a' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/' ? 600 : 400,
                   }}
@@ -75,7 +75,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   icon={<CheckSquareOutlined />}
                   style={{
                     borderBottom:
-                      currentPath === '/todos' ? '2px solid #4F46E5' : '2px solid transparent',
+                      currentPath === '/todos' ? '2px solid #1a1a1a' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/todos' ? 600 : 400,
                   }}
@@ -89,7 +89,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   icon={<FileTextOutlined />}
                   style={{
                     borderBottom:
-                      currentPath === '/notes' ? '2px solid #4F46E5' : '2px solid transparent',
+                      currentPath === '/notes' ? '2px solid #1a1a1a' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/notes' ? 600 : 400,
                   }}
@@ -103,7 +103,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   icon={<BookOutlined />}
                   style={{
                     borderBottom:
-                      currentPath === '/bookmarks' ? '2px solid #4F46E5' : '2px solid transparent',
+                      currentPath === '/bookmarks' ? '2px solid #1a1a1a' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/bookmarks' ? 600 : 400,
                   }}
@@ -133,7 +133,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
       >
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <div style={{ flex: 1 }}>
-            <Space direction="vertical" style={{ width: '100%' }} size="middle">
+            <Space orientation="vertical" style={{ width: '100%' }} size="middle">
               <div>
                 <div style={{ color: '#64748b', fontSize: '12px', marginBottom: '4px' }}>
                   Connecté en tant que

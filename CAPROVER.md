@@ -5,11 +5,13 @@ Ce guide explique comment déployer cette application AdonisJS sur CapRover.
 ## 📋 Prérequis
 
 1. **CapRover CLI installée** :
+
    ```bash
    npm install -g caprover
    ```
 
 2. **Connexion à votre serveur CapRover** :
+
    ```bash
    caprover login
    ```
@@ -101,6 +103,7 @@ caprover deploy
 ```
 
 Lors du premier `caprover deploy`, vous devrez :
+
 - Sélectionner votre serveur CapRover
 - Sélectionner votre app
 - Confirmer le déploiement
@@ -124,10 +127,12 @@ C'est tout ! 🎉
 ### **Logs en temps réel** :
 
 Dans l'interface CapRover :
+
 - Allez dans votre app
 - Cliquez sur **"Deployment"** → **"View Logs"**
 
 Vous devriez voir :
+
 ```
 🚀 Démarrage de l'application...
 ⏳ Attente de la base de données...
@@ -139,6 +144,7 @@ Vous devriez voir :
 ### **Tester l'app** :
 
 Une fois déployée, votre app sera accessible à :
+
 ```
 https://my-adonisjs-app.votre-domaine-caprover.com
 ```
@@ -150,6 +156,7 @@ https://my-adonisjs-app.votre-domaine-caprover.com
 ### **Erreur de connexion à la base de données**
 
 Vérifiez :
+
 - ✅ `DB_HOST` = `srv-captain--postgres-db` (avec `srv-captain--` devant le nom de votre app PostgreSQL)
 - ✅ `DB_PASSWORD` correspond au mot de passe configuré dans PostgreSQL
 - ✅ `DB_DATABASE` existe dans PostgreSQL
@@ -157,6 +164,7 @@ Vérifiez :
 ### **Erreur "APP_KEY is required"**
 
 Vous avez oublié de configurer `APP_KEY` :
+
 ```bash
 # Générer localement
 node ace generate:key
@@ -169,6 +177,7 @@ node ace generate:key
 Le script `start.sh` exécute automatiquement les migrations au démarrage.
 
 Pour forcer les migrations manuellement :
+
 ```bash
 # Dans CapRover, ouvrir un terminal sur le container
 # Puis exécuter :
@@ -178,6 +187,7 @@ node ace migration:run --force
 ### **Build trop long ou échec**
 
 Le build se fait **localement** avant le déploiement. Si `npm run build` échoue en local :
+
 - Vérifiez les erreurs TypeScript : `npm run typecheck`
 - Vérifiez les erreurs ESLint : `npm run lint`
 
@@ -188,6 +198,7 @@ Le build se fait **localement** avant le déploiement. Si `npm run build` échou
 ### **Le dossier build/ n'est PAS commité dans git**
 
 C'est normal ! Le workflow est :
+
 1. Vous buildez en **local** (`npm run build`)
 2. Vous déployez depuis votre **machine locale** (`caprover deploy`)
 3. CapRover reçoit les fichiers locaux (y compris `build/`) directement
@@ -202,6 +213,7 @@ CapRover gère automatiquement le reverse proxy pour exposer votre app sur le po
 ### **Sécurité**
 
 ⚠️ **Ne commitez JAMAIS** :
+
 - Votre `.env` (contient des secrets)
 - Votre `APP_KEY`
 - Les mots de passe de base de données
@@ -223,6 +235,7 @@ CapRover garde un historique des déploiements. Pour revenir en arrière :
 ## 📞 Support
 
 Pour plus d'infos :
+
 - [Documentation CapRover](https://caprover.com/docs/)
 - [Documentation AdonisJS](https://docs.adonisjs.com/)
 

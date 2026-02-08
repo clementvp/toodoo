@@ -60,6 +60,6 @@ export default class NotesController {
     await note.delete()
 
     session.flash('success', 'Note deleted successfully!')
-    return response.redirect('/notes')
+    return response.redirect().back()
   }
 }

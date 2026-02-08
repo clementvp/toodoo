@@ -34,3 +34,30 @@ export interface Bookmark {
   createdAt: string // ISO date string
   updatedAt: string
 }
+
+export interface UserSettings {
+  id: number
+  userId: number
+  weatherCity: string | null
+  createdAt: string
+  updatedAt: string
+}
+
+export interface WeatherData {
+  city: string
+  temperature: number
+  description: string
+  icon: string
+  tempMin: number
+  tempMax: number
+  humidity: number
+  windSpeed: number
+}
+
+export interface DashboardProps {
+  user?: User
+  todosToday: Todo[]
+  notesToday: Note[]
+  weather: WeatherData | null
+  userSettings: UserSettings
+}

@@ -4,11 +4,13 @@ A secure, multi-user web application for managing todos and notes with a calenda
 
 ## Features
 
+- 🏠 **Dashboard** - Daily overview with real-time clock, weather, today's todos and notes
 - 🔐 **User Authentication** - Secure registration and login with session management and Remember Me
 - ✅ **Todo Management** - Create, update, delete todos with dates and times
 - 📝 **Notes Management** - Create, view, delete notes organized by date
 - 🔖 **Bookmarks Management** - Save and organize URLs and text snippets
 - 📅 **Calendar View** - Intuitive 70/30 split layout with monthly calendar
+- 🌤️ **Weather Integration** - OpenWeatherMap API integration with customizable city
 - 👥 **User Roles** - Admin and regular user roles with different permissions
 - 🎨 **Modern Design** - Clean UI with Modern Productivity color palette
 - 🔒 **Data Isolation** - Complete user data isolation (users can only see their own data)
@@ -83,10 +85,12 @@ Visit http://localhost:3333 and you'll be redirected to the login page.
 ## Test Accounts (if seeded)
 
 **Regular User:**
+
 - **Email**: test@example.com
 - **Password**: password123
 
 **Admin User:**
+
 - **Email**: admin@example.com
 - **Password**: admin123
 
@@ -176,20 +180,32 @@ docker exec -it todo_notes_db psql -U postgres -d todo_notes
 
 ## Environment Variables
 
-| Variable         | Description                                            | Default     |
-| ---------------- | ------------------------------------------------------ | ----------- |
-| `PORT`           | Server port                                            | 3333        |
-| `HOST`           | Server host                                            | localhost   |
-| `APP_KEY`        | Encryption key (generate with `node ace generate:key`) | -           |
-| `NODE_ENV`       | Environment                                            | development |
-| `DB_HOST`        | PostgreSQL host                                        | 127.0.0.1   |
-| `DB_PORT`        | PostgreSQL port                                        | 5432        |
-| `DB_USER`        | Database user                                          | postgres    |
-| `DB_PASSWORD`    | Database password                                      | postgres    |
-| `DB_DATABASE`    | Database name                                          | todo_notes  |
-| `SESSION_DRIVER` | Session driver                                         | cookie      |
+| Variable                 | Description                                                      | Default     |
+| ------------------------ | ---------------------------------------------------------------- | ----------- |
+| `PORT`                   | Server port                                                      | 3333        |
+| `HOST`                   | Server host                                                      | localhost   |
+| `APP_KEY`                | Encryption key (generate with `node ace generate:key`)           | -           |
+| `NODE_ENV`               | Environment                                                      | development |
+| `DB_HOST`                | PostgreSQL host                                                  | 127.0.0.1   |
+| `DB_PORT`                | PostgreSQL port                                                  | 5432        |
+| `DB_USER`                | Database user                                                    | postgres    |
+| `DB_PASSWORD`            | Database password                                                | postgres    |
+| `DB_DATABASE`            | Database name                                                    | todo_notes  |
+| `SESSION_DRIVER`         | Session driver                                                   | cookie      |
+| `OPENWEATHERMAP_API_KEY` | OpenWeatherMap API key (get from https://openweathermap.org/api) | -           |
 
 ## Features Detail
+
+### Dashboard
+
+- **Real-time clock** - Displays current date and time, updates every minute
+- **Weather card** - Shows current weather for configured city (temperature, description, icon, humidity, wind)
+- **Today's todos** - View and manage todos due today (toggle status, delete with confirmation)
+- **Today's notes** - View notes created today (click to view full content in modal)
+- **Settings integration** - Configure weather city via settings page
+- **Responsive layout** - 4 columns on desktop, 2 on tablet, 1 on mobile
+- **Empty states** - Helpful messages when no data available
+- **Error handling** - Graceful degradation when weather API is unavailable
 
 ### Authentication
 

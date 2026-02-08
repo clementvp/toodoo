@@ -8,6 +8,8 @@ import {
   LogoutOutlined,
   UserOutlined,
   MenuOutlined,
+  SettingOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons'
 import { useState } from 'react'
 import type { User } from '~/lib/types'
@@ -53,6 +55,20 @@ export default function Header({ user, currentPath }: HeaderProps) {
           </Link>
           {user && (
             <>
+              <Link href="/">
+                <Button
+                  type="text"
+                  icon={<DashboardOutlined />}
+                  style={{
+                    borderBottom:
+                      currentPath === '/' ? '2px solid #4F46E5' : '2px solid transparent',
+                    borderRadius: 0,
+                    fontWeight: currentPath === '/' ? 600 : 400,
+                  }}
+                >
+                  Dashboard
+                </Button>
+              </Link>
               <Link href="/todos">
                 <Button
                   type="text"
@@ -126,6 +142,19 @@ export default function Header({ user, currentPath }: HeaderProps) {
               </div>
 
               <Divider style={{ margin: '8px 0' }} />
+
+              <Button
+                type="default"
+                icon={<SettingOutlined />}
+                block
+                size="large"
+                onClick={() => {
+                  router.visit('/settings')
+                  setDrawerVisible(false)
+                }}
+              >
+                Paramètres
+              </Button>
 
               {user?.role === 'admin' && (
                 <Button

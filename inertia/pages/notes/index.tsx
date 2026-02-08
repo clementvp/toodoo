@@ -8,7 +8,7 @@ import NoteFormCard from '../../components/cards/note_form_card'
 import type { Note, User } from '~/lib/types'
 import { dayjs, isSameDay } from '../../lib/date_utils'
 import type { Dayjs } from 'dayjs'
-import {Head} from "@inertiajs/react";
+import { Head } from '@inertiajs/react'
 
 const { Paragraph } = Typography
 
@@ -45,7 +45,7 @@ export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-        <Head title="Notes" />
+      <Head title="Notes" />
       <Header user={user} currentPath="/notes" />
       <CalendarLayout
         calendarSlot={
@@ -77,7 +77,7 @@ export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
             Fermer
           </Button>,
         ]}
-        width={600}
+        width={800}
       >
         {selectedNote && (
           <Space direction="vertical" style={{ width: '100%' }}>

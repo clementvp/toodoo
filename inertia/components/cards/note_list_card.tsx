@@ -84,14 +84,7 @@ export default function NoteListCard({ notes, onViewNote, selectedDate }: NoteLi
                 </Button>,
               ]}
             >
-              <List.Item.Meta
-                title={note.title}
-                description={
-                  <Paragraph ellipsis={{ rows: 2 }} style={{ color: '#64748b', marginBottom: 0 }}>
-                    {note.content}
-                  </Paragraph>
-                }
-              />
+              <List.Item.Meta title={note.title} />
             </List.Item>
           )}
         />

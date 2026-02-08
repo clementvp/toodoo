@@ -1,10 +1,8 @@
-import { Card, List, Button, Empty, Typography, Modal } from 'antd'
+import { Card, List, Button, Empty, Modal } from 'antd'
 import { DeleteOutlined, EyeOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
 import type { Note } from '~/lib/types'
 import type { Dayjs } from 'dayjs'
-
-const { Paragraph } = Typography
 
 interface NoteListCardProps {
   notes: Note[]
@@ -84,14 +82,7 @@ export default function NoteListCard({ notes, onViewNote, selectedDate }: NoteLi
                 </Button>,
               ]}
             >
-              <List.Item.Meta
-                title={note.title}
-                description={
-                  <Paragraph ellipsis={{ rows: 2 }} style={{ color: '#64748b', marginBottom: 0 }}>
-                    {note.content}
-                  </Paragraph>
-                }
-              />
+              <List.Item.Meta title={note.title} />
             </List.Item>
           )}
         />

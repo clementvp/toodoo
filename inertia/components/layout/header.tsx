@@ -8,6 +8,8 @@ import {
   LogoutOutlined,
   UserOutlined,
   MenuOutlined,
+  SettingOutlined,
+  DashboardOutlined,
 } from '@ant-design/icons'
 import { useState } from 'react'
 import type { User } from '~/lib/types'
@@ -43,7 +45,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
           <Link
             href="/"
             style={{
-              color: '#4F46E5',
+              color: '#1a1a1a',
               fontSize: '20px',
               fontWeight: 'bold',
               textDecoration: 'none',
@@ -53,13 +55,27 @@ export default function Header({ user, currentPath }: HeaderProps) {
           </Link>
           {user && (
             <>
+              <Link href="/">
+                <Button
+                  type="text"
+                  icon={<DashboardOutlined />}
+                  style={{
+                    borderBottom:
+                      currentPath === '/' ? '2px solid #1a1a1a' : '2px solid transparent',
+                    borderRadius: 0,
+                    fontWeight: currentPath === '/' ? 600 : 400,
+                  }}
+                >
+                  Dashboard
+                </Button>
+              </Link>
               <Link href="/todos">
                 <Button
                   type="text"
                   icon={<CheckSquareOutlined />}
                   style={{
                     borderBottom:
-                      currentPath === '/todos' ? '2px solid #4F46E5' : '2px solid transparent',
+                      currentPath === '/todos' ? '2px solid #1a1a1a' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/todos' ? 600 : 400,
                   }}
@@ -73,7 +89,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   icon={<FileTextOutlined />}
                   style={{
                     borderBottom:
-                      currentPath === '/notes' ? '2px solid #4F46E5' : '2px solid transparent',
+                      currentPath === '/notes' ? '2px solid #1a1a1a' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/notes' ? 600 : 400,
                   }}
@@ -87,7 +103,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   icon={<BookOutlined />}
                   style={{
                     borderBottom:
-                      currentPath === '/bookmarks' ? '2px solid #4F46E5' : '2px solid transparent',
+                      currentPath === '/bookmarks' ? '2px solid #1a1a1a' : '2px solid transparent',
                     borderRadius: 0,
                     fontWeight: currentPath === '/bookmarks' ? 600 : 400,
                   }}
@@ -117,7 +133,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
       >
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <div style={{ flex: 1 }}>
-            <Space direction="vertical" style={{ width: '100%' }} size="middle">
+            <Space orientation="vertical" style={{ width: '100%' }} size="middle">
               <div>
                 <div style={{ color: '#64748b', fontSize: '12px', marginBottom: '4px' }}>
                   Connecté en tant que
@@ -126,6 +142,19 @@ export default function Header({ user, currentPath }: HeaderProps) {
               </div>
 
               <Divider style={{ margin: '8px 0' }} />
+
+              <Button
+                type="default"
+                icon={<SettingOutlined />}
+                block
+                size="large"
+                onClick={() => {
+                  router.visit('/settings')
+                  setDrawerVisible(false)
+                }}
+              >
+                Paramètres
+              </Button>
 
               {user?.role === 'admin' && (
                 <Button

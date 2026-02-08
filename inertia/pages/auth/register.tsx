@@ -41,7 +41,7 @@ export default function Register({ errors, success }: RegisterPageProps) {
           }}
         >
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <UserOutlined style={{ fontSize: '48px', color: '#4F46E5' }} />
+            <UserOutlined style={{ fontSize: '48px', color: '#1a1a1a' }} />
             <Title level={2} style={{ marginTop: '16px', marginBottom: '8px' }}>
               Créer un compte
             </Title>
@@ -101,7 +101,7 @@ export default function Register({ errors, success }: RegisterPageProps) {
             <div style={{ textAlign: 'center' }}>
               <Text type="secondary">
                 Vous avez déjà un compte ?{' '}
-                <Link href="/login" style={{ color: '#4F46E5' }}>
+                <Link href="/login" style={{ color: '#1a1a1a' }}>
                   Connectez-vous ici
                 </Link>
               </Text>

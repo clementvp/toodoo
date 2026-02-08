@@ -44,7 +44,7 @@ export default function Login({ errors, success, error }: LoginPageProps & Recor
           }}
         >
           <div style={{ textAlign: 'center', marginBottom: '32px' }}>
-            <UserOutlined style={{ fontSize: '48px', color: '#4F46E5' }} />
+            <UserOutlined style={{ fontSize: '48px', color: '#1a1a1a' }} />
             <Title level={2} style={{ marginTop: '16px', marginBottom: '8px' }}>
               Bon retour
             </Title>

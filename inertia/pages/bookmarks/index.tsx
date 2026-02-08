@@ -13,7 +13,6 @@ export interface BookmarksPageProps {
 }
 
 export default function BookmarksIndex({ user, bookmarks }: BookmarksPageProps) {
-
   return (
     <Layout style={{ minHeight: '100vh' }}>
       <Head title="Bookmarks" />

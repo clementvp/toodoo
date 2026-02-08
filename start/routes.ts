@@ -13,8 +13,6 @@ import { middleware } from './kernel.js'
 // Authentication routes (public)
 const AuthController = () => import('#controllers/auth_controller')
 
-// Home page - redirect to todos if authenticated, login otherwise
-router.get('/', [AuthController, 'home'])
 router.get('/register', [AuthController, 'showRegister'])
 router.post('/register', [AuthController, 'register'])
 router.get('/login', [AuthController, 'showLogin'])
@@ -24,6 +22,15 @@ router.post('/logout', [AuthController, 'logout'])
 // Protected routes (require authentication)
 router
   .group(() => {
+    // Dashboard route (home page)
+    const DashboardController = () => import('#controllers/dashboard_controller')
+    router.get('/', [DashboardController, 'index'])
+
+    // Settings routes
+    const SettingsController = () => import('#controllers/settings_controller')
+    router.get('/settings', [SettingsController, 'index'])
+    router.patch('/settings', [SettingsController, 'update'])
+
     // Todos routes
     const TodosController = () => import('#controllers/todos_controller')
     router.get('/todos', [TodosController, 'index'])

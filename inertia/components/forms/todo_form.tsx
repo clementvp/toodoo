@@ -1,8 +1,9 @@
-import { Form, Input, Button, TimePicker, Alert } from 'antd'
+import { Form, Input, Button, TimePicker, Alert, Select } from 'antd'
 import { PlusOutlined } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
 import { useState } from 'react'
 import { toISODate } from '~/lib/date_utils'
+import { PRIORITY_OPTIONS, PRIORITY_COLOR } from '~/lib/todo_priority'
 import type { Dayjs } from 'dayjs'
 
 interface TodoFormProps {
@@ -28,6 +29,7 @@ export default function TodoForm({ selectedDate, errors, onSuccess, reloadOnly =
         description: values.description ? capitalize(values.description) : values.description,
         dueDate: toISODate(selectedDate),
         dueTime: dueTime ? dueTime.format('HH:mm') : null,
+        priority: values.priority,
       },
       {
         preserveScroll: true,
@@ -80,6 +82,19 @@ export default function TodoForm({ selectedDate, errors, onSuccess, reloadOnly =
               style={{ width: '120px' }}
             />
           </div>
+        </Form.Item>
+
+        <Form.Item name="priority" label="Priorité" initialValue="Basse">
+          <Select
+            options={PRIORITY_OPTIONS.map((opt) => ({
+              value: opt.value,
+              label: (
+                <span style={{ color: PRIORITY_COLOR[opt.value as keyof typeof PRIORITY_COLOR] }}>
+                  ● {opt.label}
+                </span>
+              ),
+            }))}
+          />
         </Form.Item>
 
         <Form.Item

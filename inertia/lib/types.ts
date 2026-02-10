@@ -14,6 +14,7 @@ export interface Todo {
   dueDate: string
   dueTime: string | null
   status: 'À faire' | 'Terminé'
+  priority: 'Haute' | 'Moyenne' | 'Basse'
   createdAt: string
   updatedAt: string
 }

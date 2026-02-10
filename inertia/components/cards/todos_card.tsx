@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
-import { Card, List, Checkbox, Button, Empty, Modal, message } from 'antd'
+import { Card, List, Checkbox, Button, Empty, Modal, message, Tag } from 'antd'
 import {
   CheckSquareOutlined,
   DeleteOutlined,
@@ -12,6 +12,8 @@ import TodoForm from '../forms/todo_form'
 import { dayjs } from '~/lib/date_utils'
 import { useThermalPrinter } from '~/lib/use_thermal_printer'
 import { drawTodosOnCanvas } from '~/lib/print_todos'
+import { PRIORITY_COLOR } from '~/lib/todo_priority'
+import type { Priority } from '~/lib/todo_priority'
 
 interface TodosCardProps {
   todos: Todo[]
@@ -140,6 +142,12 @@ export default function TodosCard({ todos, showPrinterButton = false }: TodosCar
               >
                 {todo.title}
               </span>
+              <Tag
+                color={PRIORITY_COLOR[todo.priority as Priority]}
+                style={{ marginLeft: 8, fontSize: 11 }}
+              >
+                {todo.priority}
+              </Tag>
             </Checkbox>
           </List.Item>
         )}

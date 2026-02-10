@@ -29,10 +29,12 @@ export default class TodosController {
       dueDate: DateTime.fromJSDate(data.dueDate),
       dueTime: data.dueTime || null,
       status: 'À faire',
+      priority: data.priority || 'Basse',
     })
 
     session.flash('success', 'Todo created successfully!')
-    return response.redirect().back()
+    const partialComponent = request.header('x-inertia-partial-component') ?? ''
+    return response.redirect().toPath(partialComponent.startsWith('dashboard') ? '/' : '/todos')
   }
 
   async update({ params, request, auth, response, session }: HttpContext) {

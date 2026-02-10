@@ -43,9 +43,13 @@ export function drawTodosOnCanvas(canvas: HTMLCanvasElement, todos: Todo[], date
     ctx.lineWidth = 2
     ctx.strokeRect(boxX, boxY, boxSize, boxSize)
 
-    // Title
+    // Title + priority
     ctx.fillStyle = 'black'
     ctx.font = '22px Arial'
-    ctx.fillText(todo.title, PADDING + boxSize + 12, y + LINE_HEIGHT / 2 + 8)
+    ctx.fillText(
+      `${todo.title} (${todo.priority})`,
+      PADDING + boxSize + 12,
+      y + LINE_HEIGHT / 2 + 8
+    )
   })
 }

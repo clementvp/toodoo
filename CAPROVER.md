@@ -49,28 +49,31 @@ Dans votre app CapRover, allez dans **"App Configs"** → **"Environmental Varia
 ### **Obligatoires** :
 
 ```bash
-# Database Configuration
+# Application
+NODE_ENV=production
+HOST=0.0.0.0
+PORT=80
+LOG_LEVEL=info
+
+# Application Security (IMPORTANT !)
+APP_KEY=votre_app_key_generee
+
+# Session
+SESSION_DRIVER=cookie
+
+# Database
 DB_HOST=srv-captain--postgres-db
 DB_PORT=5432
 DB_USER=postgres
 DB_PASSWORD=votre_mot_de_passe_postgresql
 DB_DATABASE=todo_notes
 
-# Application Security (IMPORTANT !)
-APP_KEY=votre_app_key_generee
+# Météo (OpenWeatherMap)
+OPENWEATHERMAP_API_KEY=votre_cle_api_openweathermap
 ```
 
-### **Optionnelles** (avec valeurs par défaut) :
-
-```bash
-# Application
-NODE_ENV=production
-TZ=UTC
-LOG_LEVEL=info
-
-# Session
-SESSION_DRIVER=cookie
-```
+> ⚠️ `OPENWEATHERMAP_API_KEY` est **obligatoire** — sans elle, l'application refuse de démarrer.
+> Obtenez une clé gratuite sur [openweathermap.org](https://openweathermap.org/api).
 
 ### 🔑 Générer l'APP_KEY
 

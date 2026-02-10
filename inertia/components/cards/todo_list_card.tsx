@@ -1,8 +1,6 @@
 import { useRef } from 'react'
-import { Card, List, Button, Tag, Space, Empty, Modal, message } from 'antd'
+import { Card, List, Checkbox, Button, Tag, Space, Empty, Modal, message } from 'antd'
 import {
-  CheckCircleOutlined,
-  CloseCircleOutlined,
   DeleteOutlined,
   ClockCircleOutlined,
   ExclamationCircleOutlined,
@@ -13,6 +11,8 @@ import type { Todo } from '~/lib/types'
 import { formatTime } from '~/lib/date_utils'
 import { useThermalPrinter } from '~/lib/use_thermal_printer'
 import { drawTodosOnCanvas } from '~/lib/print_todos'
+import { PRIORITY_COLOR } from '~/lib/todo_priority'
+import type { Priority } from '~/lib/todo_priority'
 import type { Dayjs } from 'dayjs'
 
 interface TodoListCardProps {
@@ -118,17 +118,6 @@ export default function TodoListCard({ todos, selectedDate, showPrinterButton = 
             <List.Item
               actions={[
                 <Button
-                  key="toggle"
-                  type="text"
-                  icon={
-                    todo.status === 'Terminé' ? <CloseCircleOutlined /> : <CheckCircleOutlined />
-                  }
-                  onClick={() => handleToggleStatus(todo)}
-                  style={{ color: todo.status === 'Terminé' ? '#64748b' : '#10B981' }}
-                >
-                  {todo.status === 'Terminé' ? 'Annuler' : 'Terminer'}
-                </Button>,
-                <Button
                   key="delete"
                   type="text"
                   danger
@@ -142,6 +131,10 @@ export default function TodoListCard({ todos, selectedDate, showPrinterButton = 
               <List.Item.Meta
                 title={
                   <Space>
+                    <Checkbox
+                      checked={todo.status === 'Terminé'}
+                      onChange={() => handleToggleStatus(todo)}
+                    />
                     <span
                       style={{
                         textDecoration: todo.status === 'Terminé' ? 'line-through' : 'none',
@@ -150,7 +143,12 @@ export default function TodoListCard({ todos, selectedDate, showPrinterButton = 
                     >
                       {todo.title}
                     </span>
-                    {todo.status === 'Terminé' && <Tag color="success">Terminé</Tag>}
+                    <Tag
+                      color={PRIORITY_COLOR[todo.priority as Priority]}
+                      style={{ fontSize: 11 }}
+                    >
+                      {todo.priority}
+                    </Tag>
                   </Space>
                 }
                 description={

@@ -9,6 +9,7 @@ export const createTodoValidator = vine.compile(
       .string()
       .regex(/^([01]\d|2[0-3]):([0-5]\d)$/)
       .optional(),
+    priority: vine.enum(['Haute', 'Moyenne', 'Basse']).optional(),
   })
 )
 
@@ -22,5 +23,6 @@ export const updateTodoValidator = vine.compile(
       .regex(/^([01]\d|2[0-3]):([0-5]\d)$/)
       .optional(),
     status: vine.enum(['À faire', 'Terminé']).optional(),
+    priority: vine.enum(['Haute', 'Moyenne', 'Basse']).optional(),
   })
 )

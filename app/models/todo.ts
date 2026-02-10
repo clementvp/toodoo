@@ -25,6 +25,9 @@ export default class Todo extends BaseModel {
   @column()
   declare status: 'À faire' | 'Terminé'
 
+  @column()
+  declare priority: 'Haute' | 'Moyenne' | 'Basse'
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

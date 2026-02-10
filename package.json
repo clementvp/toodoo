@@ -76,6 +76,7 @@
     "dayjs": "^1.11.19",
     "edge.js": "^6.2.1",
     "luxon": "^3.7.2",
+    "mxw01-thermal-printer": "^0.1.0",
     "pg": "^8.18.0",
     "react": "^19.2.4",
     "react-dom": "^19.2.4",

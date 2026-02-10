@@ -18,7 +18,7 @@ export default function TodoFormCard({ selectedDate, errors }: TodoFormCardProps
         boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
       }}
     >
-      <TodoForm selectedDate={selectedDate} errors={errors} />
+      <TodoForm selectedDate={selectedDate} errors={errors} reloadOnly={['todos']} />
     </Card>
   )
 }

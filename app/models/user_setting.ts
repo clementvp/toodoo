@@ -13,6 +13,9 @@ export default class UserSetting extends BaseModel {
   @column()
   declare weatherCity: string | null
 
+  @column()
+  declare showPrinterButton: boolean
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

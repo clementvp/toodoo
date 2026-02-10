@@ -1,22 +1,46 @@
-import { Card, List, Button, Tag, Space, Empty, Modal } from 'antd'
+import { useRef } from 'react'
+import { Card, List, Button, Tag, Space, Empty, Modal, message } from 'antd'
 import {
   CheckCircleOutlined,
   CloseCircleOutlined,
   DeleteOutlined,
   ClockCircleOutlined,
   ExclamationCircleOutlined,
+  PrinterOutlined,
 } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
 import type { Todo } from '~/lib/types'
 import { formatTime } from '~/lib/date_utils'
+import { useThermalPrinter } from '~/lib/use_thermal_printer'
+import { drawTodosOnCanvas } from '~/lib/print_todos'
 import type { Dayjs } from 'dayjs'
 
 interface TodoListCardProps {
   todos: Todo[]
   selectedDate: Dayjs
+  showPrinterButton?: boolean
 }
 
-export default function TodoListCard({ todos, selectedDate }: TodoListCardProps) {
+export default function TodoListCard({ todos, selectedDate, showPrinterButton = false }: TodoListCardProps) {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const { isConnected, isPrinting, connectPrinter, printCanvas } = useThermalPrinter()
+
+  const handlePrint = async () => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    try {
+      if (!isConnected) {
+        message.loading({ content: "Connexion à l'imprimante...", key: 'print' })
+        await connectPrinter()
+      }
+      drawTodosOnCanvas(canvas, todos, selectedDate)
+      message.loading({ content: 'Impression en cours...', key: 'print' })
+      await printCanvas(canvas)
+      message.success({ content: 'Impression terminée', key: 'print' })
+    } catch {
+      message.error({ content: "Erreur d'impression", key: 'print' })
+    }
+  }
   const handleToggleStatus = (todo: Todo) => {
     const newStatus = todo.status === 'À faire' ? 'Terminé' : 'À faire'
     router.patch(
@@ -55,8 +79,21 @@ export default function TodoListCard({ todos, selectedDate }: TodoListCardProps)
   const formattedDate = selectedDate.locale('fr').format('D MMMM YYYY')
 
   return (
+    <>
+      <canvas ref={canvasRef} style={{ display: 'none' }} />
     <Card
       title={`Tâches du ${formattedDate}`}
+      extra={
+        showPrinterButton && (
+          <Button
+            type="text"
+            icon={<PrinterOutlined />}
+            size="small"
+            loading={isPrinting}
+            onClick={handlePrint}
+          />
+        )
+      }
       style={{
         background: '#fff',
         boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
@@ -135,5 +172,6 @@ export default function TodoListCard({ todos, selectedDate }: TodoListCardProps)
         />
       )}
     </Card>
+    </>
   )
 }

@@ -9,9 +9,10 @@ interface NoteFormProps {
   selectedDate: Dayjs
   errors?: Record<string, string>
   onSuccess?: () => void
+  reloadOnly?: string[]
 }
 
-export default function NoteForm({ selectedDate, errors, onSuccess }: NoteFormProps) {
+export default function NoteForm({ selectedDate, errors, onSuccess, reloadOnly = ['notesToday'] }: NoteFormProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
 
@@ -26,7 +27,7 @@ export default function NoteForm({ selectedDate, errors, onSuccess }: NoteFormPr
       },
       {
         preserveScroll: true,
-        only: ['notesToday'],
+        only: reloadOnly,
         onSuccess: () => {
           form.resetFields()
           onSuccess?.()

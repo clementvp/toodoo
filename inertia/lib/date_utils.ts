@@ -9,6 +9,7 @@ dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
+dayjs.locale('fr')
 
 export function formatDate(date: string | Date | Dayjs, format: string = 'YYYY-MM-DD'): string {
   return dayjs(date).format(format)

@@ -5,7 +5,7 @@ import CalendarLayout from '../../components/layout/calendar_layout'
 import CalendarView from '../../components/calendar/calendar_view'
 import TodoListCard from '../../components/cards/todo_list_card'
 import TodoFormCard from '../../components/cards/todo_form_card'
-import type { Todo, User } from '~/lib/types'
+import type { Todo, User, UserSettings } from '~/lib/types'
 import { dayjs, isSameDay } from '../../lib/date_utils'
 import type { Dayjs } from 'dayjs'
 import { Head } from '@inertiajs/react'
@@ -13,10 +13,11 @@ import { Head } from '@inertiajs/react'
 export interface TodosPageProps {
   user?: User
   todos: Todo[]
+  userSettings: UserSettings
   errors?: Record<string, string>
 }
 
-export default function TodosIndex({ user, todos, errors }: TodosPageProps) {
+export default function TodosIndex({ user, todos, userSettings, errors }: TodosPageProps) {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs())
 
   const todosForSelectedDay = todos.filter((todo) => isSameDay(todo.dueDate, selectedDate))
@@ -36,7 +37,7 @@ export default function TodosIndex({ user, todos, errors }: TodosPageProps) {
         sidePanel={
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%' }}>
             <div style={{ flex: 1, minHeight: 0 }}>
-              <TodoListCard todos={todosForSelectedDay} selectedDate={selectedDate} />
+              <TodoListCard todos={todosForSelectedDay} selectedDate={selectedDate} showPrinterButton={userSettings.showPrinterButton} />
             </div>
             <div>
               <TodoFormCard selectedDate={selectedDate} errors={errors} />

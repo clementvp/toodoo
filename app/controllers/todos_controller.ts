@@ -1,18 +1,20 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Todo from '#models/todo'
+import UserSetting from '#models/user_setting'
 import { createTodoValidator, updateTodoValidator } from '#validators/todo_validator'
 import { DateTime } from 'luxon'
 
 export default class TodosController {
   async index({ auth, inertia }: HttpContext) {
     const user = auth.user!
-    const todos = await Todo.query()
-      .where('user_id', user.id)
-      .orderBy('due_date', 'asc')
-      .orderBy('due_time', 'asc')
+    const [todos, userSettings] = await Promise.all([
+      Todo.query().where('user_id', user.id).orderBy('due_date', 'asc').orderBy('due_time', 'asc'),
+      UserSetting.firstOrCreate({ userId: user.id }, { userId: user.id }),
+    ])
 
     return inertia.render('todos/index', {
       todos: todos.map((todo) => todo.serialize()),
+      userSettings: userSettings.serialize(),
     })
   }
 

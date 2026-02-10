@@ -9,26 +9,29 @@ interface TodoFormProps {
   selectedDate: Dayjs
   errors?: Record<string, string>
   onSuccess?: () => void
+  reloadOnly?: string[]
 }
 
-export default function TodoForm({ selectedDate, errors, onSuccess }: TodoFormProps) {
+export default function TodoForm({ selectedDate, errors, onSuccess, reloadOnly = ['todosToday'] }: TodoFormProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [dueTime, setDueTime] = useState<Dayjs | null>(null)
+
+  const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
 
   const onFinish = (values: any) => {
     setLoading(true)
     router.post(
       '/todos',
       {
-        title: values.title,
-        description: values.description,
+        title: capitalize(values.title),
+        description: values.description ? capitalize(values.description) : values.description,
         dueDate: toISODate(selectedDate),
         dueTime: dueTime ? dueTime.format('HH:mm') : null,
       },
       {
         preserveScroll: true,
-        only: ['todosToday'],
+        only: reloadOnly,
         onSuccess: () => {
           form.resetFields()
           setDueTime(null)

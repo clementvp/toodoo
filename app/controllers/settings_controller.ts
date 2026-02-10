@@ -24,7 +24,12 @@ export default class SettingsController {
       { userId: user.id },
       { userId: user.id, weatherCity: null }
     )
-    userSettings.weatherCity = data.weatherCity || null
+    if (data.weatherCity !== undefined) {
+      userSettings.weatherCity = data.weatherCity || null
+    }
+    if (data.showPrinterButton !== undefined) {
+      userSettings.showPrinterButton = data.showPrinterButton
+    }
     await userSettings.save()
 
     session.flash('success', 'Paramètres mis à jour avec succès')

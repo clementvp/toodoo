@@ -39,6 +39,7 @@ export interface UserSettings {
   id: number
   userId: number
   weatherCity: string | null
+  showPrinterButton: boolean
   createdAt: string
   updatedAt: string
 }

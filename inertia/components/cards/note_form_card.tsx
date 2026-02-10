@@ -18,7 +18,7 @@ export default function NoteFormCard({ selectedDate, errors }: NoteFormCardProps
         boxShadow: '0 4px 6px -1px rgb(0 0 0 / 0.1)',
       }}
     >
-      <NoteForm selectedDate={selectedDate} errors={errors} />
+      <NoteForm selectedDate={selectedDate} errors={errors} reloadOnly={['notes']} />
     </Card>
   )
 }

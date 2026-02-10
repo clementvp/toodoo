@@ -35,7 +35,7 @@ export default function Dashboard({
 
           <Col xs={24} md={12} lg={9} style={{ display: 'flex' }}>
             <div style={{ width: '100%' }}>
-              <TodosCard todos={todosToday} />
+              <TodosCard todos={todosToday} showPrinterButton={userSettings.showPrinterButton} />
             </div>
           </Col>
 

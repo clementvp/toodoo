@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Layout, Card, Form, Input, Button, Alert } from 'antd'
+import { Layout, Card, Form, Input, Button, Alert, Switch, Typography } from 'antd'
 import { Head, router } from '@inertiajs/react'
 import Header from '~/components/layout/header'
 import type { User, UserSettings } from '~/lib/types'
@@ -15,11 +15,19 @@ interface SettingsPageProps {
 export default function SettingsPage({ user, userSettings, success }: SettingsPageProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
+  const [printerLoading, setPrinterLoading] = useState(false)
 
   const handleSubmit = async (values: { weatherCity?: string }) => {
     setLoading(true)
     router.patch('/settings', values, {
       onFinish: () => setLoading(false),
+    })
+  }
+
+  const handlePrinterToggle = (checked: boolean) => {
+    setPrinterLoading(true)
+    router.patch('/settings', { showPrinterButton: checked }, {
+      onFinish: () => setPrinterLoading(false),
     })
   }
 
@@ -32,6 +40,24 @@ export default function SettingsPage({ user, userSettings, success }: SettingsPa
           {success && (
             <Alert title={success} type="success" closable style={{ marginBottom: '16px' }} />
           )}
+
+          <Card title="Imprimante thermique" variant="borderless" style={{ marginBottom: '16px' }}>
+            <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+              <div>
+                <Typography.Text strong>Bouton d'impression</Typography.Text>
+                <br />
+                <Typography.Text type="secondary">
+                  Affiche le bouton d'impression sur la card des tâches. Nécessite une imprimante
+                  thermique modèle MXW01.
+                </Typography.Text>
+              </div>
+              <Switch
+                checked={userSettings.showPrinterButton}
+                loading={printerLoading}
+                onChange={handlePrinterToggle}
+              />
+            </div>
+          </Card>
 
           <Card title="Météo" variant="borderless">
             <Form

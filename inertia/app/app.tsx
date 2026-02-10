@@ -51,6 +51,10 @@ const theme = {
     Card: {
       boxShadowTertiary: '0 1px 3px 0 rgb(0 0 0 / 0.1)',
     },
+    Calendar: {
+      itemActiveBg: '#f0f0f0',
+      controlItemBgActive: '#e5e5e5',
+    },
   },
 }
 

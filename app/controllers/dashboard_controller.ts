@@ -15,8 +15,8 @@ export default class DashboardController {
 
       Note.query()
         .where('user_id', user.id)
-        .whereRaw('DATE(created_at) = ?', [today])
-        .orderBy('created_at', 'desc'),
+        .whereRaw('DATE(due_date) = ?', [today])
+        .orderBy('due_date', 'desc'),
 
       UserSetting.firstOrCreate({ userId: user.id }, { userId: user.id, weatherCity: null }),
     ])

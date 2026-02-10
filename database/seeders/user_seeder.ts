@@ -68,7 +68,7 @@ export default class extends BaseSeeder {
         title: 'Project Ideas',
         content:
           'List of potential features to implement:\n- Dark mode support\n- Export to PDF\n- Email notifications\n- Mobile app',
-        createdAt: DateTime.now(),
+        dueDate: DateTime.now(),
       }
     )
 
@@ -79,7 +79,7 @@ export default class extends BaseSeeder {
         title: 'Meeting Notes',
         content:
           'Discussed the following topics:\n1. Sprint planning\n2. Code review process\n3. Testing strategy\n4. Deployment pipeline',
-        createdAt: DateTime.now().minus({ days: 1 }),
+        dueDate: DateTime.now().minus({ days: 1 }),
       }
     )
 

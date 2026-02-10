@@ -304,7 +304,7 @@ node ace db:seed           # Exécuter les seeders
 
 - **users** - Utilisateurs (id, email, password, role)
 - **todos** - Tâches (id, user_id, title, description, due_date, due_time, status)
-- **notes** - Notes (id, user_id, title, content, created_at)
+- **notes** - Notes (id, user_id, title, content, due_date)
 - **bookmarks** - Favoris (id, user_id, url, created_at)
 - **user_settings** - Paramètres (id, user_id, weather_city)
 - **remember_me_tokens** - Tokens de session persistante

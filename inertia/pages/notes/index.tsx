@@ -23,7 +23,7 @@ export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
   const [modalVisible, setModalVisible] = useState(false)
 
-  const notesForSelectedDay = notes.filter((note) => isSameDay(note.createdAt, selectedDate))
+  const notesForSelectedDay = notes.filter((note) => isSameDay(note.dueDate, selectedDate))
 
   const handleDateSelect = (date: Dayjs) => {
     setSelectedDate(date)
@@ -78,7 +78,7 @@ export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
           <Space orientation="vertical" style={{ width: '100%' }}>
             <Paragraph style={{ whiteSpace: 'pre-wrap' }}>{selectedNote.content}</Paragraph>
             <Paragraph type="secondary" style={{ fontSize: '12px', marginTop: '16px' }}>
-              Créée le : {dayjs(selectedNote.createdAt).locale('fr').format('DD MMMM YYYY')}
+              Date : {dayjs(selectedNote.dueDate).locale('fr').format('DD MMMM YYYY')}
             </Paragraph>
           </Space>
         )}

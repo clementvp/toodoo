@@ -23,7 +23,7 @@ export interface Note {
   userId: number
   title: string
   content: string
-  createdAt: string
+  dueDate: string
   updatedAt: string
 }
 

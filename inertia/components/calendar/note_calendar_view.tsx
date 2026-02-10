@@ -17,7 +17,7 @@ export default function NoteCalendarView({ notes, selectedDate, onSelect }: Note
       items={notes}
       selectedDate={selectedDate}
       onSelect={onSelect}
-      getItemDate={(note) => note.createdAt}
+      getItemDate={(note) => note.dueDate}
       renderItem={(note) => (
         <Badge
           status="processing"

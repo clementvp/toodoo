@@ -135,7 +135,7 @@ export default function NotesCard({ notes }: NotesCardProps) {
           <Space orientation="vertical" style={{ width: '100%' }}>
             <Paragraph style={{ whiteSpace: 'pre-wrap' }}>{selectedNote.content}</Paragraph>
             <Paragraph type="secondary" style={{ fontSize: '12px', marginTop: '16px' }}>
-              Créée le : {dayjs(selectedNote.createdAt).locale('fr').format('DD MMMM YYYY')}
+              Date : {dayjs(selectedNote.dueDate).locale('fr').format('DD MMMM YYYY')}
             </Paragraph>
           </Space>
         )}

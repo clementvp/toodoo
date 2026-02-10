@@ -8,7 +8,7 @@ export default class AuthController {
     await auth.use('web').check()
 
     if (auth.use('web').isAuthenticated) {
-      return response.redirect('/todos')
+      return response.redirect('/')
     }
 
     return response.redirect('/login')
@@ -49,7 +49,7 @@ export default class AuthController {
       ? 'Compte créé avec succès ! Vous êtes le premier utilisateur et donc administrateur.'
       : 'Compte créé avec succès !'
     session.flash('success', welcomeMessage)
-    return response.redirect('/todos')
+    return response.redirect('/')
   }
 
   async login({ request, auth, response, session }: HttpContext) {
@@ -64,7 +64,7 @@ export default class AuthController {
       await auth.use('web').login(user, rememberBool)
 
       session.flash('success', 'Connexion réussie !')
-      return response.redirect('/todos')
+      return response.redirect('/')
     } catch (error) {
       session.flash('error', 'Email ou mot de passe incorrect')
       return response.redirect('/login')

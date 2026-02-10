@@ -22,7 +22,7 @@ export default function NoteForm({ selectedDate, errors, onSuccess }: NoteFormPr
       {
         title: values.title,
         content: values.content,
-        createdAt: toISODate(selectedDate),
+        dueDate: toISODate(selectedDate),
       },
       {
         preserveScroll: true,

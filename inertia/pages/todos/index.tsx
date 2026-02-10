@@ -28,7 +28,7 @@ export default function TodosIndex({ user, todos, userSettings, errors }: TodosP
 
   return (
     <Layout style={{ minHeight: '100vh' }}>
-      <Head title="Todo" />
+      <Head title="Tâches" />
       <Header user={user} currentPath="/todos" />
       <CalendarLayout
         calendarSlot={

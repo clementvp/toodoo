@@ -85,7 +85,7 @@ export default function TodosCard({ todos, showPrinterButton = false }: TodosCar
 
   const handleDelete = (todo: Todo) => {
     Modal.confirm({
-      title: 'Supprimer ce todo ?',
+      title: 'Supprimer cette tâche ?',
       content: `Êtes-vous sûr de vouloir supprimer "${todo.title}" ?`,
       okText: 'Supprimer',
       okType: 'danger',
@@ -96,7 +96,7 @@ export default function TodosCard({ todos, showPrinterButton = false }: TodosCar
           only: ['todosToday'],
           onSuccess: () => {
             setLocalTodos(localTodos.filter((t) => t.id !== todo.id))
-            message.success('Todo supprimé')
+            message.success('Tâche supprimée')
           },
           onError: () => {
             message.error('Échec de la suppression')
@@ -109,7 +109,7 @@ export default function TodosCard({ todos, showPrinterButton = false }: TodosCar
   const renderContent = () => {
     if (localTodos.length === 0) {
       return (
-        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Aucun todo pour aujourd'hui" />
+        <Empty image={Empty.PRESENTED_IMAGE_SIMPLE} description="Aucune tâche pour aujourd'hui" />
       )
     }
 

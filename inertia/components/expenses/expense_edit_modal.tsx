@@ -57,6 +57,28 @@ export default function ExpenseEditModal({
     )
   }
 
+  const categoryOptions = [
+    { value: undefined, label: 'Sans catégorie' },
+    ...categories.map((cat) => ({
+      value: cat.id,
+      label: (
+        <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+          <span
+            style={{
+              width: '10px',
+              height: '10px',
+              borderRadius: '50%',
+              background: cat.color,
+              display: 'inline-block',
+              flexShrink: 0,
+            }}
+          />
+          {cat.name}
+        </span>
+      ),
+    })),
+  ]
+
   return (
     <Modal
       title="Modifier la transaction"
@@ -66,11 +88,11 @@ export default function ExpenseEditModal({
       okText="Enregistrer"
       cancelText="Annuler"
       width={480}
-      destroyOnClose
+      destroyOnHidden
     >
       {expense?.isRecurring && (
         <Alert
-          message="Modification appliquée à cette occurrence uniquement"
+          title="Modification appliquée à cette occurrence uniquement"
           type="info"
           showIcon
           style={{ marginBottom: 16 }}
@@ -104,25 +126,7 @@ export default function ExpenseEditModal({
         </Form.Item>
 
         <Form.Item name="categoryId" label="Catégorie (optionnel)">
-          <Select placeholder="Sans catégorie" allowClear>
-            {categories.map((cat) => (
-              <Select.Option key={cat.id} value={cat.id}>
-                <span style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
-                  <span
-                    style={{
-                      width: '10px',
-                      height: '10px',
-                      borderRadius: '50%',
-                      background: cat.color,
-                      display: 'inline-block',
-                      flexShrink: 0,
-                    }}
-                  />
-                  {cat.name}
-                </span>
-              </Select.Option>
-            ))}
-          </Select>
+          <Select placeholder="Sans catégorie" allowClear options={categoryOptions} />
         </Form.Item>
 
         <Form.Item name="date" label="Date">

@@ -9,6 +9,7 @@ interface BaseCalendarViewProps<T> {
   onSelect: (date: Dayjs) => void
   getItemDate: (item: T) => string | Date
   renderItem: (item: T, token: any) => ReactNode
+  headerExtra?: ReactNode
 }
 
 export default function BaseCalendarView<T extends { id: number | string }>({
@@ -17,6 +18,7 @@ export default function BaseCalendarView<T extends { id: number | string }>({
   onSelect,
   getItemDate,
   renderItem,
+  headerExtra,
 }: BaseCalendarViewProps<T>) {
   const { token } = theme.useToken()
 
@@ -73,10 +75,13 @@ export default function BaseCalendarView<T extends { id: number | string }>({
                 marginBottom: '20px',
               }}
             >
-              <Typography.Title level={4} style={{ margin: 0, textTransform: 'capitalize' }}>
-                {value.locale('fr').format('MMMM YYYY')}
-              </Typography.Title>
-              <div style={{ display: 'flex', gap: '10px' }}>
+              <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+                <Typography.Title level={4} style={{ margin: 0, textTransform: 'capitalize' }}>
+                  {value.locale('fr').format('MMMM YYYY')}
+                </Typography.Title>
+                {headerExtra}
+              </div>
+              <div style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
                 <Select
                   value={year}
                   options={yearOptions}

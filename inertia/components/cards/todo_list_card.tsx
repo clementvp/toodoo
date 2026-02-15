@@ -129,7 +129,7 @@ export default function TodoListCard({
       <Card
         title={`Tâches du ${formattedDate}`}
         extra={
-          showPrinterButton && (
+          showPrinterButton && todos.length > 0 && (
             <Button
               type="text"
               icon={<PrinterOutlined />}

@@ -14,7 +14,7 @@ const theme = {
     colorPrimaryHover: '#333333',
     colorPrimaryActive: '#000000',
 
-    colorSuccess: '#22c55e',
+    colorSuccess: '#3b82f6',
     colorWarning: '#f59e0b',
     colorError: '#ef4444',
     colorInfo: '#0ea5e9',

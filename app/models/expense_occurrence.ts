@@ -1,23 +1,26 @@
 import { DateTime } from 'luxon'
 import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
-import User from '#models/user'
+import Expense from '#models/expense'
 
-export default class UserSetting extends BaseModel {
+export default class ExpenseOccurrence extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
   @column()
-  declare userId: number
+  declare expenseId: number
 
   @column()
-  declare weatherCity: string | null
+  declare date: string
 
   @column()
-  declare showPrinterButton: boolean
+  declare status: 'active' | 'deleted'
 
   @column()
-  declare currentBalance: number
+  declare amount: number | null
+
+  @column()
+  declare categoryId: number | null
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
@@ -25,6 +28,6 @@ export default class UserSetting extends BaseModel {
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
 
-  @belongsTo(() => User)
-  declare user: BelongsTo<typeof User>
+  @belongsTo(() => Expense)
+  declare expense: BelongsTo<typeof Expense>
 }

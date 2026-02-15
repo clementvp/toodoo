@@ -222,7 +222,7 @@ export default function TodosCard({ todos, showPrinterButton = false }: TodosCar
         }
         extra={
           <div style={{ display: 'flex', gap: 4 }}>
-            {showPrinterButton && (
+            {showPrinterButton && localTodos.length > 0 && (
               <Button
                 type="text"
                 icon={<PrinterOutlined />}

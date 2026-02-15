@@ -5,6 +5,7 @@ import {
   CheckSquareOutlined,
   FileTextOutlined,
   BookOutlined,
+  WalletOutlined,
   LogoutOutlined,
   UserOutlined,
   MenuOutlined,
@@ -97,6 +98,20 @@ export default function Header({ user, currentPath }: HeaderProps) {
                   Notes
                 </Button>
               </Link>
+              <Link href="/expenses">
+                <Button
+                  type="text"
+                  icon={<WalletOutlined />}
+                  style={{
+                    borderBottom:
+                      currentPath === '/expenses' ? '2px solid #1a1a1a' : '2px solid transparent',
+                    borderRadius: 0,
+                    fontWeight: currentPath === '/expenses' ? 600 : 400,
+                  }}
+                >
+                  Dépenses
+                </Button>
+              </Link>
               <Link href="/bookmarks">
                 <Button
                   type="text"
@@ -114,6 +129,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
             </>
           )}
         </div>
+
         {user && (
           <Button
             type="text"
@@ -133,7 +149,7 @@ export default function Header({ user, currentPath }: HeaderProps) {
       >
         <div style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
           <div style={{ flex: 1 }}>
-            <Space orientation="vertical" style={{ width: '100%' }} size="middle">
+            <Space direction="vertical" style={{ width: '100%' }} size="middle">
               <div>
                 <div style={{ color: '#64748b', fontSize: '12px', marginBottom: '4px' }}>
                   Connecté en tant que

@@ -26,9 +26,13 @@ export default function SettingsPage({ user, userSettings, success }: SettingsPa
 
   const handlePrinterToggle = (checked: boolean) => {
     setPrinterLoading(true)
-    router.patch('/settings', { showPrinterButton: checked }, {
-      onFinish: () => setPrinterLoading(false),
-    })
+    router.patch(
+      '/settings',
+      { showPrinterButton: checked },
+      {
+        onFinish: () => setPrinterLoading(false),
+      }
+    )
   }
 
   return (

@@ -1,7 +1,10 @@
 import { DateTime } from 'luxon'
-import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
-import type { BelongsTo } from '@adonisjs/lucid/types/relations'
+import { BaseModel, column, belongsTo, hasMany } from '@adonisjs/lucid/orm'
+import type { BelongsTo, HasMany } from '@adonisjs/lucid/types/relations'
 import User from '#models/user'
+import TodoCompletion from '#models/todo_completion'
+
+export type RecurrenceType = 'none' | 'daily' | 'weekly' | 'monthly'
 
 export default class Todo extends BaseModel {
   @column({ isPrimary: true })
@@ -28,6 +31,12 @@ export default class Todo extends BaseModel {
   @column()
   declare priority: 'Haute' | 'Moyenne' | 'Basse'
 
+  @column()
+  declare recurrenceType: RecurrenceType
+
+  @column.date()
+  declare recurrenceEndDate: DateTime | null
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 
@@ -36,6 +45,9 @@ export default class Todo extends BaseModel {
 
   @belongsTo(() => User)
   declare user: BelongsTo<typeof User>
+
+  @hasMany(() => TodoCompletion)
+  declare completions: HasMany<typeof TodoCompletion>
 
   static forUser(query: any, userId: number) {
     query.where('user_id', userId)

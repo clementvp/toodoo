@@ -132,8 +132,6 @@ TooDoo/
   }
   ```
 
-
-
 ### Code Style
 
 - **Indentation:** 2 espaces

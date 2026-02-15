@@ -37,7 +37,11 @@ export default function TodosIndex({ user, todos, userSettings, errors }: TodosP
         sidePanel={
           <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', height: '100%' }}>
             <div style={{ flex: 1, minHeight: 0 }}>
-              <TodoListCard todos={todosForSelectedDay} selectedDate={selectedDate} showPrinterButton={userSettings.showPrinterButton} />
+              <TodoListCard
+                todos={todosForSelectedDay}
+                selectedDate={selectedDate}
+                showPrinterButton={userSettings.showPrinterButton}
+              />
             </div>
             <div>
               <TodoFormCard selectedDate={selectedDate} errors={errors} />

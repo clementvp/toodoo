@@ -5,9 +5,11 @@ import {
   DeleteOutlined,
   PlusOutlined,
   PrinterOutlined,
+  RetweetOutlined,
 } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
 import type { Todo } from '~/lib/types'
+import { RECURRENCE_LABELS } from '~/lib/types'
 import TodoForm from '../forms/todo_form'
 import { dayjs } from '~/lib/date_utils'
 import { useThermalPrinter } from '~/lib/use_thermal_printer'
@@ -49,61 +51,108 @@ export default function TodosCard({ todos, showPrinterButton = false }: TodosCar
     }
   }
 
-  const handleStatusToggle = async (todoId: number, currentStatus: string) => {
-    const newStatus = currentStatus === 'À faire' ? 'Terminé' : 'À faire'
+  const handleStatusToggle = async (todo: Todo) => {
+    const newStatus = todo.status === 'À faire' ? 'Terminé' : 'À faire'
 
     setLocalTodos(
-      localTodos.map((t) => (t.id === todoId ? { ...t, status: newStatus as Todo['status'] } : t))
+      localTodos.map((t) =>
+        t.id === todo.id && t.dueDate === todo.dueDate
+          ? { ...t, status: newStatus as Todo['status'] }
+          : t
+      )
     )
 
-    try {
-      router.patch(
-        `/todos/${todoId}`,
-        { status: newStatus },
-        {
-          preserveScroll: true,
-          only: ['todosToday'],
-          onError: () => {
-            setLocalTodos(
-              localTodos.map((t) =>
-                t.id === todoId ? { ...t, status: currentStatus as Todo['status'] } : t
-              )
-            )
-            message.error('Échec de la mise à jour')
-          },
-        }
-      )
-    } catch (error) {
-      setLocalTodos(
-        localTodos.map((t) =>
-          t.id === todoId ? { ...t, status: currentStatus as Todo['status'] } : t
+    const body = todo.isRecurring
+      ? { status: newStatus, occurrenceDate: todo.dueDate }
+      : { status: newStatus }
+
+    router.patch(`/todos/${todo.id}`, body, {
+      preserveScroll: true,
+      only: ['todosToday'],
+      onError: () => {
+        setLocalTodos(
+          localTodos.map((t) =>
+            t.id === todo.id && t.dueDate === todo.dueDate ? { ...t, status: todo.status } : t
+          )
         )
-      )
-      message.error('Échec de la mise à jour')
-    }
+        message.error('Échec de la mise à jour')
+      },
+    })
   }
 
   const handleDelete = (todo: Todo) => {
-    Modal.confirm({
-      title: 'Supprimer cette tâche ?',
-      content: `Êtes-vous sûr de vouloir supprimer "${todo.title}" ?`,
-      okText: 'Supprimer',
-      okType: 'danger',
-      cancelText: 'Annuler',
-      onOk: () => {
-        router.delete(`/todos/${todo.id}`, {
-          preserveScroll: true,
-          only: ['todosToday'],
-          onSuccess: () => {
-            setLocalTodos(localTodos.filter((t) => t.id !== todo.id))
-            message.success('Tâche supprimée')
-          },
-          onError: () => {
-            message.error('Échec de la suppression')
-          },
-        })
-      },
-    })
+    if (todo.isRecurring) {
+      Modal.confirm({
+        title: 'Supprimer cette tâche récurrente ?',
+        width: 520,
+        content: (
+          <div>
+            <p style={{ fontWeight: 'bold', marginBottom: '12px' }}>"{todo.title}"</p>
+            <p>Voulez-vous supprimer :</p>
+          </div>
+        ),
+        okText: 'Toutes les occurrences',
+        okType: 'danger',
+        cancelText: 'Annuler',
+        footer: (_, { OkBtn, CancelBtn }) => (
+          <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '8px' }}>
+            <CancelBtn />
+            <Button
+              onClick={() => {
+                Modal.destroyAll()
+                router.delete(`/todos/${todo.id}/occurrence`, {
+                  data: { occurrenceDate: todo.dueDate },
+                  preserveScroll: true,
+                  only: ['todosToday'],
+                  onSuccess: () => {
+                    setLocalTodos(
+                      localTodos.filter((t) => !(t.id === todo.id && t.dueDate === todo.dueDate))
+                    )
+                  },
+                })
+              }}
+            >
+              Cette occurrence
+            </Button>
+            <OkBtn />
+          </div>
+        ),
+        onOk: () => {
+          router.delete(`/todos/${todo.id}`, {
+            preserveScroll: true,
+            only: ['todosToday'],
+            onSuccess: () => {
+              setLocalTodos(localTodos.filter((t) => t.id !== todo.id))
+              message.success('Tâche supprimée')
+            },
+            onError: () => {
+              message.error('Échec de la suppression')
+            },
+          })
+        },
+      })
+    } else {
+      Modal.confirm({
+        title: 'Supprimer cette tâche ?',
+        content: `Êtes-vous sûr de vouloir supprimer "${todo.title}" ?`,
+        okText: 'Supprimer',
+        okType: 'danger',
+        cancelText: 'Annuler',
+        onOk: () => {
+          router.delete(`/todos/${todo.id}`, {
+            preserveScroll: true,
+            only: ['todosToday'],
+            onSuccess: () => {
+              setLocalTodos(localTodos.filter((t) => t.id !== todo.id))
+              message.success('Tâche supprimée')
+            },
+            onError: () => {
+              message.error('Échec de la suppression')
+            },
+          })
+        },
+      })
+    }
   }
 
   const renderContent = () => {
@@ -116,6 +165,7 @@ export default function TodosCard({ todos, showPrinterButton = false }: TodosCar
     return (
       <List
         dataSource={localTodos}
+        rowKey={(todo) => `${todo.id}-${todo.dueDate}`}
         renderItem={(todo) => (
           <List.Item
             actions={[
@@ -130,10 +180,7 @@ export default function TodosCard({ todos, showPrinterButton = false }: TodosCar
               </Button>,
             ]}
           >
-            <Checkbox
-              checked={todo.status === 'Terminé'}
-              onChange={() => handleStatusToggle(todo.id, todo.status)}
-            >
+            <Checkbox checked={todo.status === 'Terminé'} onChange={() => handleStatusToggle(todo)}>
               <span
                 style={{
                   textDecoration: todo.status === 'Terminé' ? 'line-through' : 'none',
@@ -148,6 +195,14 @@ export default function TodosCard({ todos, showPrinterButton = false }: TodosCar
               >
                 {todo.priority}
               </Tag>
+              {todo.isRecurring && (
+                <Tag
+                  icon={<RetweetOutlined />}
+                  style={{ marginLeft: 4, fontSize: 11, color: '#64748b', borderColor: '#cbd5e1' }}
+                >
+                  {RECURRENCE_LABELS[todo.recurrenceType]}
+                </Tag>
+              )}
             </Checkbox>
           </List.Item>
         )}

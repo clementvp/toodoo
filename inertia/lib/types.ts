@@ -6,6 +6,15 @@ export interface User {
   updatedAt: string
 }
 
+export type RecurrenceType = 'none' | 'daily' | 'weekly' | 'monthly'
+
+export const RECURRENCE_LABELS: Record<RecurrenceType, string> = {
+  none: 'Ne pas répéter',
+  daily: 'Chaque jour',
+  weekly: 'Chaque semaine',
+  monthly: 'Chaque mois',
+}
+
 export interface Todo {
   id: number
   userId: number
@@ -15,6 +24,9 @@ export interface Todo {
   dueTime: string | null
   status: 'À faire' | 'Terminé'
   priority: 'Haute' | 'Moyenne' | 'Basse'
+  recurrenceType: RecurrenceType
+  recurrenceEndDate: string | null
+  isRecurring: boolean
   createdAt: string
   updatedAt: string
 }

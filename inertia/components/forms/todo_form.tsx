@@ -1,9 +1,11 @@
-import { Form, Input, Button, TimePicker, Alert, Select } from 'antd'
-import { PlusOutlined } from '@ant-design/icons'
+import { Form, Input, Button, TimePicker, Alert, Select, DatePicker } from 'antd'
+import { PlusOutlined, RetweetOutlined } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
 import { useState } from 'react'
 import { toISODate } from '~/lib/date_utils'
 import { PRIORITY_OPTIONS, PRIORITY_COLOR } from '~/lib/todo_priority'
+import { RECURRENCE_LABELS } from '~/lib/types'
+import type { RecurrenceType } from '~/lib/types'
 import type { Dayjs } from 'dayjs'
 
 interface TodoFormProps {
@@ -13,10 +15,29 @@ interface TodoFormProps {
   reloadOnly?: string[]
 }
 
-export default function TodoForm({ selectedDate, errors, onSuccess, reloadOnly = ['todosToday'] }: TodoFormProps) {
+const RECURRENCE_OPTIONS = (Object.keys(RECURRENCE_LABELS) as RecurrenceType[]).map((value) => ({
+  value,
+  label:
+    value === 'none' ? (
+      RECURRENCE_LABELS[value]
+    ) : (
+      <span>
+        <RetweetOutlined style={{ marginRight: 6 }} />
+        {RECURRENCE_LABELS[value]}
+      </span>
+    ),
+}))
+
+export default function TodoForm({
+  selectedDate,
+  errors,
+  onSuccess,
+  reloadOnly = ['todosToday'],
+}: TodoFormProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [dueTime, setDueTime] = useState<Dayjs | null>(null)
+  const [recurrenceType, setRecurrenceType] = useState<RecurrenceType>('none')
 
   const capitalize = (str: string) => str.charAt(0).toUpperCase() + str.slice(1)
 
@@ -30,6 +51,10 @@ export default function TodoForm({ selectedDate, errors, onSuccess, reloadOnly =
         dueDate: toISODate(selectedDate),
         dueTime: dueTime ? dueTime.format('HH:mm') : null,
         priority: values.priority,
+        recurrenceType: values.recurrenceType || 'none',
+        recurrenceEndDate: values.recurrenceEndDate
+          ? values.recurrenceEndDate.format('YYYY-MM-DD')
+          : null,
       },
       {
         preserveScroll: true,
@@ -37,6 +62,7 @@ export default function TodoForm({ selectedDate, errors, onSuccess, reloadOnly =
         onSuccess: () => {
           form.resetFields()
           setDueTime(null)
+          setRecurrenceType('none')
           onSuccess?.()
         },
         onFinish: () => setLoading(false),
@@ -96,6 +122,27 @@ export default function TodoForm({ selectedDate, errors, onSuccess, reloadOnly =
             }))}
           />
         </Form.Item>
+
+        <Form.Item name="recurrenceType" label="Répétition" initialValue="none">
+          <Select
+            options={RECURRENCE_OPTIONS}
+            onChange={(val: RecurrenceType) => {
+              setRecurrenceType(val)
+              if (val === 'none') form.setFieldValue('recurrenceEndDate', undefined)
+            }}
+          />
+        </Form.Item>
+
+        {recurrenceType !== 'none' && (
+          <Form.Item name="recurrenceEndDate" label="Répéter jusqu'au (optionnel)">
+            <DatePicker
+              format="DD/MM/YYYY"
+              placeholder="Sans date de fin"
+              style={{ width: '100%' }}
+              disabledDate={(d) => d.isBefore(selectedDate, 'day')}
+            />
+          </Form.Item>
+        )}
 
         <Form.Item
           name="description"

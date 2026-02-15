@@ -12,7 +12,12 @@ interface NoteFormProps {
   reloadOnly?: string[]
 }
 
-export default function NoteForm({ selectedDate, errors, onSuccess, reloadOnly = ['notesToday'] }: NoteFormProps) {
+export default function NoteForm({
+  selectedDate,
+  errors,
+  onSuccess,
+  reloadOnly = ['notesToday'],
+}: NoteFormProps) {
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
 

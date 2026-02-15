@@ -19,6 +19,7 @@ router
     router.get('/todos', [TodosController, 'index'])
     router.post('/todos', [TodosController, 'create'])
     router.patch('/todos/:id', [TodosController, 'update'])
+    router.delete('/todos/:id/occurrence', [TodosController, 'deleteOccurrence'])
     router.delete('/todos/:id', [TodosController, 'delete'])
     const NotesController = () => import('#controllers/notes_controller')
     router.get('/notes', [NotesController, 'index'])

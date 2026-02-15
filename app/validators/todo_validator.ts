@@ -10,6 +10,8 @@ export const createTodoValidator = vine.compile(
       .regex(/^([01]\d|2[0-3]):([0-5]\d)$/)
       .optional(),
     priority: vine.enum(['Haute', 'Moyenne', 'Basse']).optional(),
+    recurrenceType: vine.enum(['none', 'daily', 'weekly', 'monthly']).optional(),
+    recurrenceEndDate: vine.date({ formats: ['YYYY-MM-DD'] }).optional(),
   })
 )
 
@@ -24,5 +26,10 @@ export const updateTodoValidator = vine.compile(
       .optional(),
     status: vine.enum(['À faire', 'Terminé']).optional(),
     priority: vine.enum(['Haute', 'Moyenne', 'Basse']).optional(),
+    // For recurring todos: the specific occurrence date being toggled
+    occurrenceDate: vine
+      .string()
+      .regex(/^\d{4}-\d{2}-\d{2}$/)
+      .optional(),
   })
 )

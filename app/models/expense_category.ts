@@ -3,7 +3,7 @@ import { BaseModel, column, belongsTo } from '@adonisjs/lucid/orm'
 import type { BelongsTo } from '@adonisjs/lucid/types/relations'
 import User from '#models/user'
 
-export default class UserSetting extends BaseModel {
+export default class ExpenseCategory extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
@@ -11,13 +11,10 @@ export default class UserSetting extends BaseModel {
   declare userId: number
 
   @column()
-  declare weatherCity: string | null
+  declare name: string
 
   @column()
-  declare showPrinterButton: boolean
-
-  @column()
-  declare currentBalance: number
+  declare color: string
 
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime

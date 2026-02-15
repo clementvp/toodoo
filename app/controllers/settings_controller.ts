@@ -30,10 +30,23 @@ export default class SettingsController {
     if (data.showPrinterButton !== undefined) {
       userSettings.showPrinterButton = data.showPrinterButton
     }
+    if (data.currentBalance !== undefined) {
+      userSettings.currentBalance = data.currentBalance
+    }
     await userSettings.save()
 
     session.flash('success', 'Paramètres mis à jour avec succès')
 
+    return response.redirect().back()
+  }
+
+  async resetBalance({ auth, response, session }: HttpContext) {
+    const user = auth.user!
+    const userSettings = await UserSetting.firstOrCreate({ userId: user.id }, { userId: user.id })
+    userSettings.currentBalance = 0
+    await userSettings.save()
+
+    session.flash('success', 'Solde réinitialisé')
     return response.redirect().back()
   }
 }

@@ -391,3 +391,12 @@ Pour toute question ou contribution :
 
 **Dernière mise à jour:** 2026-02-08
 **Auteur:** Claude & Team
+
+## Active Technologies
+
+- TypeScript 5.8+ / Node.js 20.6+ + AdonisJS v6.18, Lucid ORM v21, VineJS, React 19, Inertia.js v3, Ant Design v6.2.3, Vite 6, Day.js (frontend), Luxon (backend), `recharts` (new — for analytics charts) (004-expense-tracker)
+- PostgreSQL — new `expenses` table + `current_balance` column on `user_settings` (004-expense-tracker)
+
+## Recent Changes
+
+- 004-expense-tracker: Added TypeScript 5.8+ / Node.js 20.6+ + AdonisJS v6.18, Lucid ORM v21, VineJS, React 19, Inertia.js v3, Ant Design v6.2.3, Vite 6, Day.js (frontend), Luxon (backend), `recharts` (new — for analytics charts)

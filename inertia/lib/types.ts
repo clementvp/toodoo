@@ -53,6 +53,31 @@ export interface UserSettings {
   userId: number
   weatherCity: string | null
   showPrinterButton: boolean
+  currentBalance: number
+  createdAt: string
+  updatedAt: string
+}
+
+export interface ExpenseCategory {
+  id: number
+  userId: number
+  name: string
+  color: string
+  createdAt: string
+  updatedAt: string
+}
+
+export interface Expense {
+  id: number
+  userId: number
+  type: 'income' | 'expense' | 'adjustment'
+  amount: number
+  categoryId: number | null
+  date: string
+  isRecurring: boolean
+  recurrenceType: RecurrenceType
+  recurrenceEndDate: string | null
+  occurrenceDate: string | null
   createdAt: string
   updatedAt: string
 }
@@ -72,6 +97,9 @@ export interface DashboardProps {
   user?: User
   todosToday: Todo[]
   notesToday: Note[]
+  expensesToday: Expense[]
+  derivedBalance: number
   weather: WeatherData | null
   userSettings: UserSettings
+  categories: ExpenseCategory[]
 }

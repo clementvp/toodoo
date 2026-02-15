@@ -6,14 +6,16 @@ const { Content } = Layout
 interface CalendarLayoutProps {
   calendarSlot: ReactNode
   sidePanel: ReactNode
+  extraOffset?: number
 }
 
-export default function CalendarLayout({ calendarSlot, sidePanel }: CalendarLayoutProps) {
+export default function CalendarLayout({ calendarSlot, sidePanel, extraOffset = 0 }: CalendarLayoutProps) {
   return (
     <Content
       style={{
         padding: '24px',
-        height: 'calc(100vh - 64px)',
+        height: `calc(100vh - 64px - ${extraOffset}px)`,
+        overflow: 'hidden',
         background: '#F8FAFC',
       }}
     >

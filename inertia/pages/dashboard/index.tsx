@@ -6,6 +6,7 @@ import DateTimeCard from '~/components/cards/datetime_card'
 import WeatherCard from '~/components/cards/weather_card'
 import TodosCard from '~/components/cards/todos_card'
 import NotesCard from '~/components/cards/notes_card'
+import ExpensesCard from '~/components/cards/expenses_card'
 
 const { Content } = Layout
 
@@ -13,8 +14,11 @@ export default function Dashboard({
   user,
   todosToday,
   notesToday,
+  expensesToday,
+  derivedBalance,
   weather,
   userSettings,
+  categories,
 }: DashboardProps) {
   return (
     <Layout style={{ minHeight: '100vh' }}>
@@ -22,7 +26,8 @@ export default function Dashboard({
       <Header user={user} currentPath="/" />
       <Content style={{ padding: '24px' }}>
         <Row gutter={[16, 16]} style={{ minHeight: 'calc(100vh - 64px - 48px)' }}>
-          <Col xs={24} md={24} lg={6} style={{ display: 'flex' }}>
+          {/* Colonne gauche : Date/Heure + Météo */}
+          <Col xs={24} lg={6} style={{ display: 'flex' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
               <div style={{ flex: 1 }}>
                 <DateTimeCard />
@@ -33,15 +38,30 @@ export default function Dashboard({
             </div>
           </Col>
 
-          <Col xs={24} md={12} lg={9} style={{ display: 'flex' }}>
-            <div style={{ width: '100%' }}>
-              <TodosCard todos={todosToday} showPrinterButton={userSettings.showPrinterButton} />
-            </div>
-          </Col>
+          {/* Colonne droite : Tâches+Notes en haut, Dépenses en bas */}
+          <Col xs={24} lg={18} style={{ display: 'flex' }}>
+            <div
+              style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}
+            >
+              <Row gutter={[16, 16]} style={{ flex: 1 }}>
+                <Col xs={24} md={12} style={{ display: 'flex' }}>
+                  <div style={{ width: '100%' }}>
+                    <TodosCard
+                      todos={todosToday}
+                      showPrinterButton={userSettings.showPrinterButton}
+                    />
+                  </div>
+                </Col>
+                <Col xs={24} md={12} style={{ display: 'flex' }}>
+                  <div style={{ width: '100%' }}>
+                    <NotesCard notes={notesToday} />
+                  </div>
+                </Col>
+              </Row>
 
-          <Col xs={24} md={12} lg={9} style={{ display: 'flex' }}>
-            <div style={{ width: '100%' }}>
-              <NotesCard notes={notesToday} />
+              <div style={{ flex: 1 }}>
+                <ExpensesCard expenses={expensesToday} categories={categories ?? []} balance={derivedBalance} showPrinterButton={userSettings.showPrinterButton} />
+              </div>
             </div>
           </Col>
         </Row>

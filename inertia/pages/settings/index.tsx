@@ -1,5 +1,16 @@
 import { useState } from 'react'
-import { Layout, Card, Form, Input, Button, Alert, Switch, Typography } from 'antd'
+import {
+  Layout,
+  Card,
+  Form,
+  Input,
+  Button,
+  Alert,
+  Switch,
+  Typography,
+  InputNumber,
+  Modal,
+} from 'antd'
 import { Head, router } from '@inertiajs/react'
 import Header from '~/components/layout/header'
 import type { User, UserSettings } from '~/lib/types'
@@ -16,11 +27,41 @@ export default function SettingsPage({ user, userSettings, success }: SettingsPa
   const [form] = Form.useForm()
   const [loading, setLoading] = useState(false)
   const [printerLoading, setPrinterLoading] = useState(false)
+  const [balanceLoading, setBalanceLoading] = useState(false)
+  const [balanceValue, setBalanceValue] = useState<number>(userSettings.currentBalance || 0)
 
   const handleSubmit = async (values: { weatherCity?: string }) => {
     setLoading(true)
     router.patch('/settings', values, {
       onFinish: () => setLoading(false),
+    })
+  }
+
+  const handleBalanceSave = () => {
+    setBalanceLoading(true)
+    router.patch(
+      '/settings',
+      { currentBalance: balanceValue },
+      { onFinish: () => setBalanceLoading(false) }
+    )
+  }
+
+  const handleBalanceReset = () => {
+    Modal.confirm({
+      title: 'Réinitialiser le solde ?',
+      content: 'Le solde sera remis à zéro. Cette action ne supprime pas vos transactions.',
+      okText: 'Réinitialiser',
+      okType: 'danger',
+      cancelText: 'Annuler',
+      onOk: () => {
+        router.post(
+          '/settings/reset-balance',
+          {},
+          {
+            onSuccess: () => setBalanceValue(0),
+          }
+        )
+      },
     })
   }
 
@@ -61,6 +102,36 @@ export default function SettingsPage({ user, userSettings, success }: SettingsPa
                 onChange={handlePrinterToggle}
               />
             </div>
+          </Card>
+
+          <Card title="Finances" variant="borderless" style={{ marginBottom: '16px' }}>
+            <div style={{ marginBottom: '16px' }}>
+              <Typography.Text strong>Solde actuel</Typography.Text>
+              <br />
+              <Typography.Text type="secondary">
+                Ce solde sert de point de départ pour le calcul du solde courant dans vos dépenses.
+              </Typography.Text>
+            </div>
+            <div
+              style={{ display: 'flex', gap: '8px', alignItems: 'center', marginBottom: '12px' }}
+            >
+              <InputNumber
+                prefix="€"
+                precision={2}
+                min={0}
+                step={0.01}
+                value={balanceValue}
+                onChange={(v) => setBalanceValue(v ?? 0)}
+                style={{ flex: 1 }}
+                placeholder="0.00"
+              />
+              <Button type="primary" loading={balanceLoading} onClick={handleBalanceSave}>
+                Enregistrer
+              </Button>
+            </div>
+            <Button danger onClick={handleBalanceReset}>
+              Réinitialiser le solde
+            </Button>
           </Card>
 
           <Card title="Météo" variant="borderless">

@@ -50,6 +50,7 @@ export default function NotesIndex({ user, notes }: NotesPageProps) {
 
   const calendarView = (
     <CalendarLayout
+      extraOffset={46}
       calendarSlot={
         <NoteCalendarView
           notes={calendarNotes}

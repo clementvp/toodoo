@@ -1,16 +1,15 @@
-import { Layout, Modal, Typography, Space, Button } from 'antd'
+import { Layout, Button } from 'antd'
+import { PlusOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import Header from '../../components/layout/header'
 import CalendarLayout from '../../components/layout/calendar_layout'
 import NoteCalendarView from '../../components/calendar/note_calendar_view'
 import NoteListCard from '../../components/cards/note_list_card'
-import NoteFormCard from '../../components/cards/note_form_card'
+import NoteEditorModal from '../../components/forms/note_editor_modal'
 import type { Note, User } from '~/lib/types'
 import { dayjs, isSameDay } from '../../lib/date_utils'
 import type { Dayjs } from 'dayjs'
 import { Head } from '@inertiajs/react'
-
-const { Paragraph } = Typography
 
 export interface NotesPageProps {
   user?: User
@@ -18,10 +17,10 @@ export interface NotesPageProps {
   errors?: Record<string, string>
 }
 
-export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
+export default function NotesIndex({ user, notes }: NotesPageProps) {
   const [selectedDate, setSelectedDate] = useState<Dayjs>(dayjs())
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
-  const [modalVisible, setModalVisible] = useState(false)
+  const [editorOpen, setEditorOpen] = useState(false)
 
   const notesForSelectedDay = notes.filter((note) => isSameDay(note.dueDate, selectedDate))
 
@@ -31,11 +30,16 @@ export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
 
   const handleViewNote = (note: Note) => {
     setSelectedNote(note)
-    setModalVisible(true)
+    setEditorOpen(true)
   }
 
-  const handleModalClose = () => {
-    setModalVisible(false)
+  const handleCreate = () => {
+    setSelectedNote(null)
+    setEditorOpen(true)
+  }
+
+  const handleEditorClose = () => {
+    setEditorOpen(false)
     setSelectedNote(null)
   }
 
@@ -57,32 +61,27 @@ export default function NotesIndex({ user, notes, errors }: NotesPageProps) {
               />
             </div>
             <div>
-              <NoteFormCard selectedDate={selectedDate} errors={errors} />
+              <Button
+                type="primary"
+                icon={<PlusOutlined />}
+                block
+                onClick={handleCreate}
+                style={{ height: 48, fontSize: 15 }}
+              >
+                Nouvelle note pour le {selectedDate.locale('fr').format('D MMMM YYYY')}
+              </Button>
             </div>
           </div>
         }
       />
 
-      <Modal
-        title={selectedNote?.title}
-        open={modalVisible}
-        onCancel={handleModalClose}
-        footer={[
-          <Button key="close" onClick={handleModalClose}>
-            Fermer
-          </Button>,
-        ]}
-        width={800}
-      >
-        {selectedNote && (
-          <Space orientation="vertical" style={{ width: '100%' }}>
-            <Paragraph style={{ whiteSpace: 'pre-wrap' }}>{selectedNote.content}</Paragraph>
-            <Paragraph type="secondary" style={{ fontSize: '12px', marginTop: '16px' }}>
-              Date : {dayjs(selectedNote.dueDate).locale('fr').format('DD MMMM YYYY')}
-            </Paragraph>
-          </Space>
-        )}
-      </Modal>
+      <NoteEditorModal
+        open={editorOpen}
+        onClose={handleEditorClose}
+        note={selectedNote}
+        selectedDate={selectedDate}
+        reloadOnly={['notes']}
+      />
     </Layout>
   )
 }

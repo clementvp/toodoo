@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Card, List, Empty, Button, Modal, Typography, Space } from 'antd'
+import { Card, List, Empty, Button, Modal } from 'antd'
 import {
   FileTextOutlined,
   EyeOutlined,
@@ -10,9 +10,7 @@ import {
 import { router } from '@inertiajs/react'
 import type { Note } from '~/lib/types'
 import { dayjs } from '~/lib/date_utils'
-import NoteForm from '../forms/note_form'
-
-const { Paragraph } = Typography
+import NoteEditorModal from '../forms/note_editor_modal'
 
 interface NotesCardProps {
   notes: Note[]
@@ -20,16 +18,20 @@ interface NotesCardProps {
 
 export default function NotesCard({ notes }: NotesCardProps) {
   const [selectedNote, setSelectedNote] = useState<Note | null>(null)
-  const [modalVisible, setModalVisible] = useState(false)
-  const [createModalVisible, setCreateModalVisible] = useState(false)
+  const [editorOpen, setEditorOpen] = useState(false)
 
   const handleViewNote = (note: Note) => {
     setSelectedNote(note)
-    setModalVisible(true)
+    setEditorOpen(true)
   }
 
-  const handleModalClose = () => {
-    setModalVisible(false)
+  const handleCreate = () => {
+    setSelectedNote(null)
+    setEditorOpen(true)
+  }
+
+  const handleEditorClose = () => {
+    setEditorOpen(false)
     setSelectedNote(null)
   }
 
@@ -110,7 +112,7 @@ export default function NotesCard({ notes }: NotesCardProps) {
             type="text"
             icon={<PlusOutlined />}
             size="small"
-            onClick={() => setCreateModalVisible(true)}
+            onClick={handleCreate}
           />
         }
         variant="borderless"
@@ -120,36 +122,13 @@ export default function NotesCard({ notes }: NotesCardProps) {
         {renderContent()}
       </Card>
 
-      <Modal
-        title={selectedNote?.title}
-        open={modalVisible}
-        onCancel={handleModalClose}
-        footer={[
-          <Button key="close" onClick={handleModalClose}>
-            Fermer
-          </Button>,
-        ]}
-        width={800}
-      >
-        {selectedNote && (
-          <Space orientation="vertical" style={{ width: '100%' }}>
-            <Paragraph style={{ whiteSpace: 'pre-wrap' }}>{selectedNote.content}</Paragraph>
-            <Paragraph type="secondary" style={{ fontSize: '12px', marginTop: '16px' }}>
-              Date : {dayjs(selectedNote.dueDate).locale('fr').format('DD MMMM YYYY')}
-            </Paragraph>
-          </Space>
-        )}
-      </Modal>
-
-      <Modal
-        title="Créer une note"
-        open={createModalVisible}
-        onCancel={() => setCreateModalVisible(false)}
-        footer={null}
-        width={600}
-      >
-        <NoteForm selectedDate={dayjs()} onSuccess={() => setCreateModalVisible(false)} />
-      </Modal>
+      <NoteEditorModal
+        open={editorOpen}
+        onClose={handleEditorClose}
+        note={selectedNote}
+        selectedDate={dayjs()}
+        reloadOnly={['notesToday']}
+      />
     </>
   )
 }

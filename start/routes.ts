@@ -26,6 +26,7 @@ router
     router.get('/notes', [NotesController, 'index'])
     router.get('/notes/:id', [NotesController, 'show'])
     router.post('/notes', [NotesController, 'create'])
+    router.patch('/notes/:id', [NotesController, 'update'])
     router.delete('/notes/:id', [NotesController, 'delete'])
     const BookmarksController = () => import('#controllers/bookmarks_controller')
     router.get('/bookmarks', [BookmarksController, 'index'])

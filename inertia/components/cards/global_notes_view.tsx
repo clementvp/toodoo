@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Button, Input, Table, Modal, Space } from 'antd'
-import { PlusOutlined, DeleteOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
+import { PlusOutlined, DeleteOutlined, EyeOutlined, ExclamationCircleOutlined } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
 import type { TableColumnsType, SorterResult } from 'antd/es/table/interface'
 import type { Note } from '~/lib/types'
@@ -99,17 +99,25 @@ export default function GlobalNotesView({ notes }: GlobalNotesViewProps) {
     {
       title: '',
       key: 'actions',
-      width: 60,
+      width: 140,
       render: (_: unknown, record: Note) => (
-        <Button
-          type="text"
-          danger
-          icon={<DeleteOutlined />}
-          onClick={(e) => {
-            e.stopPropagation()
-            handleDelete(record)
-          }}
-        />
+        <Space onClick={(e) => e.stopPropagation()}>
+          <Button
+            type="text"
+            icon={<EyeOutlined />}
+            onClick={() => handleViewNote(record)}
+          >
+            Voir
+          </Button>
+          <Button
+            type="text"
+            danger
+            icon={<DeleteOutlined />}
+            onClick={() => handleDelete(record)}
+          >
+            Supprimer
+          </Button>
+        </Space>
       ),
     },
   ]

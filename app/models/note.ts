@@ -19,7 +19,10 @@ export default class Note extends BaseModel {
   declare content: string
 
   @column.date()
-  declare dueDate: DateTime
+  declare dueDate: DateTime | null
+
+  @column.dateTime({ autoCreate: true })
+  declare createdAt: DateTime
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime

@@ -36,7 +36,8 @@ export interface Note {
   userId: number
   title: string
   content: string
-  dueDate: string
+  dueDate: string | null
+  createdAt: string
   updatedAt: string
 }
 

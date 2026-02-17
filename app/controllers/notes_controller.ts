@@ -6,7 +6,10 @@ import { DateTime } from 'luxon'
 export default class NotesController {
   async index({ auth, inertia }: HttpContext) {
     const user = auth.user!
-    const notes = await Note.query().where('user_id', user.id).orderBy('due_date', 'desc')
+    const notes = await Note.query()
+      .where('user_id', user.id)
+      .orderBy('due_date', 'desc')
+      .orderBy('created_at', 'desc')
 
     return inertia.render('notes/index', {
       notes: notes.map((note) => note.serialize()),
@@ -28,7 +31,7 @@ export default class NotesController {
       userId: user.id,
       title: data.title,
       content: data.content,
-      dueDate: DateTime.fromJSDate(data.dueDate),
+      dueDate: data.dueDate ? DateTime.fromJSDate(data.dueDate) : null,
     })
 
     session.flash('success', 'Note created successfully!')

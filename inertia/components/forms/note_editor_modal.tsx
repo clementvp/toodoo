@@ -138,24 +138,23 @@ export default function NoteEditorModal({
   }
 
   const handleCreate = () => {
-    if (!editorInstance.current || !selectedDate) return
+    if (!editorInstance.current) return
     const content = editorInstance.current.getMarkdown()
     if (!title.trim() || !content.trim()) return
 
+    const payload: Record<string, string> = { title: title.trim(), content }
+    if (selectedDate) payload.dueDate = toISODate(selectedDate)
+
     setLoading(true)
-    router.post(
-      '/notes',
-      { title: title.trim(), content, dueDate: toISODate(selectedDate) },
-      {
-        preserveScroll: true,
-        only: reloadOnly,
-        onSuccess: () => {
-          setTitle('')
-          onClose()
-        },
-        onFinish: () => setLoading(false),
-      }
-    )
+    router.post('/notes', payload, {
+      preserveScroll: true,
+      only: reloadOnly,
+      onSuccess: () => {
+        setTitle('')
+        onClose()
+      },
+      onFinish: () => setLoading(false),
+    })
   }
 
   const footer = isEditMode
@@ -175,7 +174,7 @@ export default function NoteEditorModal({
 
   return (
     <Modal
-      title={isEditMode ? 'Modifier la note' : 'Créer une note'}
+      title={isEditMode ? 'Modifier la note' : selectedDate ? 'Créer une note' : 'Nouvelle note globale'}
       open={open}
       onCancel={isEditMode ? handleClose : onClose}
       footer={footer}

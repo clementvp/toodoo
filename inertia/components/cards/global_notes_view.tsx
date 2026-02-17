@@ -168,12 +168,7 @@ export default function GlobalNotesView({ notes }: GlobalNotesViewProps) {
           }}
         >
           {filtered.map((note) => (
-            <NoteCard
-              key={note.id}
-              note={note}
-              onView={handleViewNote}
-              onDelete={handleDelete}
-            />
+            <NoteCard key={note.id} note={note} onView={handleViewNote} onDelete={handleDelete} />
           ))}
         </div>
       )}
@@ -254,9 +249,7 @@ function NoteCard({ note, onView, onDelete }: NoteCardProps) {
         cursor: 'pointer',
         border: '1px solid',
         borderColor: hovered ? '#1a1a1a' : '#e2e8f0',
-        boxShadow: hovered
-          ? '0 8px 24px rgba(0,0,0,0.10)'
-          : '0 1px 4px rgba(0,0,0,0.05)',
+        boxShadow: hovered ? '0 8px 24px rgba(0,0,0,0.10)' : '0 1px 4px rgba(0,0,0,0.05)',
         transition: 'all 0.18s ease',
         display: 'flex',
         flexDirection: 'column',
@@ -305,9 +298,17 @@ function NoteCard({ note, onView, onDelete }: NoteCardProps) {
           marginTop: 4,
         }}
       >
-        <Tooltip title={`Créée le ${dayjs(note.createdAt).locale('fr').format('D MMM YYYY, HH:mm')}`}>
+        <Tooltip
+          title={`Créée le ${dayjs(note.createdAt).locale('fr').format('D MMM YYYY, HH:mm')}`}
+        >
           <Typography.Text
-            style={{ fontSize: 12, color: '#94a3b8', display: 'flex', alignItems: 'center', gap: 4 }}
+            style={{
+              fontSize: 12,
+              color: '#94a3b8',
+              display: 'flex',
+              alignItems: 'center',
+              gap: 4,
+            }}
           >
             <ClockCircleOutlined />
             {dayjs(note.updatedAt).locale('fr').fromNow()}
@@ -324,12 +325,7 @@ function NoteCard({ note, onView, onDelete }: NoteCardProps) {
           onClick={(e) => e.stopPropagation()}
         >
           <Tooltip title="Voir">
-            <Button
-              type="text"
-              size="small"
-              icon={<EyeOutlined />}
-              onClick={() => onView(note)}
-            />
+            <Button type="text" size="small" icon={<EyeOutlined />} onClick={() => onView(note)} />
           </Tooltip>
           <Tooltip title="Supprimer">
             <Button

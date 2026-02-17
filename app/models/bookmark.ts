@@ -13,6 +13,12 @@ export default class Bookmark extends BaseModel {
   @column()
   declare url: string
 
+  @column()
+  declare title: string | null
+
+  @column()
+  declare imageUrl: string | null
+
   @column.dateTime({ autoCreate: true })
   declare createdAt: DateTime
 

@@ -1,5 +1,18 @@
 import { useState } from 'react'
-import { List, Button, Form, Input, ColorPicker, Typography, Modal, Empty, Space, Card, Row, Col } from 'antd'
+import {
+  List,
+  Button,
+  Form,
+  Input,
+  ColorPicker,
+  Typography,
+  Modal,
+  Empty,
+  Space,
+  Card,
+  Row,
+  Col,
+} from 'antd'
 import { DeleteOutlined, PlusOutlined, TagOutlined } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
 import type { ExpenseCategory } from '~/lib/types'
@@ -111,12 +124,7 @@ export default function ExpenseCategoriesManager({
             </Col>
             <Col>
               <Form.Item style={{ marginBottom: 0 }}>
-                <Button
-                  type="primary"
-                  htmlType="submit"
-                  icon={<PlusOutlined />}
-                  loading={loading}
-                >
+                <Button type="primary" htmlType="submit" icon={<PlusOutlined />} loading={loading}>
                   Ajouter
                 </Button>
               </Form.Item>

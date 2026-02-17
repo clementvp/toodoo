@@ -16,7 +16,12 @@ interface ExpensesCardProps {
   showPrinterButton?: boolean
 }
 
-export default function ExpensesCard({ expenses, categories, balance, showPrinterButton = false }: ExpensesCardProps) {
+export default function ExpensesCard({
+  expenses,
+  categories,
+  balance,
+  showPrinterButton = false,
+}: ExpensesCardProps) {
   const [createModalVisible, setCreateModalVisible] = useState(false)
   const canvasRef = useRef<HTMLCanvasElement>(null)
   const { isConnected, isPrinting, connectPrinter, printCanvas } = useThermalPrinter()

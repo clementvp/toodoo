@@ -174,7 +174,9 @@ export default function NoteEditorModal({
 
   return (
     <Modal
-      title={isEditMode ? 'Modifier la note' : selectedDate ? 'Créer une note' : 'Nouvelle note globale'}
+      title={
+        isEditMode ? 'Modifier la note' : selectedDate ? 'Créer une note' : 'Nouvelle note globale'
+      }
       open={open}
       onCancel={isEditMode ? handleClose : onClose}
       footer={footer}

@@ -75,9 +75,7 @@ export default function ExpenseAnalytics({
     const month = now.subtract(11 - i, 'month')
     const key = month.format('YYYY-MM')
     const label = month.locale('fr').format('MMM YY')
-    const monthExpenses = expenses.filter((e) =>
-      (e.occurrenceDate ?? e.date).startsWith(key)
-    )
+    const monthExpenses = expenses.filter((e) => (e.occurrenceDate ?? e.date).startsWith(key))
     const income = monthExpenses
       .filter((e) => e.type === 'income')
       .reduce((s, e) => s + Number(e.amount), 0)
@@ -161,11 +159,7 @@ export default function ExpenseAnalytics({
               precision={2}
               style={{ width: 160 }}
             />
-            <Button
-              type="primary"
-              disabled={!isCorrectionNeeded}
-              onClick={handleCorrectBalance}
-            >
+            <Button type="primary" disabled={!isCorrectionNeeded} onClick={handleCorrectBalance}>
               Corriger
             </Button>
             {correctionDiff !== null && isCorrectionNeeded && (

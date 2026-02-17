@@ -107,14 +107,7 @@ export default function NotesCard({ notes }: NotesCardProps) {
             <FileTextOutlined /> Notes du jour
           </span>
         }
-        extra={
-          <Button
-            type="text"
-            icon={<PlusOutlined />}
-            size="small"
-            onClick={handleCreate}
-          />
-        }
+        extra={<Button type="text" icon={<PlusOutlined />} size="small" onClick={handleCreate} />}
         variant="borderless"
         style={{ height: '100%', display: 'flex', flexDirection: 'column' }}
         styles={{ body: { flex: 1, overflow: 'auto' } }}

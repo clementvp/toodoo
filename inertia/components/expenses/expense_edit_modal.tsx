@@ -116,13 +116,7 @@ export default function ExpenseEditModal({
           label="Montant"
           rules={[{ required: true, message: 'Le montant est requis' }]}
         >
-          <InputNumber
-            prefix="€"
-            min={0.01}
-            precision={2}
-            step={0.01}
-            style={{ width: '100%' }}
-          />
+          <InputNumber prefix="€" min={0.01} precision={2} step={0.01} style={{ width: '100%' }} />
         </Form.Item>
 
         <Form.Item name="categoryId" label="Catégorie (optionnel)">

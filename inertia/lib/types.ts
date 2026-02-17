@@ -45,6 +45,8 @@ export interface Bookmark {
   id: number
   userId: number
   url: string
+  title: string | null
+  imageUrl: string | null
   createdAt: string
   updatedAt: string
 }

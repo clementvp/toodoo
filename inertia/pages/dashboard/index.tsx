@@ -40,9 +40,7 @@ export default function Dashboard({
 
           {/* Colonne droite : Tâches+Notes en haut, Dépenses en bas */}
           <Col xs={24} lg={18} style={{ display: 'flex' }}>
-            <div
-              style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}
-            >
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '16px', width: '100%' }}>
               <Row gutter={[16, 16]} style={{ flex: 1 }}>
                 <Col xs={24} md={12} style={{ display: 'flex' }}>
                   <div style={{ width: '100%' }}>
@@ -60,7 +58,12 @@ export default function Dashboard({
               </Row>
 
               <div style={{ flex: 1 }}>
-                <ExpensesCard expenses={expensesToday} categories={categories ?? []} balance={derivedBalance} showPrinterButton={userSettings.showPrinterButton} />
+                <ExpensesCard
+                  expenses={expensesToday}
+                  categories={categories ?? []}
+                  balance={derivedBalance}
+                  showPrinterButton={userSettings.showPrinterButton}
+                />
               </div>
             </div>
           </Col>

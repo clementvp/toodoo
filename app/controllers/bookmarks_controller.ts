@@ -1,6 +1,7 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Bookmark from '#models/bookmark'
 import { createBookmarkValidator } from '#validators/bookmark_validator'
+import BookmarkMetadataService from '#services/bookmark_metadata_service'
 
 export default class BookmarksController {
   async index({ auth, inertia }: HttpContext) {
@@ -14,9 +15,14 @@ export default class BookmarksController {
     const user = auth.getUserOrFail()
     const data = await request.validateUsing(createBookmarkValidator)
 
+    const metadataService = new BookmarkMetadataService()
+    const { title, imageUrl } = await metadataService.fetch(data.url)
+
     const bookmark = new Bookmark()
     bookmark.userId = user.id
     bookmark.url = data.url
+    bookmark.title = title
+    bookmark.imageUrl = imageUrl
     await bookmark.save()
 
     session.flash('success', 'Bookmark ajouté avec succès')

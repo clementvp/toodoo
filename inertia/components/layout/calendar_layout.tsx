@@ -9,7 +9,11 @@ interface CalendarLayoutProps {
   extraOffset?: number
 }
 
-export default function CalendarLayout({ calendarSlot, sidePanel, extraOffset = 0 }: CalendarLayoutProps) {
+export default function CalendarLayout({
+  calendarSlot,
+  sidePanel,
+  extraOffset = 0,
+}: CalendarLayoutProps) {
   return (
     <Content
       style={{

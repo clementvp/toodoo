@@ -10,7 +10,11 @@ interface ExpenseFormCardProps {
   errors?: Record<string, string>
 }
 
-export default function ExpenseFormCard({ selectedDate, categories, errors }: ExpenseFormCardProps) {
+export default function ExpenseFormCard({
+  selectedDate,
+  categories,
+  errors,
+}: ExpenseFormCardProps) {
   return (
     <Card
       title={

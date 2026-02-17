@@ -26,7 +26,7 @@ const ALL_SUGGESTIONS: Suggestion[] = [
   {
     icon: <BankOutlined />,
     name: 'Livret A',
-    description: 'Épargne de précaution, disponible immédiatement, garantie par l\'État.',
+    description: "Épargne de précaution, disponible immédiatement, garantie par l'État.",
     yield: '3 %',
     tag: 'Sans risque',
     tagColor: 'blue',
@@ -62,7 +62,7 @@ const ALL_SUGGESTIONS: Suggestion[] = [
   {
     icon: <LineChartOutlined />,
     name: 'PEA',
-    description: 'Actions européennes, exonération d\'impôt sur les plus-values après 5 ans.',
+    description: "Actions européennes, exonération d'impôt sur les plus-values après 5 ans.",
     yield: 'Variable',
     tag: 'Risque modéré',
     tagColor: 'orange',
@@ -120,8 +120,7 @@ export default function PlacementSuggestions({ balance }: PlacementSuggestionsPr
         </Title>
       </div>
       <Text type="secondary" style={{ fontSize: 12, display: 'block', marginBottom: 12 }}>
-        Basé sur votre solde de{' '}
-        <Text strong>€{balance.toFixed(2)}</Text>
+        Basé sur votre solde de <Text strong>€{balance.toFixed(2)}</Text>
       </Text>
 
       <List
@@ -146,9 +145,7 @@ export default function PlacementSuggestions({ balance }: PlacementSuggestionsPr
                   </Text>
                 </div>
                 <div style={{ display: 'flex', alignItems: 'center', gap: 4 }}>
-                  <Text style={{ fontSize: 12, color: '#1a1a1a', fontWeight: 600 }}>
-                    {s.yield}
-                  </Text>
+                  <Text style={{ fontSize: 12, color: '#1a1a1a', fontWeight: 600 }}>{s.yield}</Text>
                   <Tag color={s.tagColor} style={{ fontSize: 10, margin: 0 }}>
                     {s.tag}
                   </Tag>

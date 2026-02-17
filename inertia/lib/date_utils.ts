@@ -3,12 +3,14 @@ import utc from 'dayjs/plugin/utc'
 import timezone from 'dayjs/plugin/timezone'
 import isSameOrBefore from 'dayjs/plugin/isSameOrBefore'
 import isSameOrAfter from 'dayjs/plugin/isSameOrAfter'
+import relativeTime from 'dayjs/plugin/relativeTime'
 import 'dayjs/locale/fr'
 
 dayjs.extend(utc)
 dayjs.extend(timezone)
 dayjs.extend(isSameOrBefore)
 dayjs.extend(isSameOrAfter)
+dayjs.extend(relativeTime)
 dayjs.locale('fr')
 
 export function formatDate(date: string | Date | Dayjs, format: string = 'YYYY-MM-DD'): string {

@@ -99,7 +99,7 @@ export default function GlobalNotesView({ notes }: GlobalNotesViewProps) {
     {
       title: '',
       key: 'actions',
-      width: 140,
+      width: 220,
       render: (_: unknown, record: Note) => (
         <Space onClick={(e) => e.stopPropagation()}>
           <Button
@@ -123,7 +123,7 @@ export default function GlobalNotesView({ notes }: GlobalNotesViewProps) {
   ]
 
   return (
-    <div style={{ padding: '24px', maxWidth: 900, margin: '0 auto' }}>
+    <div style={{ padding: '24px' }}>
       <Space style={{ marginBottom: 16, width: '100%', justifyContent: 'space-between' }}>
         <Input.Search
           placeholder="Rechercher par titre…"

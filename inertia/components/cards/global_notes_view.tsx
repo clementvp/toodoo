@@ -1,5 +1,5 @@
 import { useState, useMemo } from 'react'
-import { Button, Input, Modal, Typography, Empty, Select, Tooltip } from 'antd'
+import { Button, Input, Modal, Typography, Empty, Tooltip } from 'antd'
 import {
   PlusOutlined,
   DeleteOutlined,
@@ -7,6 +7,8 @@ import {
   ExclamationCircleOutlined,
   SearchOutlined,
   ClockCircleOutlined,
+  ArrowUpOutlined,
+  ArrowDownOutlined,
 } from '@ant-design/icons'
 import { router } from '@inertiajs/react'
 import type { Note } from '~/lib/types'
@@ -114,21 +116,36 @@ export default function GlobalNotesView({ notes }: GlobalNotesViewProps) {
           onChange={(e) => setSearch(e.target.value)}
           style={{ flex: '1 1 220px', maxWidth: 360 }}
         />
-        <Select
-          value={`${sortField}-${sortOrder}`}
-          onChange={(val) => {
-            const [field, order] = val.split('-') as [SortField, SortOrder]
-            setSortField(field)
-            setSortOrder(order)
-          }}
-          style={{ width: 210 }}
-          options={[
-            { label: 'Modifiée — récente en premier', value: 'updatedAt-desc' },
-            { label: 'Modifiée — ancienne en premier', value: 'updatedAt-asc' },
-            { label: 'Créée — récente en premier', value: 'createdAt-desc' },
-            { label: 'Créée — ancienne en premier', value: 'createdAt-asc' },
-          ]}
-        />
+
+        <div style={{ display: 'flex', gap: 6 }}>
+          <SortButton
+            label="Modifiée le"
+            active={sortField === 'updatedAt'}
+            order={sortOrder}
+            onClick={() => {
+              if (sortField === 'updatedAt') {
+                setSortOrder((o) => (o === 'desc' ? 'asc' : 'desc'))
+              } else {
+                setSortField('updatedAt')
+                setSortOrder('desc')
+              }
+            }}
+          />
+          <SortButton
+            label="Créée le"
+            active={sortField === 'createdAt'}
+            order={sortOrder}
+            onClick={() => {
+              if (sortField === 'createdAt') {
+                setSortOrder((o) => (o === 'desc' ? 'asc' : 'desc'))
+              } else {
+                setSortField('createdAt')
+                setSortOrder('desc')
+              }
+            }}
+          />
+        </div>
+
         <Button
           type="primary"
           icon={<PlusOutlined />}
@@ -168,6 +185,49 @@ export default function GlobalNotesView({ notes }: GlobalNotesViewProps) {
         reloadOnly={['notes']}
       />
     </div>
+  )
+}
+
+// ── SortButton ─────────────────────────────────────────────────────────────────
+interface SortButtonProps {
+  label: string
+  active: boolean
+  order: SortOrder
+  onClick: () => void
+}
+
+function SortButton({ label, active, order, onClick }: SortButtonProps) {
+  return (
+    <button
+      onClick={onClick}
+      style={{
+        display: 'inline-flex',
+        alignItems: 'center',
+        gap: 5,
+        padding: '5px 12px',
+        borderRadius: 6,
+        border: '1px solid',
+        borderColor: active ? '#1a1a1a' : '#e2e8f0',
+        background: active ? '#1a1a1a' : '#fff',
+        color: active ? '#fff' : '#64748b',
+        fontSize: 13,
+        fontWeight: active ? 600 : 400,
+        cursor: 'pointer',
+        transition: 'all 0.15s ease',
+        lineHeight: 1,
+      }}
+    >
+      {label}
+      {active ? (
+        order === 'desc' ? (
+          <ArrowDownOutlined style={{ fontSize: 11 }} />
+        ) : (
+          <ArrowUpOutlined style={{ fontSize: 11 }} />
+        )
+      ) : (
+        <ArrowDownOutlined style={{ fontSize: 11, opacity: 0.3 }} />
+      )}
+    </button>
   )
 }
 

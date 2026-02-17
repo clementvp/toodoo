@@ -105,7 +105,10 @@ export default function GlobalNotesView({ notes }: GlobalNotesViewProps) {
           type="text"
           danger
           icon={<DeleteOutlined />}
-          onClick={() => handleDelete(record)}
+          onClick={(e) => {
+            e.stopPropagation()
+            handleDelete(record)
+          }}
         />
       ),
     },

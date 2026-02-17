@@ -1,6 +1,6 @@
 import type { HttpContext } from '@adonisjs/core/http'
 import Note from '#models/note'
-import { createNoteValidator } from '#validators/note_validator'
+import { createNoteValidator, updateNoteValidator } from '#validators/note_validator'
 import { DateTime } from 'luxon'
 
 export default class NotesController {
@@ -32,6 +32,18 @@ export default class NotesController {
     })
 
     session.flash('success', 'Note created successfully!')
+    return response.redirect().back()
+  }
+
+  async update({ params, request, auth, response }: HttpContext) {
+    const user = auth.user!
+    const note = await Note.query().where('id', params.id).where('user_id', user.id).firstOrFail()
+    const data = await request.validateUsing(updateNoteValidator)
+
+    if (data.title !== undefined) note.title = data.title
+    if (data.content !== undefined) note.content = data.content
+    await note.save()
+
     return response.redirect().back()
   }
 
